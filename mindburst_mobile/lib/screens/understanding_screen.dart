@@ -25,6 +25,8 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
   late List<TextEditingController> _dateControllers;
 
   final List<String> _retentionOptions = ['Temporary', 'Keep Until Delete', 'Permanent'];
+  bool _isSaving = false;
+  bool _isSaved = false;
 
   @override
   void initState() {
@@ -59,27 +61,43 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
   }
 
   Future<void> _handleCancel() async {
-    if (widget.capture.id != null) {
-      await DatabaseHelper.instance.deleteCapture(widget.capture.id!);
-    }
+    if (_isSaving || _isSaved) return;
+    try {
+      if (widget.capture.id != null) {
+        await DatabaseHelper.instance.deleteCapture(widget.capture.id!);
+      }
+    } catch (_) {}
     if (mounted) Navigator.pop(context, false);
   }
 
   Future<void> _handleSave() async {
-    for (int i = 0; i < _memories.length; i++) {
-      _memories[i].title = _titleControllers[i].text.trim().isNotEmpty
-          ? _titleControllers[i].text.trim()
-          : _memories[i].title;
-      _memories[i].category = _catControllers[i].text.trim().isNotEmpty
-          ? _catControllers[i].text.trim()
-          : _memories[i].category;
-      _memories[i].date = _dateControllers[i].text.trim().isNotEmpty
-          ? _dateControllers[i].text.trim()
-          : null;
-    }
+    if (_isSaving || _isSaved) return;
+    setState(() => _isSaving = true);
 
-    await DatabaseHelper.instance.saveMemories(_memories);
-    if (mounted) Navigator.pop(context, true);
+    try {
+      for (int i = 0; i < _memories.length; i++) {
+        _memories[i].title = _titleControllers[i].text.trim().isNotEmpty
+            ? _titleControllers[i].text.trim()
+            : _memories[i].title;
+        _memories[i].category = _catControllers[i].text.trim().isNotEmpty
+            ? _catControllers[i].text.trim()
+            : _memories[i].category;
+        _memories[i].date = _dateControllers[i].text.trim().isNotEmpty
+            ? _dateControllers[i].text.trim()
+            : null;
+      }
+
+      await DatabaseHelper.instance.saveMemories(_memories);
+      _isSaved = true;
+      if (mounted) Navigator.pop(context, true);
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isSaving = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error saving: $e')),
+        );
+      }
+    }
   }
 
   String _getTypeIcon(String type) {
@@ -102,10 +120,11 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: true,
-      onPopInvokedWithResult: (didPop, result) {
-        if (didPop) {
-          _handleCancel();
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        if (!_isSaving && !_isSaved) {
+          await _handleCancel();
         }
       },
       child: Scaffold(
@@ -113,7 +132,7 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
           title: const Text('Here’s what I understood.'),
           leading: IconButton(
             icon: const Icon(Icons.close),
-            onPressed: _handleCancel,
+            onPressed: _isSaving ? null : _handleCancel,
           ),
         ),
         body: Column(
@@ -300,7 +319,7 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
-                      onPressed: _handleCancel,
+                      onPressed: _isSaving ? null : _handleCancel,
                       child: const Text('Cancel', style: TextStyle(color: AppTheme.textPrimary, fontSize: 15)),
                     ),
                   ),
@@ -313,8 +332,14 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
-                      onPressed: _handleSave,
-                      child: const Text('✓ Save', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      onPressed: _isSaving ? null : _handleSave,
+                      child: _isSaving
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.2),
+                            )
+                          : const Text('✓ Save', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],

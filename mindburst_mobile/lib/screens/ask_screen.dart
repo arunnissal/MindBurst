@@ -4,6 +4,7 @@ import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
 import '../services/grounded_qa.dart';
+import '../services/llm_service.dart';
 import 'memory_detail_screen.dart';
 
 class QAMessage {
@@ -126,7 +127,13 @@ class _AskScreenState extends State<AskScreen> {
     }
 
     final memoriesList = combinedMemories.values.toList();
-    final answer = GroundedQA.answerQuestion(query, memoriesList);
+    String answer = '';
+    final llmAns = await LLMService.instance.askLLM(query, memoriesList);
+    if (llmAns != null && llmAns.trim().isNotEmpty) {
+      answer = llmAns.trim();
+    } else {
+      answer = GroundedQA.answerQuestion(query, memoriesList);
+    }
 
     // Filter relevant memories cited
     List<Memory> sources = [];

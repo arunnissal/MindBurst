@@ -152,9 +152,9 @@ class DatabaseHelper {
     final db = await database;
 
     String sql = '''
-      SELECT m.*, c.original_text 
+      SELECT m.*, COALESCE(c.original_text, '') AS original_text 
       FROM memories m
-      JOIN captures c ON m.capture_id = c.id
+      LEFT JOIN captures c ON m.capture_id = c.id
       WHERE m.deleted_at IS NULL
       AND NOT (m.retention = 'Temporary' AND m.completed = 1)
     ''';
@@ -209,9 +209,9 @@ class DatabaseHelper {
   Future<List<Memory>> getDeletedMemories() async {
     final db = await database;
     final rows = await db.rawQuery('''
-      SELECT m.*, c.original_text
+      SELECT m.*, COALESCE(c.original_text, '') AS original_text
       FROM memories m
-      JOIN captures c ON m.capture_id = c.id
+      LEFT JOIN captures c ON m.capture_id = c.id
       WHERE m.deleted_at IS NOT NULL
       ORDER BY m.deleted_at DESC;
     ''');
