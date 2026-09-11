@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Buildozer / Android
+.buildozer/
+bin/
+*.apk
+*.aab
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Local database / temporary files
+*.db-journal
+mindburst.db
+MindBurst.zip
