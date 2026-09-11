@@ -23,7 +23,7 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,sqlite3,kivy==2.3.1,kivymd==2.0.0,asynckivy,asyncgui,materialyoucolor,materialshapes,android,pyjnius,pillow,requests,urllib3
+requirements = python3, kivy==2.3.0, https://github.com/kivymd/KivyMD/archive/master.zip, pillow, materialyoucolor, materialshapes, asynckivy, asyncgui, exceptiongroup, android, pyjnius, requests, urllib3
 
 # (str) Custom source folders for requirements
 # (list) Permissions
