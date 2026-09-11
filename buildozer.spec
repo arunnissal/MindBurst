@@ -17,6 +17,7 @@ source.include_exts = py,png,jpg,kv,atlas,json,db,gguf,txt,ttf
 
 # (list) List of directory to exclude (let empty to not exclude anything)
 source.exclude_dirs = tests, bin, .venv, .git, .pytest_cache
+source.exclude_patterns = license,*.zip,*.log,*.bat,*.ipynb
 
 # (str) Application versioning (method 1)
 version = 1.0.0
@@ -36,9 +37,10 @@ orientation = portrait
 fullscreen = 0
 
 # (str) Preserved Android NDK / SDK settings
-android.minapi = 24
+android.minapi = 21
 android.api = 34
-android.ndk = 25b
+android.ndk_api = 21
+# android.ndk = 25b
 android.archs = arm64-v8a
 
 

@@ -48,7 +48,8 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             git zip unzip autoconf libtool pkg-config zlib1g-dev \
             libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev \
-            libssl-dev cython3 libltdl-dev libgl1-mesa-dev libstdc++6 openjdk-17-jdk
+            libssl-dev cython3 libltdl-dev libgl1-mesa-dev libstdc++6 openjdk-17-jdk \
+            ccache patch libmpc-dev libmpfr-dev libgmp-dev
 
       - name: Install Buildozer & Cython
         run: |
@@ -57,7 +58,12 @@ jobs:
 
       - name: Build Android APK with Buildozer
         run: |
-          yes | buildozer -v android debug
+          yes | buildozer -v android debug || {
+            echo "================================ BUILDOZER FAILURE LOG ================================"
+            cat .buildozer/android/platform/build-arm64-v8a/build/other_builds/python3/arm64-v8a__ndk_target_21/python3/*.log 2>/dev/null || true
+            find .buildozer -name "*.log" -exec echo "--- {} ---" \; -exec tail -n 100 {} \; 2>/dev/null || true
+            exit 1
+          }
 
       - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
