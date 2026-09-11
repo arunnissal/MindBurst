@@ -284,8 +284,16 @@ class AIExtractor {
         cLower.contains('todo') ||
         cLower.contains('need to') ||
         cLower.contains('have to')) {
-      type = 'Task';
-      category = (cLower.contains('remind') || date != null) ? 'Reminders' : (projects.isNotEmpty ? 'Projects' : 'Tasks');
+      if (cLower.contains('remind') || cLower.contains('remember to') || cLower.contains('maranthuraadha') || cLower.contains('alert') || cLower.contains('alarm')) {
+        type = 'Reminder';
+        category = 'Reminders';
+      } else if (projects.isNotEmpty) {
+        type = 'Task';
+        category = 'Projects';
+      } else {
+        type = 'Task';
+        category = 'Tasks';
+      }
 
       // Smart title formatting
       if (cLower.contains('go to') || cLower.contains('need to go') || cLower.contains('ponum')) {

@@ -5,6 +5,7 @@ import '../models/memory_model.dart';
 import '../database/db_helper.dart';
 import '../services/grounded_qa.dart';
 import '../services/llm_service.dart';
+import '../services/native_service.dart';
 import 'memory_detail_screen.dart';
 
 class QAMessage {
@@ -433,6 +434,14 @@ class _AskScreenState extends State<AskScreen> {
                     fontWeight: FontWeight.bold,
                     color: AppTheme.goldAccent,
                   ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.volume_up, size: 18, color: AppTheme.goldAccent),
+                  constraints: const BoxConstraints(),
+                  padding: EdgeInsets.zero,
+                  tooltip: 'Read aloud',
+                  onPressed: () => NativeService.speak(msg.text),
                 ),
               ],
             ),

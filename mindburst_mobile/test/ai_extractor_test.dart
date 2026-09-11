@@ -21,7 +21,7 @@ void main() {
 
     expect(memories.length, 1);
     final m = memories[0];
-    expect(m.category, 'Reminders');
+    expect(m.category, 'Tasks');
     expect(m.title, 'Wash dress');
     expect(m.items, contains('Dress'));
   });

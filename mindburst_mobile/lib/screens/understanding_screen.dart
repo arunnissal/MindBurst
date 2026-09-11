@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
 import '../services/ai_extractor.dart';
+import '../services/native_service.dart';
 
 class UnderstandingScreen extends StatefulWidget {
   final Capture capture;
@@ -89,6 +90,16 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
 
       await DatabaseHelper.instance.saveMemories(_memories);
       _isSaved = true;
+
+      final count = _memories.length;
+      final summary = count == 1
+          ? _memories.first.title
+          : '$count items saved and organized into categories.';
+      NativeService.showNotification(
+        'MindBurst Captured 🧠',
+        summary,
+      );
+
       if (mounted) Navigator.pop(context, true);
     } catch (e) {
       if (mounted) {

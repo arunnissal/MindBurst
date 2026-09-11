@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
+import '../services/native_service.dart';
+import '../services/ai_extractor.dart';
 import 'memory_detail_screen.dart';
 import 'recently_deleted_screen.dart';
 
@@ -432,6 +434,28 @@ class AllScreenState extends State<AllScreen> {
                       ],
                     ),
 
+                  const SizedBox(width: 4),
+
+                  // Notification button
+                  IconButton(
+                    icon: const Icon(Icons.notifications_none, size: 18, color: AppTheme.goldAccent),
+                    constraints: const BoxConstraints(),
+                    padding: EdgeInsets.zero,
+                    tooltip: 'Send Phone Notification',
+                    onPressed: () {
+                      NativeService.showNotification(
+                        mem.title,
+                        '${mem.category} • ${mem.date != null ? AIExtractor.formatHumanDate(mem.date) : "Reminder"}',
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('🔔 Notification sent for "${mem.title}"'),
+                          duration: const Duration(seconds: 1),
+                        ),
+                      );
+                    },
+                  ),
+
                   const SizedBox(width: 6),
 
                   // Quick Delete button
@@ -506,10 +530,51 @@ class AllScreenState extends State<AllScreen> {
     return InkWell(
       borderRadius: BorderRadius.circular(6),
       onTap: () {
-        setState(() {
-          _searchController.text = name;
-        });
-        refreshMemories();
+        if (icon == Icons.place) {
+          showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            ),
+            builder: (ctx) => SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.place, color: Colors.green, size: 28),
+                    title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    subtitle: const Text('Detected Location'),
+                  ),
+                  const Divider(height: 1),
+                  ListTile(
+                    leading: const Icon(Icons.map_outlined, color: AppTheme.goldAccent),
+                    title: const Text('Open in Google Maps'),
+                    subtitle: const Text('Pin location and navigate'),
+                    onTap: () {
+                      Navigator.pop(ctx);
+                      NativeService.openMaps(name);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.filter_list, color: AppTheme.goldAccent),
+                    title: const Text('Filter memories for this place'),
+                    onTap: () {
+                      Navigator.pop(ctx);
+                      setState(() => _searchController.text = name);
+                      refreshMemories();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        } else {
+          setState(() {
+            _searchController.text = name;
+          });
+          refreshMemories();
+        }
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
