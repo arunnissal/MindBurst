@@ -38,10 +38,10 @@ class _AskScreenState extends State<AskScreen> {
   bool _isListening = false;
 
   final List<String> _suggestions = [
+    'Where do I need to go?',
     'What should I carry?',
-    'What about Rahul?',
-    'Show my project notes',
     'What tasks are scheduled?',
+    'What do I need to buy?',
   ];
 
   @override

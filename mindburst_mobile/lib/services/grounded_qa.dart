@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import '../models/memory_model.dart';
+import 'ai_extractor.dart';
 
 class GroundedQA {
   static String answerQuestion(String question, List<Memory> memories) {
@@ -10,7 +11,32 @@ class GroundedQA {
     final q = question.toLowerCase();
     final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-    // 1. Carry queries
+    // 1. General Place queries ("what are the places I need to go", "where do I need to go", "where am I going", "places to visit")
+    if (q.contains('place') || q.contains('places') || q.contains('where') || q.contains('go to') || q.contains('going') || q.contains('visit')) {
+      final placeMems = memories.where((m) =>
+          m.places.isNotEmpty ||
+          m.category == 'Places' ||
+          m.title.toLowerCase().contains('go to') ||
+          m.title.toLowerCase().contains('go ') ||
+          m.title.toLowerCase().contains('visit') ||
+          m.details.toLowerCase().contains('go to') ||
+          m.details.toLowerCase().contains('go ') ||
+          m.details.toLowerCase().contains('visit')).toList();
+
+      if (placeMems.isNotEmpty) {
+        final lines = <String>[];
+        for (final m in placeMems) {
+          final placeStr = m.places.isNotEmpty ? m.places.join(', ') : 'Scheduled location';
+          final dateStr = m.date != null ? ' (${AIExtractor.formatHumanDate(m.date)})' : '';
+          lines.add('• $placeStr$dateStr — ${m.title}');
+        }
+        return "Based on your memories, here are the places you need to go:\n\n${lines.join('\n')}";
+      } else {
+        return "You haven't scheduled any places to visit in your memories.";
+      }
+    }
+
+    // 2. Carry queries ("what should I carry", "what to take", "what to pack")
     if (q.contains('carry') || q.contains('take') || q.contains('pack') || q.contains('bring') || q.contains('eduthutu')) {
       final carryMems = memories.where((m) => m.type == 'Carry' || m.category == 'Carry' || m.items.isNotEmpty).toList();
       if (carryMems.isNotEmpty) {
@@ -25,7 +51,7 @@ class GroundedQA {
       }
     }
 
-    // 2. Shopping / Buy queries
+    // 3. Shopping / Buy queries
     if (q.contains('buy') || q.contains('shopping') || q.contains('grocery') || q.contains('groceries') || q.contains('vaanga')) {
       final shopMems = memories.where((m) => m.type == 'Shopping' || m.category == 'Shopping').toList();
       if (shopMems.isNotEmpty) {
@@ -37,7 +63,7 @@ class GroundedQA {
       }
     }
 
-    // 3. Money / Return / Pay queries
+    // 4. Money / Return / Pay queries
     if (q.contains('money') || q.contains('return') || q.contains('pay') || q.contains('kadan')) {
       final moneyMems = memories.where((m) =>
           m.title.toLowerCase().contains('money') ||
@@ -46,11 +72,11 @@ class GroundedQA {
           m.details.toLowerCase().contains('money') ||
           m.details.toLowerCase().contains('return')).toList();
       if (moneyMems.isNotEmpty) {
-        return "Regarding payments/returns:\n${moneyMems.map((m) => "• ${m.title} (${m.date ?? 'No date'})").join("\n")}";
+        return "Regarding payments/returns:\n${moneyMems.map((m) => "• ${m.title} (${AIExtractor.formatHumanDate(m.date)})").join("\n")}";
       }
     }
 
-    // 4. Today / Upcoming queries
+    // 5. Today / Upcoming queries
     if (q.contains('today') || q.contains('scheduled') || q.contains('pending') || q.contains('tasks') || q.contains('what to do')) {
       final todayMems = memories.where((m) => m.date == todayStr || (!m.completed && m.category == 'Tasks')).toList();
       if (todayMems.isNotEmpty) {
@@ -58,19 +84,7 @@ class GroundedQA {
       }
     }
 
-    // 5. Specific Person query
-    for (final m in memories) {
-      for (final p in m.people) {
-        if (q.contains(p.toLowerCase())) {
-          final personMems = memories.where((mem) =>
-              mem.people.any((per) => per.toLowerCase() == p.toLowerCase()) ||
-              mem.title.toLowerCase().contains(p.toLowerCase())).toList();
-          return "Regarding $p, you saved:\n${personMems.map((mem) => "• ${mem.title} (${mem.category})").join("\n")}";
-        }
-      }
-    }
-
-    // 6. Specific Place query
+    // 6. Specific Place query ("about college", "at office")
     for (final m in memories) {
       for (final pl in m.places) {
         if (q.contains(pl.toLowerCase())) {
@@ -82,7 +96,19 @@ class GroundedQA {
       }
     }
 
-    // 7. Project queries
+    // 7. Specific Person query
+    for (final m in memories) {
+      for (final p in m.people) {
+        if (q.contains(p.toLowerCase())) {
+          final personMems = memories.where((mem) =>
+              mem.people.any((per) => per.toLowerCase() == p.toLowerCase()) ||
+              mem.title.toLowerCase().contains(p.toLowerCase())).toList();
+          return "Regarding $p, you saved:\n${personMems.map((mem) => "• ${mem.title} (${mem.category})").join("\n")}";
+        }
+      }
+    }
+
+    // 8. Project queries
     if (q.contains('project') || q.contains('mindburst') || q.contains('jeevansetu')) {
       final projMems = memories.where((m) => m.projects.isNotEmpty || m.category == 'Projects').toList();
       if (projMems.isNotEmpty) {
@@ -90,10 +116,10 @@ class GroundedQA {
       }
     }
 
-    // 8. General Keyword Match
+    // 9. General Keyword Match
     final words = q.split(' ').where((w) => w.length > 2).toList();
     final matching = memories.where((m) {
-      final text = '${m.title} ${m.details} ${m.category} ${m.items.join(" ")}'.toLowerCase();
+      final text = '${m.title} ${m.details} ${m.category} ${m.items.join(" ")} ${m.places.join(" ")}'.toLowerCase();
       return words.any((w) => text.contains(w));
     }).take(4).toList();
 

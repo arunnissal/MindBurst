@@ -183,7 +183,7 @@ class AllScreenState extends State<AllScreen> {
                   controller: _searchController,
                   onChanged: (_) => refreshMemories(),
                   decoration: InputDecoration(
-                    hintText: 'Search memories, items, people, places...',
+                    hintText: 'Search memories, places, tasks, items...',
                     prefixIcon: const Icon(Icons.search, color: AppTheme.goldAccent, size: 20),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
@@ -503,23 +503,32 @@ class AllScreenState extends State<AllScreen> {
   }
 
   Widget _buildEntityBadge(String name, IconData icon, Color textColor, Color bgColor) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-      decoration: BoxDecoration(
-        color: bgColor,
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: textColor.withOpacity(0.2), width: 0.5),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 12, color: textColor),
-          const SizedBox(width: 3),
-          Text(
-            name,
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: textColor),
-          ),
-        ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(6),
+      onTap: () {
+        setState(() {
+          _searchController.text = name;
+        });
+        refreshMemories();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: textColor.withValues(alpha: 0.2), width: 0.5),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 12, color: textColor),
+            const SizedBox(width: 3),
+            Text(
+              name,
+              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: textColor),
+            ),
+          ],
+        ),
       ),
     );
   }

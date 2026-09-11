@@ -161,8 +161,26 @@ class DatabaseHelper {
     List<dynamic> args = [];
 
     if (category != null && category != 'All') {
-      sql += ' AND m.category = ?';
-      args.add(category);
+      if (category == 'Places') {
+        sql += ''' AND (
+          m.category = 'Places' OR 
+          m.id IN (SELECT memory_id FROM entities WHERE entity_type = 'place')
+        )''';
+      } else if (category == 'Carry') {
+        sql += ''' AND (
+          m.category = 'Carry' OR 
+          m.type = 'Carry' OR 
+          m.id IN (SELECT memory_id FROM entities WHERE entity_type = 'item')
+        )''';
+      } else if (category == 'Projects') {
+        sql += ''' AND (
+          m.category = 'Projects' OR 
+          m.id IN (SELECT memory_id FROM entities WHERE entity_type = 'project')
+        )''';
+      } else {
+        sql += ' AND m.category = ?';
+        args.add(category);
+      }
     }
 
     if (retention != null && retention != 'All') {

@@ -6,7 +6,8 @@ class AIExtractor {
     'project', 'the project', 'a project', 'that project', 'our project',
     'assignment', 'the assignment', 'a assignment', 'that assignment',
     'task', 'the task', 'a task', 'that task',
-    'thing', 'the thing', 'things', 'item', 'items', 'someone', 'person', 'place'
+    'thing', 'the thing', 'things', 'item', 'items', 'someone', 'person', 'place',
+    'need', 'need to', 'want to', 'have to', 'going', 'go'
   };
 
   static List<Memory> extractMemories(String rawText, int captureId) {
@@ -24,9 +25,6 @@ class AIExtractor {
       ];
     }
 
-    // 1. Intelligent Clause Splitting:
-    // Only split on sentence boundaries (. ; \n) or conjunctions connecting distinct thoughts,
-    // NOT within item pairs like "bread and milk" or "laptop and charger".
     final clauses = _splitIntoClauses(text);
     List<Memory> records = [];
 
@@ -50,12 +48,8 @@ class AIExtractor {
   }
 
   static List<String> _splitIntoClauses(String text) {
-    // Regex for clause separators:
-    // Periods, semicolons, exclamation marks, question marks, newlines
-    // OR ", and "
-    // OR " and " followed by actions or prepositions/Tanglish subjects
     final clauseRegex = RegExp(
-      r'(?:[\.\;\!\?\n]+|\,\s*and\s+|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|study|college\b|office\b|rahul\b|home\b)))',
+      r'(?:[\.\;\!\?\n]+|\,\s*and\s+|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b)))',
       caseSensitive: false,
     );
 
@@ -85,7 +79,6 @@ class AIExtractor {
     } else if (cLower.contains('yesterday') || cLower.contains('naethu') || cLower.contains('nethu')) {
       date = resolveDate('Yesterday');
     } else {
-      // Days of week
       final days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
       for (final d in days) {
         if (cLower.contains(d)) {
@@ -101,34 +94,65 @@ class AIExtractor {
       time = timeMatch.group(0)?.trim();
     }
 
-    // --- 3. Detect People ---
-    final knownPeople = ['rahul', 'priya', 'arun', 'vijay', 'suresh', 'kumar', 'ramesh', 'anitha', 'mom', 'dad', 'boss', 'manager', 'sir', 'doctor', 'professor', 'team'];
-    for (final p in knownPeople) {
-      if (RegExp('\\b$p\\b', caseSensitive: false).hasMatch(clause)) {
-        people.add(_capitalize(p));
+    // --- 3. Detect People (Dynamic, NO hardcoded names) ---
+    // Common relational / professional roles
+    final genericRoles = ['mom', 'dad', 'brother', 'sister', 'boss', 'manager', 'sir', 'doctor', 'professor', 'friend', 'colleague', 'team', 'client'];
+    for (final role in genericRoles) {
+      if (RegExp('\\b$role\\b', caseSensitive: false).hasMatch(clause)) {
+        people.add(_capitalize(role));
       }
     }
-    // Pattern like "Rahul ku", "Rahul kitta", "Rahul oda"
-    final tanglishPersonMatch = RegExp(r'\b([A-Z][a-z]+)\s*(?:ku|kitta|oda)\b').firstMatch(clause);
-    if (tanglishPersonMatch != null) {
-      final pName = tanglishPersonMatch.group(1)!;
-      if (!people.contains(pName) && !genericNoiseWords.contains(pName.toLowerCase())) {
+
+    // Dynamic pattern: [call / meet / ask / tell / with] [Name] (e.g. "call John", "meet Dr. Smith")
+    final actionNameMatch = RegExp(r'\b(?:call|meet|ask|tell|with|pay|return to)\s+([A-Z][a-z]+)\b').firstMatch(clause);
+    if (actionNameMatch != null) {
+      final pName = actionNameMatch.group(1)!;
+      if (!people.contains(pName) && !genericNoiseWords.contains(pName.toLowerCase()) && !_isDayOfWeek(pName)) {
         people.add(pName);
       }
     }
 
-    // --- 4. Detect Places ---
-    final knownPlaces = ['college', 'office', 'home', 'gym', 'library', 'hospital', 'clinic', 'bank', 'supermarket', 'market', 'store', 'airport', 'hostel', 'room'];
+    // Tanglish pattern: [Name] ku, [Name] kitta, [Name] oda
+    final tanglishPersonMatch = RegExp(r'\b([A-Z][a-z]+)\s*(?:ku|kitta|oda)\b').firstMatch(clause);
+    if (tanglishPersonMatch != null) {
+      final pName = tanglishPersonMatch.group(1)!;
+      if (!people.contains(pName) && !genericNoiseWords.contains(pName.toLowerCase()) && !_isDayOfWeek(pName)) {
+        people.add(pName);
+      }
+    }
+
+    // --- 4. Detect Places (Comprehensive) ---
+    final knownPlaces = [
+      'college', 'school', 'university', 'campus', 'institute',
+      'office', 'work', 'workplace', 'home', 'gym', 'library',
+      'hospital', 'clinic', 'pharmacy', 'medical', 'bank', 'atm',
+      'supermarket', 'market', 'bazaar', 'grocery', 'shop', 'store', 'mall',
+      'airport', 'station', 'railway station', 'bus stand', 'bus stop', 'metro',
+      'temple', 'church', 'mosque', 'hotel', 'restaurant', 'cafe',
+      'hostel', 'room', 'flat', 'apartment', 'salon'
+    ];
+
     for (final pl in knownPlaces) {
       if (RegExp('\\b$pl\\b', caseSensitive: false).hasMatch(clause)) {
         places.add(_capitalize(pl));
       }
     }
-    // Pattern like "College ku", "Office la"
-    final tanglishPlaceMatch = RegExp(r'\b([a-zA-Z]+)\s*(?:ku|la)\b', caseSensitive: false).firstMatch(clause);
+
+    // Dynamic patterns: "go to [Place]", "go [Place]", "reach [Place]", "visit [Place]"
+    final goToPlaceMatch = RegExp(r'\b(?:go to|go|reach|visit|heading to|travel to)\s+([a-zA-Z]+)\b', caseSensitive: false).firstMatch(clause);
+    if (goToPlaceMatch != null) {
+      final detected = goToPlaceMatch.group(1)!.trim();
+      final cap = _capitalize(detected);
+      if (!places.contains(cap) && !genericNoiseWords.contains(detected.toLowerCase()) && !_isDayOfWeek(detected) && !_isNoisePlace(detected)) {
+        places.add(cap);
+      }
+    }
+
+    // Tanglish place pattern: "[Place] ku ponum", "[Place] ku poga", "[Place] la"
+    final tanglishPlaceMatch = RegExp(r'\b([a-zA-Z]+)\s*(?:ku\s*(?:ponum|poga|poren)|la\b)\b', caseSensitive: false).firstMatch(clause);
     if (tanglishPlaceMatch != null) {
       final plName = _capitalize(tanglishPlaceMatch.group(1)!);
-      if (knownPlaces.contains(plName.toLowerCase()) && !places.contains(plName)) {
+      if (!places.contains(plName) && !genericNoiseWords.contains(plName.toLowerCase()) && !_isDayOfWeek(plName)) {
         places.add(plName);
       }
     }
@@ -141,6 +165,7 @@ class AIExtractor {
       'bag', 'backpack', 'pen', 'pencil', 'notebook', 'book', 'books',
       'passport', 'license', 'helmet', 'jacket', 'glasses', 'spectacles',
       'medicine', 'medicines', 'tablet', 'tablets',
+      'dress', 'clothes', 'uniform', 'shoes',
       'milk', 'bread', 'eggs', 'curd', 'coffee', 'tea', 'vegetables', 'fruits'
     ];
     for (final it in itemKeywords) {
@@ -169,7 +194,7 @@ class AIExtractor {
     String title = clause;
     String retention = 'Temporary';
 
-    // A. Carry Intent (English & Tanglish)
+    // A. Carry Intent
     final isCarryVerb = cLower.contains('carry') ||
         cLower.contains('take') ||
         cLower.contains('bring') ||
@@ -217,14 +242,21 @@ class AIExtractor {
       final shopItems = items.isNotEmpty ? items.join(", ") : '';
       title = shopItems.isNotEmpty ? 'Buy $shopItems' : _cleanActionTitle(clause, 'Buy');
     }
-    // C. Action / Task / Reminder Intent (English & Tanglish)
-    else if (cLower.contains('pananum') ||
+    // C. Action / Task / Reminder Intent
+    else if (cLower.contains('need to go') ||
+        cLower.contains('have to go') ||
+        cLower.contains('must go') ||
+        cLower.contains('go to') ||
+        cLower.contains('ponum') ||
+        cLower.contains('poga') ||
+        cLower.contains('wash') ||
+        cLower.contains('clean') ||
+        cLower.contains('pananum') ||
         cLower.contains('pannanum') ||
         cLower.contains('seiyanum') ||
         cLower.contains('kudukanum') ||
         cLower.contains('tharanum') ||
         cLower.contains('return') ||
-        cLower.contains('money return') ||
         cLower.contains('call') ||
         cLower.contains('phone') ||
         cLower.contains('pesanum') ||
@@ -240,7 +272,6 @@ class AIExtractor {
         cLower.contains('anupanum') ||
         cLower.contains('check') ||
         cLower.contains('paakanum') ||
-        cLower.contains('clean') ||
         cLower.contains('prepare') ||
         cLower.contains('write') ||
         cLower.contains('ezhudhanum') ||
@@ -256,8 +287,17 @@ class AIExtractor {
       type = 'Task';
       category = (cLower.contains('remind') || date != null) ? 'Reminders' : (projects.isNotEmpty ? 'Projects' : 'Tasks');
 
-      // Specific smart title generation
-      if (cLower.contains('money return') || (cLower.contains('return') && cLower.contains('money')) || (cLower.contains('return') && cLower.contains('pananum'))) {
+      // Smart title formatting
+      if (cLower.contains('go to') || cLower.contains('need to go') || cLower.contains('ponum')) {
+        final placeStr = places.isNotEmpty ? places.first : '';
+        title = placeStr.isNotEmpty ? 'Go to $placeStr' : 'Go out';
+      } else if (cLower.contains('wash')) {
+        final itemStr = items.isNotEmpty ? items.first.toLowerCase() : 'clothes';
+        title = 'Wash $itemStr';
+      } else if (cLower.contains('clean')) {
+        final placeStr = places.isNotEmpty ? places.first.toLowerCase() : 'room';
+        title = 'Clean $placeStr';
+      } else if (cLower.contains('money return') || (cLower.contains('return') && cLower.contains('money'))) {
         final personStr = people.isNotEmpty ? ' to ${people.first}' : '';
         title = 'Return money$personStr';
       } else if (cLower.contains('call') || cLower.contains('phone') || cLower.contains('pesanum')) {
@@ -267,13 +307,13 @@ class AIExtractor {
         final personStr = people.isNotEmpty ? ' ${people.first}' : '';
         title = 'Ask$personStr about ${projects.isNotEmpty ? projects.first : "task"}';
       } else if (cLower.contains('submit')) {
-        title = projects.isNotEmpty ? 'Submit ${projects.first}' : 'Submit assignment / documents';
+        title = projects.isNotEmpty ? 'Submit ${projects.first}' : 'Submit assignment';
       } else if (cLower.contains('renew')) {
-        title = 'Renew subscription / account';
+        title = 'Renew subscription';
       } else if (cLower.contains('pay') || cLower.contains('recharge')) {
-        title = 'Pay bill / recharge';
+        title = 'Pay bill';
       } else {
-        title = _capitalizeFirstLetter(clause);
+        title = _cleanActionSummary(clause);
       }
     }
     // D. Event Intent
@@ -313,8 +353,7 @@ class AIExtractor {
       category = 'Projects';
       retention = 'Permanent';
       title = _capitalizeFirstLetter(clause);
-    }
-    else {
+    } else {
       type = 'Note';
       category = 'Notes';
       title = _capitalizeFirstLetter(clause);
@@ -344,6 +383,23 @@ class AIExtractor {
     );
   }
 
+  static bool _isDayOfWeek(String s) {
+    final lower = s.toLowerCase();
+    return ['today', 'tomorrow', 'yesterday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].contains(lower);
+  }
+
+  static bool _isNoisePlace(String s) {
+    final lower = s.toLowerCase();
+    return ['the', 'a', 'an', 'some', 'my', 'your', 'our', 'and', 'or', 'in', 'at', 'on', 'to'].contains(lower);
+  }
+
+  static String _cleanActionSummary(String clause) {
+    var s = clause.trim();
+    // Remove leading conversational prefixes
+    s = s.replaceAll(RegExp(r'^(?:tomorrow|today|yesterday|namma|i\s+need\s+to|we\s+need\s+to|need\s+to|have\s+to|must|should|please)\s+', caseSensitive: false), '');
+    return _capitalizeFirstLetter(s);
+  }
+
   static String _normalizeItemName(String it) {
     final lower = it.toLowerCase();
     switch (lower) {
@@ -360,8 +416,8 @@ class AIExtractor {
       case 'cv': return 'Resume';
       case 'hall ticket':
       case 'admit card': return 'Hall Ticket';
-      case 'key':
-      case 'keys': return 'Keys';
+      case 'keys':
+      case 'key': return 'Keys';
       case 'wallet':
       case 'purse': return 'Wallet';
       case 'bottle':
@@ -370,6 +426,8 @@ class AIExtractor {
       case 'passport': return 'Passport';
       case 'license': return 'License';
       case 'helmet': return 'Helmet';
+      case 'dress': return 'Dress';
+      case 'clothes': return 'Clothes';
       case 'milk': return 'Milk';
       case 'bread': return 'Bread';
       case 'coffee': return 'Coffee';
@@ -410,7 +468,6 @@ class AIExtractor {
       return DateFormat('yyyy-MM-dd').format(now.subtract(const Duration(days: 1)));
     }
 
-    // Days of week
     final days = {
       'monday': DateTime.monday,
       'tuesday': DateTime.tuesday,

@@ -374,7 +374,7 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
                       height: 1.4,
                     ),
                     decoration: const InputDecoration(
-                      hintText: "Type or speak freely in English or Tanglish...\n\nExample:\n\"Tomorrow namma rahul ku money return pananum and college ku resume kondu ponum\"",
+                      hintText: "Type or tap the microphone to speak your thoughts...",
                       border: InputBorder.none,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
