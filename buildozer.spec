@@ -23,7 +23,7 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy==2.3.0, https://github.com/kivymd/KivyMD/archive/master.zip, pillow, materialyoucolor, materialshapes, asynckivy, asyncgui, exceptiongroup, android, pyjnius, requests, urllib3
+requirements = python3, kivy, https://github.com/kivymd/KivyMD/archive/master.zip, pillow, materialyoucolor, materialshapes, asynckivy, asyncgui, exceptiongroup, android, pyjnius, requests, urllib3
 
 # (str) Custom source folders for requirements
 # (list) Permissions
@@ -61,4 +61,4 @@ p4a.bootstrap = sdl2
 log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = false, 1 = true)
-warn_on_root = 1
+warn_on_root = 0
