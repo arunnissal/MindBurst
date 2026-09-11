@@ -142,7 +142,9 @@ class _AskScreenState extends State<AskScreen> {
     for (final m in memoriesList) {
       if (qLower.contains('carry') && (m.type == 'Carry' || m.category == 'Carry' || m.items.isNotEmpty)) {
         sources.add(m);
-      } else if (qLower.contains('rahul') && (m.people.any((p) => p.toLowerCase().contains('rahul')) || m.title.toLowerCase().contains('rahul'))) {
+      } else if ((qLower.contains('remind') || qLower.contains('alarm')) && (m.category == 'Reminders' || m.time != null)) {
+        sources.add(m);
+      } else if ((qLower.contains('place') || qLower.contains('where')) && m.places.isNotEmpty) {
         sources.add(m);
       } else if (qLower.contains('project') && (m.projects.isNotEmpty || m.category == 'Projects')) {
         sources.add(m);
@@ -186,7 +188,7 @@ class _AskScreenState extends State<AskScreen> {
         actions: [
           if (_messages.isNotEmpty)
             IconButton(
-              icon: const Icon(Icons.refresh, color: AppTheme.goldAccent),
+              icon: const Icon(Icons.refresh, color: AppTheme.primary),
               tooltip: 'Clear Chat',
               onPressed: () {
                 setState(() => _messages.clear());
@@ -196,29 +198,6 @@ class _AskScreenState extends State<AskScreen> {
       ),
       body: Column(
         children: [
-          // Subtitle bar
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            color: AppTheme.goldAccentLight,
-            child: const Row(
-              children: [
-                Icon(Icons.lock_outline, size: 14, color: AppTheme.goldAccent),
-                SizedBox(width: 6),
-                Expanded(
-                  child: Text(
-                    '100% Offline & Grounded — Answers strictly from saved memories.',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: AppTheme.goldAccent,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-
           // Message history or empty state
           Expanded(
             child: _messages.isEmpty
@@ -231,15 +210,15 @@ class _AskScreenState extends State<AskScreen> {
                           width: 68,
                           height: 68,
                           decoration: BoxDecoration(
-                            color: AppTheme.goldAccentLight,
+                            color: AppTheme.primaryLight,
                             shape: BoxShape.circle,
-                            border: Border.all(color: AppTheme.goldBorder, width: 1.5),
+                            border: Border.all(color: AppTheme.primary.withOpacity(0.2), width: 1.5),
                           ),
-                          child: const Icon(Icons.psychology_outlined, size: 36, color: AppTheme.goldAccent),
+                          child: const Icon(Icons.psychology_outlined, size: 36, color: AppTheme.primary),
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          'Ask Anything',
+                          'Ask Your Mind',
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -248,7 +227,7 @@ class _AskScreenState extends State<AskScreen> {
                         ),
                         const SizedBox(height: 8),
                         const Text(
-                          'MindBurst searches all your personal notes, tasks, items to carry, and people without hallucinating.',
+                          'Search and ask anything across your tasks, reminders, places, and shopping lists.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 13,
@@ -260,7 +239,7 @@ class _AskScreenState extends State<AskScreen> {
                         const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            'TRY ASKING:',
+                            'QUICK QUESTIONS:',
                             style: TextStyle(
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
@@ -276,7 +255,8 @@ class _AskScreenState extends State<AskScreen> {
                           children: _suggestions.map((s) {
                             return ActionChip(
                               backgroundColor: Colors.white,
-                              side: const BorderSide(color: AppTheme.goldBorder),
+                              side: const BorderSide(color: AppTheme.cardBorder),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                               label: Text(s, style: const TextStyle(fontSize: 12, color: AppTheme.textPrimary)),
                               onPressed: () => _handleSend(s),
                             );
@@ -323,7 +303,7 @@ class _AskScreenState extends State<AskScreen> {
                   IconButton(
                     icon: Icon(
                       _isListening ? Icons.mic : Icons.mic_none,
-                      color: _isListening ? AppTheme.deleteRed : AppTheme.goldAccent,
+                      color: _isListening ? AppTheme.deleteRed : AppTheme.primary,
                     ),
                     onPressed: _toggleListening,
                   ),
@@ -333,7 +313,7 @@ class _AskScreenState extends State<AskScreen> {
                     child: TextField(
                       controller: _queryController,
                       decoration: const InputDecoration(
-                        hintText: 'Ask your memories...',
+                        hintText: 'Ask your memories or schedule...',
                         contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                       ),
                       onSubmitted: (_) => _handleSend(),
@@ -345,7 +325,7 @@ class _AskScreenState extends State<AskScreen> {
                   // Send button
                   Container(
                     decoration: const BoxDecoration(
-                      color: AppTheme.goldAccent,
+                      gradient: AppTheme.primaryGradient,
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
@@ -370,7 +350,7 @@ class _AskScreenState extends State<AskScreen> {
           margin: const EdgeInsets.only(bottom: 12, left: 40),
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           decoration: BoxDecoration(
-            color: AppTheme.goldAccent,
+            color: AppTheme.primary,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),

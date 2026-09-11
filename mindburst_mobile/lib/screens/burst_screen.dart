@@ -279,8 +279,8 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
         actions: [
           IconButton(
             icon: Icon(
-              isLLM ? Icons.psychology : Icons.bolt,
-              color: AppTheme.goldAccent,
+              isLLM ? Icons.psychology : Icons.tune_outlined,
+              color: AppTheme.primary,
             ),
             tooltip: 'AI Engine Settings',
             onPressed: _showAISettings,
@@ -289,80 +289,40 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Engine Status Badge
-              Center(
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: _showAISettings,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: isLLM ? Colors.purple.withValues(alpha: 0.1) : AppTheme.goldAccentLight,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: isLLM ? Colors.purple : AppTheme.goldBorder,
-                        width: 0.8,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          isLLM ? Icons.smart_toy : Icons.bolt,
-                          size: 14,
-                          color: isLLM ? Colors.purple : AppTheme.goldAccent,
-                        ),
-                        const SizedBox(width: 6),
-                        Text(
-                          isLLM ? 'Local LLM Active (${LLMService.instance.modelName})' : '⚡ Built-in Edge NLP (Offline)',
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            color: isLLM ? Colors.purple : AppTheme.goldAccent,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        const Icon(Icons.tune, size: 12, color: AppTheme.textSecondary),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
 
               const Center(
                 child: Text(
                   "What's on your mind?",
                   style: TextStyle(
                     color: AppTheme.textPrimary,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
 
               // Multiline Thought Input Area
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     color: AppTheme.cardBg,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: AppTheme.goldBorder, width: 1.0),
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: AppTheme.cardBorder, width: 1.0),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.02),
-                        blurRadius: 10,
+                        color: Colors.black.withOpacity(0.03),
+                        blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  padding: const EdgeInsets.all(16.0),
+                  padding: const EdgeInsets.all(18.0),
                   child: TextField(
                     controller: _textController,
                     maxLines: null,
@@ -371,7 +331,7 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
                     style: const TextStyle(
                       fontSize: 16,
                       color: AppTheme.textPrimary,
-                      height: 1.4,
+                      height: 1.45,
                     ),
                     decoration: const InputDecoration(
                       hintText: "Type or tap the microphone to speak your thoughts...",
@@ -387,12 +347,12 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
 
               if (_statusText.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
                     _statusText,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: AppTheme.goldAccent,
+                    style: TextStyle(
+                      color: _isListening ? AppTheme.primary : AppTheme.textSecondary,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),
@@ -401,24 +361,31 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
 
               const SizedBox(height: 16),
 
-              // Mic Button (Tap-to-Speak)
+              // Mic Button (Tap-to-Speak with animated pulse)
               Center(
                 child: ScaleTransition(
                   scale: _isListening ? _pulseController : const AlwaysStoppedAnimation(1.0),
                   child: Container(
+                    width: 64,
+                    height: 64,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _isListening ? AppTheme.deleteRed.withValues(alpha: 0.15) : AppTheme.goldAccentLight,
-                      border: Border.all(
-                        color: _isListening ? AppTheme.deleteRed : AppTheme.goldBorder,
-                        width: 1.5,
-                      ),
+                      gradient: _isListening
+                          ? const LinearGradient(colors: [Color(0xFFEF4444), Color(0xFFDC2626)])
+                          : const LinearGradient(colors: [Color(0xFFEEF2FF), Color(0xFFE0E7FF)]),
+                      boxShadow: [
+                        BoxShadow(
+                          color: (_isListening ? AppTheme.deleteRed : AppTheme.primary).withOpacity(0.2),
+                          blurRadius: 12,
+                          spreadRadius: 2,
+                        ),
+                      ],
                     ),
                     child: IconButton(
                       iconSize: 32,
                       icon: Icon(
                         _isListening ? Icons.mic : Icons.mic_none,
-                        color: _isListening ? AppTheme.deleteRed : AppTheme.goldAccent,
+                        color: _isListening ? Colors.white : AppTheme.primary,
                       ),
                       onPressed: _toggleListening,
                     ),
@@ -426,41 +393,54 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
-              // Burst Action Button
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.goldAccent,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 2,
+              // Burst Action Button with Animated Gradient
+              Container(
+                decoration: BoxDecoration(
+                  gradient: AppTheme.primaryGradient,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.primary.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                onPressed: _isProcessing ? null : _handleBurst,
-                child: _isProcessing
-                    ? const SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.2),
-                      )
-                    : const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '💥 Burst',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    shadowColor: Colors.transparent,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  onPressed: _isProcessing ? null : _handleBurst,
+                  child: _isProcessing
+                      ? const SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.2),
+                        )
+                      : const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '💥 Burst Thoughts',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 0.5,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
             ],
           ),
         ),

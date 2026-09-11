@@ -48,13 +48,26 @@ class AIExtractor {
   }
 
   static List<String> _splitIntoClauses(String text) {
+    // Pre-normalize times written with dots (e.g. "7.40pm", "7.30 am", "7.40 pm") to colons
+    var normalized = text.replaceAllMapped(
+      RegExp(r'\b(\d{1,2})\.(\d{2})\s*(am|pm|AM|PM)?\b'),
+      (m) => '${m.group(1)}:${m.group(2)}${m.group(3) != null ? " ${m.group(3)}" : ""}',
+    );
+
+    // Protect decimal quantities like 1.5, 2.5
+    normalized = normalized.replaceAllMapped(
+      RegExp(r'(\d+)\.(\d+)'),
+      (m) => '${m.group(1)}__DOT__${m.group(2)}',
+    );
+
     final clauseRegex = RegExp(
       r'(?:[\.\;\!\?\n]+|\,\s*and\s+|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b)))',
       caseSensitive: false,
     );
 
-    final parts = text.split(clauseRegex)
-        .map((p) => p.trim())
+    final parts = normalized
+        .split(clauseRegex)
+        .map((p) => p.replaceAll('__DOT__', '.').trim())
         .where((p) => p.isNotEmpty)
         .toList();
 
@@ -89,9 +102,13 @@ class AIExtractor {
     }
 
     // --- 2. Detect Time ---
-    final timeMatch = RegExp(r'\b(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))\b|\bat\s+(\d{1,2})\b').firstMatch(clause);
+    final timeMatch = RegExp(
+      r'\b(?:at\s+)?(\d{1,2}(?::\d{2})?\s*(?:am|pm))\b|\bat\s+(\d{1,2}(?::\d{2})?)\b|\b([01]?\d|2[0-3]):([0-5]\d)\b',
+      caseSensitive: false,
+    ).firstMatch(clause);
     if (timeMatch != null) {
-      time = timeMatch.group(0)?.trim();
+      final rawTime = timeMatch.group(0)?.trim() ?? '';
+      time = _normalizeTimeDisplay(rawTime);
     }
 
     // --- 3. Detect People (Dynamic, NO hardcoded names) ---
@@ -296,7 +313,29 @@ class AIExtractor {
       }
 
       // Smart title formatting
-      if (cLower.contains('go to') || cLower.contains('need to go') || cLower.contains('ponum')) {
+      if (category == 'Reminders') {
+        final remMatch = RegExp(
+          r'\b(?:remind\s+(?:me\s+)?(?:to|about)?|remember\s+to|maranthuraadha)\s+(.+)',
+          caseSensitive: false,
+        ).firstMatch(clause);
+        if (remMatch != null) {
+          var action = remMatch.group(1)!.trim();
+          action = action.replaceAll(RegExp(r'\b(?:at\s+\d{1,2}(?::\d{2})?\s*(?:am|pm)?|\d{1,2}(?::\d{2})?\s*(?:am|pm))\b', caseSensitive: false), '').trim();
+          action = action.replaceAll(RegExp(r'\b(?:today|tomorrow|tonight|inniku|naalaiku|morning|afternoon|evening|night)\b', caseSensitive: false), '').trim();
+          action = action.replaceAll(RegExp(r'^(?:to\s+|about\s+|at\s+)', caseSensitive: false), '').trim();
+          if (action.isNotEmpty) {
+            title = _capitalizeFirstLetter(action);
+          } else if (time != null) {
+            title = 'Reminder at $time';
+          } else {
+            title = 'Reminder';
+          }
+        } else if (time != null) {
+          title = 'Reminder at $time';
+        } else {
+          title = 'Reminder';
+        }
+      } else if (cLower.contains('go to') || cLower.contains('need to go') || cLower.contains('ponum')) {
         final placeStr = places.isNotEmpty ? places.first : '';
         title = placeStr.isNotEmpty ? 'Go to $placeStr' : 'Go out';
       } else if (cLower.contains('wash')) {
@@ -460,6 +499,29 @@ class AIExtractor {
     final words = clause.split(' ');
     if (words.length <= 5) return _capitalizeFirstLetter(clause);
     return '$verb ${words.take(4).join(" ")}';
+  }
+
+  static String _normalizeTimeDisplay(String raw) {
+    var s = raw.replaceAll(RegExp(r'^at\s+', caseSensitive: false), '').trim();
+    final m12 = RegExp(r'^(\d{1,2})(?::(\d{2}))?\s*(am|pm)?$', caseSensitive: false).firstMatch(s);
+    if (m12 != null) {
+      int hour = int.parse(m12.group(1)!);
+      int minute = m12.group(2) != null ? int.parse(m12.group(2)!) : 0;
+      final amPm = m12.group(3)?.toUpperCase();
+
+      final minStr = minute.toString().padLeft(2, '0');
+      if (amPm != null) {
+        return '$hour:$minStr $amPm';
+      } else {
+        if (hour >= 12) {
+          final h12 = hour == 12 ? 12 : hour - 12;
+          return '$h12:$minStr PM';
+        } else {
+          return '$hour:$minStr AM';
+        }
+      }
+    }
+    return raw;
   }
 
   static String? resolveDate(String dateStr) {

@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
 import '../services/ai_extractor.dart';
+import '../services/native_service.dart';
 
 class MemoryDetailScreen extends StatefulWidget {
   final Memory memory;
@@ -19,6 +20,7 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
   late TextEditingController _titleController;
   late TextEditingController _detailsController;
   late TextEditingController _dateController;
+  late TextEditingController _timeController;
   late TextEditingController _categoryController;
   late String _retention;
 
@@ -35,6 +37,7 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
     _titleController = TextEditingController(text: _memory.title);
     _detailsController = TextEditingController(text: _memory.details);
     _dateController = TextEditingController(text: _memory.date ?? '');
+    _timeController = TextEditingController(text: _memory.time ?? '');
     _categoryController = TextEditingController(text: _memory.category);
     _retention = _memory.retention;
   }
@@ -44,6 +47,7 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
     _titleController.dispose();
     _detailsController.dispose();
     _dateController.dispose();
+    _timeController.dispose();
     _categoryController.dispose();
     super.dispose();
   }
@@ -58,11 +62,24 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
       _memory.title = _titleController.text.trim().isNotEmpty ? _titleController.text.trim() : _memory.title;
       _memory.details = _detailsController.text.trim();
       _memory.date = _dateController.text.trim().isNotEmpty ? _dateController.text.trim() : null;
+      _memory.time = _timeController.text.trim().isNotEmpty ? _timeController.text.trim() : null;
       _memory.category = _categoryController.text.trim().isNotEmpty ? _categoryController.text.trim() : _memory.category;
       _memory.retention = _retention;
       _isEditing = false;
     });
     await DatabaseHelper.instance.updateMemory(_memory);
+
+    if (_memory.category == 'Reminders' || _memory.time != null) {
+      final scheduledDt = NativeService.parseReminderDateTime(_memory.date, _memory.time);
+      if (scheduledDt != null && _memory.id != null) {
+        NativeService.scheduleNotification(
+          id: _memory.id!,
+          title: 'Reminder: ${_memory.title}',
+          body: _memory.details.isNotEmpty ? _memory.details : _memory.title,
+          triggerAtMillis: scheduledDt.millisecondsSinceEpoch,
+        );
+      }
+    }
   }
 
   Future<void> _handleDelete() async {
@@ -153,10 +170,38 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
         ),
         const SizedBox(height: 8),
 
-        // Date
-        Text(
-          '📅 Scheduled: ${AIExtractor.formatHumanDate(_memory.date)}',
-          style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+        // Date & Time
+        Row(
+          children: [
+            Text(
+              '📅 Scheduled: ${AIExtractor.formatHumanDate(_memory.date)}',
+              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+            ),
+            if (_memory.time != null) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: AppTheme.reminderAmberLight,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.alarm, size: 12, color: AppTheme.reminderAmber),
+                    const SizedBox(width: 3),
+                    Text(
+                      _memory.time!,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.reminderAmber,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
         ),
         const SizedBox(height: 20),
 
@@ -187,8 +232,7 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
         ),
         const SizedBox(height: 16),
 
-        // Extracted Entities
-        if (_memory.people.isNotEmpty) _buildEntityRow('👤 People', _memory.people.join(', ')),
+        // Extracted Entities (Places, Items, Projects - NO people names)
         if (_memory.places.isNotEmpty) _buildEntityRow('📍 Places', _memory.places.join(', ')),
         if (_memory.items.isNotEmpty) _buildEntityRow('🎒 Items', _memory.items.join(', ')),
         if (_memory.projects.isNotEmpty) _buildEntityRow('📁 Projects', _memory.projects.join(', ')),
@@ -239,6 +283,14 @@ class _MemoryDetailScreenState extends State<MemoryDetailScreen> {
         TextField(
           controller: _dateController,
           decoration: const InputDecoration(labelText: 'Date (YYYY-MM-DD or Tomorrow)'),
+        ),
+        const SizedBox(height: 14),
+        TextField(
+          controller: _timeController,
+          decoration: const InputDecoration(
+            labelText: 'Reminder Time (e.g. 7:40 PM)',
+            hintText: '7:40 PM',
+          ),
         ),
         const SizedBox(height: 14),
         DropdownButtonFormField<String>(

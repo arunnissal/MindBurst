@@ -1,7 +1,9 @@
 package org.mindburst.mindburst_app
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -38,7 +40,21 @@ class MainActivity : FlutterActivity(), TextToSpeech.OnInitListener {
                 "showNotification" -> {
                     val title = call.argument<String>("title") ?: "MindBurst Reminder"
                     val body = call.argument<String>("body") ?: ""
-                    showNativeNotification(title, body)
+                    val id = call.argument<Int>("id") ?: (System.currentTimeMillis() % 100000).toInt()
+                    showNativeNotification(title, body, id)
+                    result.success(true)
+                }
+                "scheduleNotification" -> {
+                    val id = call.argument<Int>("id") ?: (System.currentTimeMillis() % 100000).toInt()
+                    val title = call.argument<String>("title") ?: "MindBurst Reminder"
+                    val body = call.argument<String>("body") ?: ""
+                    val triggerAtMillis = (call.argument<Number>("triggerAtMillis"))?.toLong() ?: 0L
+                    scheduleNativeNotification(id, title, body, triggerAtMillis)
+                    result.success(true)
+                }
+                "cancelNotification" -> {
+                    val id = call.argument<Int>("id") ?: 0
+                    cancelNativeNotification(id)
                     result.success(true)
                 }
                 "speak" -> {
@@ -116,19 +132,68 @@ class MainActivity : FlutterActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    private fun showNativeNotification(title: String, body: String) {
+    private fun showNativeNotification(title: String, body: String, id: Int = (System.currentTimeMillis() % 100000).toInt()) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val notifId = (System.currentTimeMillis() % 100000).toInt()
 
         val builder = NotificationCompat.Builder(this, NOTIF_CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
+            .setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
             .setContentTitle(title)
             .setContentText(body)
             .setStyle(NotificationCompat.BigTextStyle().bigText(body))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
             .setAutoCancel(true)
 
-        notificationManager.notify(notifId, builder.build())
+        notificationManager.notify(id, builder.build())
+    }
+
+    private fun scheduleNativeNotification(id: Int, title: String, body: String, triggerAtMillis: Long) {
+        val now = System.currentTimeMillis()
+        if (triggerAtMillis <= now + 2000L) {
+            // Trigger immediately if time is in past or within 2 seconds
+            showNativeNotification(title, body, id)
+            return
+        }
+
+        try {
+            val intent = Intent(this, NotificationReceiver::class.java).apply {
+                putExtra("id", id)
+                putExtra("title", title)
+                putExtra("body", body)
+            }
+            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+            val pendingIntent = PendingIntent.getBroadcast(this, id, intent, flags)
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+            }
+        } catch (e: Exception) {
+            showNativeNotification(title, body, id)
+        }
+    }
+
+    private fun cancelNativeNotification(id: Int) {
+        try {
+            val intent = Intent(this, NotificationReceiver::class.java)
+            val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+            } else {
+                PendingIntent.FLAG_NO_CREATE
+            }
+            val pendingIntent = PendingIntent.getBroadcast(this, id, intent, flags)
+            if (pendingIntent != null) {
+                val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                alarmManager.cancel(pendingIntent)
+                pendingIntent.cancel()
+            }
+        } catch (e: Exception) {}
     }
 
     override fun onDestroy() {

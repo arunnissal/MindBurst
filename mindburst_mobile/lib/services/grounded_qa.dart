@@ -5,14 +5,48 @@ import 'ai_extractor.dart';
 class GroundedQA {
   static String answerQuestion(String question, List<Memory> memories) {
     if (memories.isEmpty) {
-      return "I couldn't find anything in your memories. Try bursting some thoughts first!";
+      return "I couldn't find any memories saved yet. Type or speak a thought in Burst to start!";
     }
 
-    final q = question.toLowerCase();
+    final q = question.toLowerCase().trim();
     final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
-    // 1. General Place queries ("what are the places I need to go", "where do I need to go", "where am I going", "places to visit")
-    if (q.contains('place') || q.contains('places') || q.contains('where') || q.contains('go to') || q.contains('going') || q.contains('visit')) {
+    // 1. Reminders & Alarms Queries
+    if (q.contains('remind') ||
+        q.contains('reminder') ||
+        q.contains('alarm') ||
+        q.contains('alert') ||
+        q.contains('maranthuraadha') ||
+        q.contains('time')) {
+      final remMems = memories.where((m) =>
+          m.category == 'Reminders' ||
+          m.type == 'Reminder' ||
+          m.time != null ||
+          m.title.toLowerCase().contains('remind')).toList();
+
+      if (remMems.isNotEmpty) {
+        final lines = <String>[];
+        for (final m in remMems) {
+          final timeStr = m.time != null ? ' at ${m.time}' : '';
+          final dateStr = m.date != null ? ' [${AIExtractor.formatHumanDate(m.date)}$timeStr]' : (timeStr.isNotEmpty ? ' [$timeStr]' : '');
+          lines.add('• ${m.title}$dateStr');
+        }
+        return "Here are your scheduled reminders:\n\n${lines.join('\n')}";
+      } else {
+        return "You don't have any pending reminders scheduled in your memories.";
+      }
+    }
+
+    // 2. Places & Destinations Queries ("where do I need to go", "places to visit", "enga ponum")
+    if (q.contains('place') ||
+        q.contains('places') ||
+        q.contains('where') ||
+        q.contains('go to') ||
+        q.contains('going') ||
+        q.contains('visit') ||
+        q.contains('destination') ||
+        q.contains('enga') ||
+        q.contains('ponum')) {
       final placeMems = memories.where((m) =>
           m.places.isNotEmpty ||
           m.category == 'Places' ||
@@ -20,114 +54,160 @@ class GroundedQA {
           m.title.toLowerCase().contains('go ') ||
           m.title.toLowerCase().contains('visit') ||
           m.details.toLowerCase().contains('go to') ||
-          m.details.toLowerCase().contains('go ') ||
           m.details.toLowerCase().contains('visit')).toList();
 
       if (placeMems.isNotEmpty) {
         final lines = <String>[];
         for (final m in placeMems) {
-          final placeStr = m.places.isNotEmpty ? m.places.join(', ') : 'Scheduled location';
+          final placeStr = m.places.isNotEmpty ? m.places.join(', ') : 'Location';
           final dateStr = m.date != null ? ' (${AIExtractor.formatHumanDate(m.date)})' : '';
-          lines.add('• $placeStr$dateStr — ${m.title}');
+          final timeStr = m.time != null ? ' at ${m.time}' : '';
+          lines.add('• $placeStr$dateStr$timeStr — ${m.title}');
         }
-        return "Based on your memories, here are the places you need to go:\n\n${lines.join('\n')}";
+        return "Here are the places you need to go:\n\n${lines.join('\n')}\n\nTip: You can tap the place badge in Memories to open directly in Google Maps!";
       } else {
         return "You haven't scheduled any places to visit in your memories.";
       }
     }
 
-    // 2. Carry queries ("what should I carry", "what to take", "what to pack")
-    if (q.contains('carry') || q.contains('take') || q.contains('pack') || q.contains('bring') || q.contains('eduthutu')) {
-      final carryMems = memories.where((m) => m.type == 'Carry' || m.category == 'Carry' || m.items.isNotEmpty).toList();
+    // 3. Carry Items Queries ("what should I carry", "what to take", "enna edukanum")
+    if (q.contains('carry') ||
+        q.contains('take') ||
+        q.contains('pack') ||
+        q.contains('bring') ||
+        q.contains('eduthutu') ||
+        q.contains('edukanum')) {
+      final carryMems = memories.where((m) =>
+          m.type == 'Carry' ||
+          m.category == 'Carry' ||
+          m.items.isNotEmpty && (m.title.toLowerCase().contains('take') || m.title.toLowerCase().contains('carry'))).toList();
+
       if (carryMems.isNotEmpty) {
         final items = carryMems.expand((m) => m.items).toSet().toList();
         final places = carryMems.expand((m) => m.places).toSet().toList();
         final placeStr = places.isNotEmpty ? ' for ${places.join(", ")}' : '';
+
         if (items.isNotEmpty) {
-          return "Based on your memories, you scheduled to take ${items.join(" and ")}$placeStr.";
+          return "Based on your memories, you need to carry:\n\n• ${items.join("\n• ")}$placeStr";
         } else {
-          return "You have: \"${carryMems.map((m) => m.title).join("; ")}\"$placeStr.";
+          return "Items to carry:\n\n${carryMems.map((m) => "• ${m.title}").join("\n")}";
         }
+      } else {
+        return "You don't have any items scheduled to carry.";
       }
     }
 
-    // 3. Shopping / Buy queries
-    if (q.contains('buy') || q.contains('shopping') || q.contains('grocery') || q.contains('groceries') || q.contains('vaanga')) {
-      final shopMems = memories.where((m) => m.type == 'Shopping' || m.category == 'Shopping').toList();
+    // 4. Shopping & Purchases Queries ("what to buy", "shopping list", "enna vaanganum")
+    if (q.contains('buy') ||
+        q.contains('shopping') ||
+        q.contains('grocery') ||
+        q.contains('groceries') ||
+        q.contains('vaanga') ||
+        q.contains('vaanganum')) {
+      final shopMems = memories.where((m) =>
+          m.type == 'Shopping' ||
+          m.category == 'Shopping' ||
+          m.title.toLowerCase().startsWith('buy')).toList();
+
       if (shopMems.isNotEmpty) {
         final items = shopMems.expand((m) => m.items).toSet().toList();
         if (items.isNotEmpty) {
-          return "Your shopping list has: ${items.join(", ")}.";
+          return "Here is your shopping list:\n\n• ${items.join("\n• ")}";
         }
-        return "You planned to buy:\n${shopMems.map((m) => "• ${m.title}").join("\n")}";
+        return "Here is what you planned to buy:\n\n${shopMems.map((m) => "• ${m.title}").join("\n")}";
+      } else {
+        return "Your shopping list is currently empty.";
       }
     }
 
-    // 4. Money / Return / Pay queries
-    if (q.contains('money') || q.contains('return') || q.contains('pay') || q.contains('kadan')) {
-      final moneyMems = memories.where((m) =>
-          m.title.toLowerCase().contains('money') ||
-          m.title.toLowerCase().contains('return') ||
-          m.title.toLowerCase().contains('pay') ||
-          m.details.toLowerCase().contains('money') ||
-          m.details.toLowerCase().contains('return')).toList();
-      if (moneyMems.isNotEmpty) {
-        return "Regarding payments/returns:\n${moneyMems.map((m) => "• ${m.title} (${AIExtractor.formatHumanDate(m.date)})").join("\n")}";
+    // 5. Tasks & Chores Queries ("what tasks", "pending tasks", "what to do", "enna pannanum")
+    if (q.contains('task') ||
+        q.contains('tasks') ||
+        q.contains('todo') ||
+        q.contains('chore') ||
+        q.contains('pending') ||
+        q.contains('pannanum') ||
+        q.contains('what to do') ||
+        q.contains('work')) {
+      final taskMems = memories.where((m) =>
+          (m.category == 'Tasks' || m.type == 'Task') && !m.completed).toList();
+
+      if (taskMems.isNotEmpty) {
+        final lines = <String>[];
+        for (final m in taskMems) {
+          final dateStr = m.date != null ? ' (${AIExtractor.formatHumanDate(m.date)})' : '';
+          lines.add('• ${m.title}$dateStr');
+        }
+        return "Here are your pending tasks:\n\n${lines.join('\n')}";
+      } else {
+        return "You have no pending tasks right now. Great job!";
       }
     }
 
-    // 5. Today / Upcoming queries
-    if (q.contains('today') || q.contains('scheduled') || q.contains('pending') || q.contains('tasks') || q.contains('what to do')) {
-      final todayMems = memories.where((m) => m.date == todayStr || (!m.completed && m.category == 'Tasks')).toList();
+    // 6. Summary / Daily Briefing ("how does my day look", "summary", "today", "schedule", "inniku")
+    if (q.contains('summary') ||
+        q.contains('day look') ||
+        q.contains('schedule') ||
+        q.contains('today') ||
+        q.contains('inniku') ||
+        q.contains('brief')) {
+      final todayMems = memories.where((m) =>
+          m.date == todayStr ||
+          m.category == 'Reminders' ||
+          (!m.completed && m.category == 'Tasks')).toList();
+
       if (todayMems.isNotEmpty) {
-        return "Here are your scheduled tasks:\n${todayMems.map((m) => "• ${m.title} [${m.category}]").join("\n")}";
-      }
-    }
+        final rems = todayMems.where((m) => m.category == 'Reminders' || m.time != null).toList();
+        final tasks = todayMems.where((m) => m.category == 'Tasks' && !m.completed).toList();
+        final places = todayMems.where((m) => m.places.isNotEmpty).toList();
 
-    // 6. Specific Place query ("about college", "at office")
-    for (final m in memories) {
-      for (final pl in m.places) {
-        if (q.contains(pl.toLowerCase())) {
-          final placeMems = memories.where((mem) =>
-              mem.places.any((plc) => plc.toLowerCase() == pl.toLowerCase()) ||
-              mem.title.toLowerCase().contains(pl.toLowerCase())).toList();
-          return "Regarding $pl, you have:\n${placeMems.map((mem) => "• ${mem.title} (${mem.category})").join("\n")}";
+        final buffer = StringBuffer();
+        buffer.writeln("Here is your personalized summary:");
+
+        if (rems.isNotEmpty) {
+          buffer.writeln("\n⏰ Reminders:");
+          for (final r in rems) {
+            final t = r.time != null ? ' at ${r.time}' : '';
+            buffer.writeln("• ${r.title}$t");
+          }
         }
-      }
-    }
 
-    // 7. Specific Person query
-    for (final m in memories) {
-      for (final p in m.people) {
-        if (q.contains(p.toLowerCase())) {
-          final personMems = memories.where((mem) =>
-              mem.people.any((per) => per.toLowerCase() == p.toLowerCase()) ||
-              mem.title.toLowerCase().contains(p.toLowerCase())).toList();
-          return "Regarding $p, you saved:\n${personMems.map((mem) => "• ${mem.title} (${mem.category})").join("\n")}";
+        if (tasks.isNotEmpty) {
+          buffer.writeln("\n✓ Tasks:");
+          for (final t in tasks) {
+            buffer.writeln("• ${t.title}");
+          }
         }
+
+        if (places.isNotEmpty) {
+          buffer.writeln("\n📍 Destinations:");
+          for (final p in places) {
+            buffer.writeln("• ${p.places.join(', ')} (${p.title})");
+          }
+        }
+
+        return buffer.toString().trim();
+      } else {
+        return "You have no active tasks or reminders scheduled for today.";
       }
     }
 
-    // 8. Project queries
-    if (q.contains('project') || q.contains('mindburst') || q.contains('jeevansetu')) {
-      final projMems = memories.where((m) => m.projects.isNotEmpty || m.category == 'Projects').toList();
-      if (projMems.isNotEmpty) {
-        return "You have project notes:\n${projMems.map((m) => "• ${m.title}").join("\n")}";
-      }
-    }
-
-    // 9. General Keyword Match
+    // 7. General Keyword Match across all memories
     final words = q.split(' ').where((w) => w.length > 2).toList();
     final matching = memories.where((m) {
       final text = '${m.title} ${m.details} ${m.category} ${m.items.join(" ")} ${m.places.join(" ")}'.toLowerCase();
       return words.any((w) => text.contains(w));
-    }).take(4).toList();
+    }).take(5).toList();
 
     if (matching.isNotEmpty) {
-      final matchingTitles = matching.map((m) => "• ${m.title} (${m.category})").join("\n");
+      final matchingTitles = matching.map((m) {
+        final timeStr = m.time != null ? ' at ${m.time}' : '';
+        final dateStr = m.date != null ? ' (${AIExtractor.formatHumanDate(m.date)}$timeStr)' : (timeStr.isNotEmpty ? ' ($timeStr)' : '');
+        return "• ${m.title}$dateStr [${m.category}]";
+      }).join("\n");
       return "Here is what I found in your memories:\n\n$matchingTitles";
     }
 
-    return "I couldn't find anything relevant to \"$question\" in your memories.";
+    return "I couldn't find anything matching \"$question\" in your saved memories. Try asking about your tasks, reminders, places, or shopping list!";
   }
 }

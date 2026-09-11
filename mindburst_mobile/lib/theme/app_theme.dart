@@ -1,22 +1,56 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color background = Color(0xFFFAFAFA);
+  // Canvas & Surfaces
+  static const Color background = Color(0xFFF8FAFC); // Slate-50
   static const Color cardBg = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF1A1A1A);
-  static const Color textSecondary = Color(0xFF737373);
-  static const Color goldAccent = Color(0xFFC5A059);
-  static const Color goldAccentLight = Color(0xFFF7F3E9);
-  static const Color goldBorder = Color(0xFFE8E2D5);
-  static const Color deleteRed = Color(0xFFE53935);
+  static const Color cardBorder = Color(0xFFE2E8F0); // Slate-200
+  static const Color textPrimary = Color(0xFF0F172A); // Slate-900
+  static const Color textSecondary = Color(0xFF64748B); // Slate-500
+
+  // Brand Palette: Electric Indigo & Violet
+  static const Color primary = Color(0xFF4F46E5);
+  static const Color primaryLight = Color(0xFFEEF2FF);
+  static const Color primaryDark = Color(0xFF3730A3);
+  static const Color accent = Color(0xFF7C3AED);
+
+  // Backward compatibility aliases
+  static const Color goldAccent = Color(0xFF4F46E5);
+  static const Color goldAccentLight = Color(0xFFEEF2FF);
+  static const Color goldBorder = Color(0xFFE0E7FF);
+  static const Color deleteRed = Color(0xFFEF4444);
+
+  // Semantic Category Colors
+  static const Color reminderAmber = Color(0xFFF59E0B);
+  static const Color reminderAmberLight = Color(0xFFFEF3C7);
+  static const Color taskIndigo = Color(0xFF4F46E5);
+  static const Color shoppingEmerald = Color(0xFF10B981);
+  static const Color carrySky = Color(0xFF0284C7);
+  static const Color noteViolet = Color(0xFF8B5CF6);
+  static const Color eventRose = Color(0xFFF43F5E);
+  static const Color ideaCyan = Color(0xFF06B6D4);
+
+  // Gradients
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [Color(0xFF4F46E5), Color(0xFF7C3AED)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient reminderGradient = LinearGradient(
+    colors: [Color(0xFFF59E0B), Color(0xFFEA580C)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       scaffoldBackgroundColor: background,
-      primaryColor: goldAccent,
-      colorScheme: ColorScheme.light(
-        primary: goldAccent,
+      primaryColor: primary,
+      colorScheme: const ColorScheme.light(
+        primary: primary,
+        secondary: accent,
         surface: cardBg,
         onSurface: textPrimary,
       ),
@@ -25,35 +59,36 @@ class AppTheme {
         elevation: 0,
         centerTitle: true,
         titleTextStyle: TextStyle(
-          color: goldAccent,
+          color: primary,
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          letterSpacing: 1.2,
+          letterSpacing: 1.0,
         ),
-        iconTheme: IconThemeData(color: goldAccent),
+        iconTheme: IconThemeData(color: primary),
       ),
       cardTheme: CardThemeData(
         color: cardBg,
-        elevation: 0.5,
+        elevation: 1.0,
+        shadowColor: Colors.black.withOpacity(0.04),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-          side: const BorderSide(color: goldBorder, width: 0.8),
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: cardBorder, width: 1.0),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: cardBg,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: goldBorder),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: cardBorder),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: goldBorder),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: cardBorder),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: goldAccent, width: 1.5),
+          borderRadius: BorderRadius.circular(14),
+          borderSide: const BorderSide(color: primary, width: 2.0),
         ),
         hintStyle: const TextStyle(color: textSecondary, fontSize: 14),
       ),

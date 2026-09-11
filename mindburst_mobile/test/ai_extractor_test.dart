@@ -42,6 +42,18 @@ void main() {
     final answer = GroundedQA.answerQuestion('what are the places I need to go', memories);
 
     expect(answer.toLowerCase(), contains('college'));
-    expect(answer, contains('here are the places you need to go'));
+    expect(answer.toLowerCase(), contains('here are the places you need to go'));
+  });
+
+  test('Time dot reminder extraction does not split and parses time', () {
+    const text = 'Remind me at 7.40pm today';
+    final memories = AIExtractor.extractMemories(text, 10);
+
+    expect(memories.length, 1);
+    final m = memories[0];
+    expect(m.category, 'Reminders');
+    expect(m.time, '7:40 PM');
+    expect(m.date, isNotNull);
+    expect(m.title, contains('7:40 PM'));
   });
 }

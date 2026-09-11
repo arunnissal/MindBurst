@@ -346,20 +346,180 @@ class AllScreenState extends State<AllScreen> {
     );
   }
 
+  Color _getCategoryColor(String cat) {
+    switch (cat.toLowerCase()) {
+      case 'reminders':
+        return AppTheme.reminderAmber;
+      case 'tasks':
+        return AppTheme.taskIndigo;
+      case 'shopping':
+        return AppTheme.shoppingEmerald;
+      case 'carry':
+        return AppTheme.carrySky;
+      case 'ideas':
+        return AppTheme.ideaCyan;
+      case 'events':
+        return AppTheme.eventRose;
+      default:
+        return AppTheme.noteViolet;
+    }
+  }
+
+  Future<void> _handleReminderTap(Memory mem) async {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(Icons.alarm, color: AppTheme.reminderAmber, size: 22),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      mem.title,
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 6),
+              Text(
+                mem.time != null
+                    ? 'Current alert: ${mem.date ?? "Today"} at ${mem.time}'
+                    : 'No reminder time set yet.',
+                style: const TextStyle(fontSize: 13, color: AppTheme.textSecondary),
+              ),
+              const Divider(height: 24),
+              ListTile(
+                leading: const Icon(Icons.edit_calendar, color: AppTheme.primary),
+                title: Text(mem.time != null ? 'Change Reminder Time' : 'Set Reminder Time'),
+                subtitle: const Text('Pick exact date & time for Android notification'),
+                onTap: () async {
+                  Navigator.pop(ctx);
+                  await _setMemoryReminderTime(mem);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.notifications_active_outlined, color: AppTheme.reminderAmber),
+                title: const Text('Test Alert Now'),
+                subtitle: const Text('Trigger immediate phone notification'),
+                onTap: () {
+                  Navigator.pop(ctx);
+                  NativeService.showNotification(
+                    mem.title,
+                    '${mem.category} • ${mem.date != null ? AIExtractor.formatHumanDate(mem.date) : "Reminder"}${mem.time != null ? " at ${mem.time}" : ""}',
+                    id: mem.id,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('🔔 Notification triggered for "${mem.title}"'),
+                      duration: const Duration(seconds: 1),
+                    ),
+                  );
+                },
+              ),
+              if (mem.time != null)
+                ListTile(
+                  leading: const Icon(Icons.alarm_off, color: AppTheme.deleteRed),
+                  title: const Text('Remove Reminder Time', style: TextStyle(color: AppTheme.deleteRed)),
+                  onTap: () async {
+                    Navigator.pop(ctx);
+                    if (mem.id != null) {
+                      NativeService.cancelNotification(mem.id!);
+                      mem.time = null;
+                      await DatabaseHelper.instance.updateMemory(mem);
+                      refreshMemories();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Reminder alert cancelled.')),
+                      );
+                    }
+                  },
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _setMemoryReminderTime(Memory mem) async {
+    final now = DateTime.now();
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: mem.date != null ? (DateTime.tryParse(mem.date!) ?? now) : now,
+      firstDate: now.subtract(const Duration(days: 365)),
+      lastDate: now.add(const Duration(days: 365 * 5)),
+    );
+    if (pickedDate == null) return;
+
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (pickedTime == null) return;
+
+    final hour = pickedTime.hourOfPeriod == 0 ? 12 : pickedTime.hourOfPeriod;
+    final minute = pickedTime.minute.toString().padLeft(2, '0');
+    final period = pickedTime.period == DayPeriod.am ? 'AM' : 'PM';
+    final formattedTime = '$hour:$minute $period';
+    final formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+
+    mem.date = formattedDate;
+    mem.time = formattedTime;
+    if (mem.category == 'Notes') {
+      mem.category = 'Reminders';
+      mem.type = 'Reminder';
+    }
+
+    if (mem.id != null) {
+      await DatabaseHelper.instance.updateMemory(mem);
+
+      final scheduledDt = NativeService.parseReminderDateTime(formattedDate, formattedTime);
+      if (scheduledDt != null) {
+        await NativeService.scheduleNotification(
+          id: mem.id!,
+          title: 'Reminder: ${mem.title}',
+          body: mem.details.isNotEmpty ? mem.details : mem.title,
+          triggerAtMillis: scheduledDt.millisecondsSinceEpoch,
+        );
+      }
+
+      refreshMemories();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('⏰ Reminder set for $formattedDate at $formattedTime'),
+          backgroundColor: AppTheme.primary,
+        ),
+      );
+    }
+  }
+
   Widget _buildMemoryCard(Memory mem) {
     final bool isCompleted = mem.completed;
+    final catColor = _getCategoryColor(mem.category);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(16),
         onTap: () => _openDetail(mem),
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Row: Category Badge, Date/Time, Retention, Delete
+              // Header Row: Checkbox, Category Badge, Retention, Date/Time, Bell, Delete
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -369,7 +529,7 @@ class AllScreenState extends State<AllScreen> {
                     height: 24,
                     child: Checkbox(
                       value: isCompleted,
-                      activeColor: AppTheme.goldAccent,
+                      activeColor: AppTheme.primary,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                       onChanged: (_) => _toggleComplete(mem),
                     ),
@@ -380,21 +540,20 @@ class AllScreenState extends State<AllScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: AppTheme.goldAccentLight,
+                      color: catColor.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(6),
-                      border: Border.all(color: AppTheme.goldBorder, width: 0.5),
                     ),
                     child: Text(
                       mem.category,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
-                        color: AppTheme.goldAccent,
+                        color: catColor,
                       ),
                     ),
                   ),
 
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 6),
 
                   // Retention badge
                   Container(
@@ -421,12 +580,12 @@ class AllScreenState extends State<AllScreen> {
                   if (mem.date != null)
                     Row(
                       children: [
-                        const Icon(Icons.event, size: 13, color: AppTheme.textSecondary),
-                        const SizedBox(width: 3),
+                        const Icon(Icons.event, size: 12, color: AppTheme.textSecondary),
+                        const SizedBox(width: 2),
                         Text(
                           mem.date!,
                           style: const TextStyle(
-                            fontSize: 11,
+                            fontSize: 10,
                             color: AppTheme.textSecondary,
                             fontWeight: FontWeight.w500,
                           ),
@@ -434,35 +593,60 @@ class AllScreenState extends State<AllScreen> {
                       ],
                     ),
 
+                  // Time badge if available
+                  if (mem.time != null) ...[
+                    const SizedBox(width: 6),
+                    InkWell(
+                      onTap: () => _handleReminderTap(mem),
+                      borderRadius: BorderRadius.circular(4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: AppTheme.reminderAmberLight,
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: AppTheme.reminderAmber.withOpacity(0.4)),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.alarm, size: 11, color: AppTheme.reminderAmber),
+                            const SizedBox(width: 2),
+                            Text(
+                              mem.time!,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.reminderAmber,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+
                   const SizedBox(width: 4),
 
-                  // Notification button
+                  // Reminder Bell button
                   IconButton(
-                    icon: const Icon(Icons.notifications_none, size: 18, color: AppTheme.goldAccent),
+                    icon: Icon(
+                      mem.time != null ? Icons.notifications_active : Icons.notifications_none,
+                      size: 18,
+                      color: mem.time != null ? AppTheme.reminderAmber : AppTheme.primary,
+                    ),
                     constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
-                    tooltip: 'Send Phone Notification',
-                    onPressed: () {
-                      NativeService.showNotification(
-                        mem.title,
-                        '${mem.category} • ${mem.date != null ? AIExtractor.formatHumanDate(mem.date) : "Reminder"}',
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('🔔 Notification sent for "${mem.title}"'),
-                          duration: const Duration(seconds: 1),
-                        ),
-                      );
-                    },
+                    padding: const EdgeInsets.all(4),
+                    tooltip: 'Set Reminder',
+                    onPressed: () => _handleReminderTap(mem),
                   ),
 
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 2),
 
                   // Quick Delete button
                   IconButton(
                     icon: const Icon(Icons.delete_outline, size: 18, color: AppTheme.textSecondary),
                     constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.all(4),
                     onPressed: () => _softDelete(mem),
                   ),
                 ],
@@ -502,8 +686,8 @@ class AllScreenState extends State<AllScreen> {
                 ),
               ],
 
-              // Entities chips (People, Places, Items, Projects)
-              if (mem.people.isNotEmpty || mem.places.isNotEmpty || mem.items.isNotEmpty || mem.projects.isNotEmpty) ...[
+              // Entities chips (Places, Items, Projects - NO people names)
+              if (mem.places.isNotEmpty || mem.items.isNotEmpty || mem.projects.isNotEmpty) ...[
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.only(left: 32.0),
@@ -511,7 +695,6 @@ class AllScreenState extends State<AllScreen> {
                     spacing: 6,
                     runSpacing: 4,
                     children: [
-                      ...mem.people.map((p) => _buildEntityBadge(p, Icons.person, Colors.blue.shade700, Colors.blue.shade50)),
                       ...mem.places.map((p) => _buildEntityBadge(p, Icons.place, Colors.green.shade700, Colors.green.shade50)),
                       ...mem.items.map((i) => _buildEntityBadge(i, Icons.shopping_bag_outlined, Colors.orange.shade800, Colors.orange.shade50)),
                       ...mem.projects.map((pr) => _buildEntityBadge(pr, Icons.folder_outlined, Colors.purple.shade700, Colors.purple.shade50)),

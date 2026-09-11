@@ -49,16 +49,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: _screens,
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: AppTheme.cardBg,
-          border: Border(
-            top: BorderSide(color: AppTheme.goldBorder, width: 0.8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+          border: const Border(
+            top: BorderSide(color: AppTheme.cardBorder, width: 0.8),
           ),
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           backgroundColor: AppTheme.cardBg,
-          selectedItemColor: AppTheme.goldAccent,
+          selectedItemColor: AppTheme.primary,
           unselectedItemColor: AppTheme.textSecondary,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
           unselectedLabelStyle: const TextStyle(fontSize: 11),

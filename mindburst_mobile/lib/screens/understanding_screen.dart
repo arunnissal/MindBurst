@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
@@ -24,6 +25,7 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
   late List<TextEditingController> _titleControllers;
   late List<TextEditingController> _catControllers;
   late List<TextEditingController> _dateControllers;
+  late List<TextEditingController> _timeControllers;
 
   final List<String> _retentionOptions = ['Temporary', 'Keep Until Delete', 'Permanent'];
   bool _isSaving = false;
@@ -36,19 +38,15 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
     _titleControllers = _memories.map((m) => TextEditingController(text: m.title)).toList();
     _catControllers = _memories.map((m) => TextEditingController(text: m.category)).toList();
     _dateControllers = _memories.map((m) => TextEditingController(text: m.date ?? '')).toList();
+    _timeControllers = _memories.map((m) => TextEditingController(text: m.time ?? '')).toList();
   }
 
   @override
   void dispose() {
-    for (final c in _titleControllers) {
-      c.dispose();
-    }
-    for (final c in _catControllers) {
-      c.dispose();
-    }
-    for (final c in _dateControllers) {
-      c.dispose();
-    }
+    for (final c in _titleControllers) c.dispose();
+    for (final c in _catControllers) c.dispose();
+    for (final c in _dateControllers) c.dispose();
+    for (final c in _timeControllers) c.dispose();
     super.dispose();
   }
 
@@ -59,6 +57,50 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
       final nextIdx = (currentIdx + 1) % _retentionOptions.length;
       _memories[index].retention = _retentionOptions[nextIdx];
     });
+  }
+
+  Future<void> _pickDate(int index) async {
+    final now = DateTime.now();
+    DateTime initial = now;
+    if (_dateControllers[index].text.trim().isNotEmpty) {
+      try {
+        initial = DateTime.parse(_dateControllers[index].text.trim());
+      } catch (_) {}
+    }
+
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: initial,
+      firstDate: now.subtract(const Duration(days: 365)),
+      lastDate: now.add(const Duration(days: 365 * 5)),
+    );
+
+    if (picked != null) {
+      final formatted = DateFormat('yyyy-MM-dd').format(picked);
+      setState(() {
+        _dateControllers[index].text = formatted;
+        _memories[index].date = formatted;
+      });
+    }
+  }
+
+  Future<void> _pickTime(int index) async {
+    final now = TimeOfDay.now();
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: now,
+    );
+
+    if (picked != null) {
+      final hour = picked.hourOfPeriod == 0 ? 12 : picked.hourOfPeriod;
+      final minute = picked.minute.toString().padLeft(2, '0');
+      final period = picked.period == DayPeriod.am ? 'AM' : 'PM';
+      final formatted = '$hour:$minute $period';
+      setState(() {
+        _timeControllers[index].text = formatted;
+        _memories[index].time = formatted;
+      });
+    }
   }
 
   Future<void> _handleCancel() async {
@@ -86,10 +128,28 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
         _memories[i].date = _dateControllers[i].text.trim().isNotEmpty
             ? _dateControllers[i].text.trim()
             : null;
+        _memories[i].time = _timeControllers[i].text.trim().isNotEmpty
+            ? _timeControllers[i].text.trim()
+            : null;
       }
 
       await DatabaseHelper.instance.saveMemories(_memories);
       _isSaved = true;
+
+      // Schedule exact Android AlarmManager notifications for reminders
+      for (final m in _memories) {
+        if (m.category == 'Reminders' || m.time != null) {
+          final scheduledDt = NativeService.parseReminderDateTime(m.date, m.time);
+          if (scheduledDt != null && m.id != null) {
+            NativeService.scheduleNotification(
+              id: m.id!,
+              title: 'Reminder: ${m.title}',
+              body: m.details.isNotEmpty ? m.details : m.title,
+              triggerAtMillis: scheduledDt.millisecondsSinceEpoch,
+            );
+          }
+        }
+      }
 
       final count = _memories.length;
       final summary = count == 1
@@ -113,6 +173,8 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
 
   String _getTypeIcon(String type) {
     switch (type) {
+      case 'Reminder':
+        return '⏰';
       case 'Carry':
         return '🎒';
       case 'Task':
@@ -128,6 +190,23 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
     }
   }
 
+  Color _getCategoryColor(String cat) {
+    switch (cat.toLowerCase()) {
+      case 'reminders':
+        return AppTheme.reminderAmber;
+      case 'tasks':
+        return AppTheme.taskIndigo;
+      case 'shopping':
+        return AppTheme.shoppingEmerald;
+      case 'carry':
+        return AppTheme.carrySky;
+      case 'ideas':
+        return AppTheme.ideaCyan;
+      default:
+        return AppTheme.noteViolet;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -140,7 +219,7 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Here’s what I understood.'),
+          title: const Text('Here’s what I understood'),
           leading: IconButton(
             icon: const Icon(Icons.close),
             onPressed: _isSaving ? null : _handleCancel,
@@ -153,9 +232,9 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               padding: const EdgeInsets.all(14.0),
               decoration: BoxDecoration(
-                color: AppTheme.goldAccentLight,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppTheme.goldBorder),
+                color: AppTheme.primaryLight,
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppTheme.primary.withOpacity(0.15)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +242,7 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                   const Text(
                     'YOUR THOUGHT',
                     style: TextStyle(
-                      color: AppTheme.goldAccent,
+                      color: AppTheme.primary,
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 1.0,
@@ -200,6 +279,8 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                 itemCount: _memories.length,
                 itemBuilder: (context, index) {
                   final mem = _memories[index];
+                  final catColor = _getCategoryColor(mem.category);
+
                   return Card(
                     margin: const EdgeInsets.only(bottom: 14.0),
                     child: Padding(
@@ -211,24 +292,50 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                '${_getTypeIcon(mem.type)} ${mem.type}',
-                                style: const TextStyle(
-                                  color: AppTheme.goldAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${_getTypeIcon(mem.type)} ${mem.type}',
+                                    style: TextStyle(
+                                      color: catColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: catColor.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    child: Text(
+                                      mem.category,
+                                      style: TextStyle(
+                                        color: catColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '[${mem.category}]',
-                                style: const TextStyle(
-                                  color: AppTheme.textSecondary,
-                                  fontSize: 12,
+                              OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  side: const BorderSide(color: AppTheme.cardBorder),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                  visualDensity: VisualDensity.compact,
                                 ),
+                                icon: const Icon(Icons.timer_outlined, size: 13, color: AppTheme.textSecondary),
+                                label: Text(
+                                  mem.retention,
+                                  style: const TextStyle(fontSize: 11, color: AppTheme.textSecondary),
+                                ),
+                                onPressed: () => _cycleRetention(index),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 12),
 
                           // Editable Title
                           TextField(
@@ -242,69 +349,105 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
                           ),
                           const SizedBox(height: 10),
 
-                          // Category & Date Row
+                          // Date & Time Selectors Row
                           Row(
                             children: [
+                              // Date Picker Field
                               Expanded(
-                                child: TextField(
-                                  controller: _catControllers[index],
-                                  style: const TextStyle(fontSize: 13),
-                                  decoration: const InputDecoration(
-                                    labelText: 'Category',
-                                    isDense: true,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                child: InkWell(
+                                  onTap: () => _pickDate(index),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(color: AppTheme.cardBorder),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Icon(Icons.calendar_today, size: 14, color: AppTheme.primary),
+                                        const SizedBox(width: 6),
+                                        Expanded(
+                                          child: Text(
+                                            _dateControllers[index].text.isNotEmpty
+                                                ? _dateControllers[index].text
+                                                : 'Set Date',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: _dateControllers[index].text.isNotEmpty
+                                                  ? AppTheme.textPrimary
+                                                  : AppTheme.textSecondary,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              const SizedBox(width: 10),
+                              const SizedBox(width: 8),
+
+                              // Time Picker Field
                               Expanded(
-                                child: TextField(
-                                  controller: _dateControllers[index],
-                                  style: const TextStyle(fontSize: 13),
-                                  decoration: const InputDecoration(
-                                    labelText: 'Date (YYYY-MM-DD)',
-                                    isDense: true,
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                child: InkWell(
+                                  onTap: () => _pickTime(index),
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                        color: mem.category == 'Reminders' && _timeControllers[index].text.isNotEmpty
+                                            ? AppTheme.reminderAmber
+                                            : AppTheme.cardBorder,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.access_time,
+                                          size: 14,
+                                          color: mem.category == 'Reminders'
+                                              ? AppTheme.reminderAmber
+                                              : AppTheme.primary,
+                                        ),
+                                        const SizedBox(width: 6),
+                                        Expanded(
+                                          child: Text(
+                                            _timeControllers[index].text.isNotEmpty
+                                                ? _timeControllers[index].text
+                                                : 'Set Time',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: _timeControllers[index].text.isNotEmpty
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal,
+                                              color: _timeControllers[index].text.isNotEmpty
+                                                  ? (_memories[index].category == 'Reminders' ? AppTheme.reminderAmber : AppTheme.textPrimary)
+                                                  : AppTheme.textSecondary,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(height: 10),
 
-                          // Retention & Human Date Row
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '🗓️ ${AIExtractor.formatHumanDate(mem.date)}',
-                                style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12),
-                              ),
-                              OutlinedButton.icon(
-                                style: OutlinedButton.styleFrom(
-                                  side: const BorderSide(color: AppTheme.goldBorder),
-                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                  visualDensity: VisualDensity.compact,
-                                ),
-                                icon: const Icon(Icons.timer_outlined, size: 14, color: AppTheme.goldAccent),
-                                label: Text(
-                                  mem.retention,
-                                  style: const TextStyle(fontSize: 11, color: AppTheme.textPrimary),
-                                ),
-                                onPressed: () => _cycleRetention(index),
-                              ),
-                            ],
-                          ),
-
-                          // Extracted Entities
-                          if (mem.items.isNotEmpty || mem.people.isNotEmpty || mem.places.isNotEmpty || mem.projects.isNotEmpty) ...[
-                            const SizedBox(height: 8),
+                          // Extracted Entities (items, places, projects - no people names)
+                          if (mem.items.isNotEmpty || mem.places.isNotEmpty || mem.projects.isNotEmpty) ...[
+                            const SizedBox(height: 10),
                             Wrap(
                               spacing: 6,
                               runSpacing: 4,
                               children: [
                                 ...mem.items.map((i) => _buildEntityChip('🎒 $i')),
-                                ...mem.people.map((p) => _buildEntityChip('👤 $p')),
                                 ...mem.places.map((pl) => _buildEntityChip('📍 $pl')),
                                 ...mem.projects.map((pr) => _buildEntityChip('📁 $pr')),
                               ],
@@ -318,42 +461,52 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
               ),
             ),
 
-            // Bottom Buttons [ Cancel ] [ Save ]
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: AppTheme.goldBorder),
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            // Bottom Buttons
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: AppTheme.cardBorder),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        ),
+                        onPressed: _isSaving ? null : _handleCancel,
+                        child: const Text('Cancel', style: TextStyle(color: AppTheme.textSecondary)),
                       ),
-                      onPressed: _isSaving ? null : _handleCancel,
-                      child: const Text('Cancel', style: TextStyle(color: AppTheme.textPrimary, fontSize: 15)),
                     ),
-                  ),
-                  const SizedBox(width: 14),
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.goldAccent,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      flex: 2,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.primary,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          elevation: 2,
+                        ),
+                        onPressed: _isSaving ? null : _handleSave,
+                        child: _isSaving
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                              )
+                            : const Text(
+                                '✓ Save Memories',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
-                      onPressed: _isSaving ? null : _handleSave,
-                      child: _isSaving
-                          ? const SizedBox(
-                              width: 22,
-                              height: 22,
-                              child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.2),
-                            )
-                          : const Text('✓ Save', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],
@@ -366,12 +519,13 @@ class _UnderstandingScreenState extends State<UnderstandingScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: AppTheme.goldAccentLight,
-        borderRadius: BorderRadius.circular(6),
+        color: AppTheme.background,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppTheme.cardBorder, width: 0.8),
       ),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 11, color: AppTheme.textPrimary, fontWeight: FontWeight.w500),
+        style: const TextStyle(fontSize: 11, color: AppTheme.textPrimary),
       ),
     );
   }
