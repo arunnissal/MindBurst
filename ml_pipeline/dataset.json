@@ -1,0 +1,6402 @@
+[
+  {
+    "text": "Apollo hospital ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "client office in T Nagar ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "dentist clinic ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila vengayam and urulai order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send money for flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Passport and ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila paal and bread vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "College id card marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pay college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Review exam notes before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila soap and paste order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "College id card maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila kaapi thool order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Complete water filter change",
+    "intent": "Task"
+  },
+  {
+    "text": "Review client proposal tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "College tuition fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "post office ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Submit standup notes today",
+    "intent": "Task"
+  },
+  {
+    "text": "Buy chicken and masala for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Office badge maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Travel to Apollo hospital this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Fridge cleaning innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Pack water bottle",
+    "intent": "Carry"
+  },
+  {
+    "text": "Don't forget to take passport and ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to alarm for medicine by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Order coffee powder",
+    "intent": "Shopping"
+  },
+  {
+    "text": "airport terminal 2 ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Carry stethoscope and lab coat when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to car service center",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to call manager in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Clean fridge cleaning tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "College id card maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by post office",
+    "intent": "Place"
+  },
+  {
+    "text": "Office badge bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Water bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "manager call irukku innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quotation for customer innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Fridge cleaning innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Prepare clothes by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Review quotation for customer tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take vitamin tablet at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to water intake morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Hall ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Update client proposal tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Get chicken and masala today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Apollo hospital ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila oil packet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Debug fridge cleaning today",
+    "intent": "Task"
+  },
+  {
+    "text": "Head to gym center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Client proposal innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "tab pottuko innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Hostel electricity charge gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clothes innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Credit card bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy milk and bread for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Mobile recharge on 28th gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "House keys bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by gym center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Milkman payment gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to take vitamin tablet by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila vengayam and urulai order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Order washing detergent from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila muttai and thakkali order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Keep in bag bike RC book and helmet in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Electricity bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Purchase fruits for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Drop by airport terminal 2 today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Update water filter change tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Water bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kitchen sink innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Mobile recharge on 28th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Client email innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Phonepe milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Head to railway station this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "client office in T Nagar ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Clean monthly invoice",
+    "intent": "Task"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Mess fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clean fridge cleaning tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Purchase coffee powder",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Don't forget to take office badge for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to water intake afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call manager in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Water bottle marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Visit airport terminal 2 today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Update client proposal before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Go to car service center",
+    "intent": "Place"
+  },
+  {
+    "text": "Restock fruits for home for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Mobile recharge on 28th settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Hall room innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "medicine podanum evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take laptop and charger in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Sprint tickets innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock coffee powder in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pr review innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to call mom sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send money for flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Debug kitchen sink this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Head to SBI bank branch tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Update architecture doc this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Keep in bag stethoscope and lab coat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send money for flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Carry umbrella and raincoat when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take umbrella and raincoat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila oil packet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "medicine podanum naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Seminar ppt innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "central library ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Clear room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila paal and bread vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "SBI bank branch ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Order toothpaste and soap from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Visit metro station",
+    "intent": "Place"
+  },
+  {
+    "text": "Send money for mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "gym center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Clear hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Update project report before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to water intake morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send money for house rent on 1st",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Purchase fruits for home in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Sprint tickets innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila soap and paste kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Restock fruits for home from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Architecture doc innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take water bottle in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Passport and ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "amma ku call pannu night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call manager at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Go to metro station",
+    "intent": "Place"
+  },
+  {
+    "text": "Vendor agreement innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "central library ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "car service center ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "medicine podanum night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "airport terminal 2 ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Debug internship application this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "Keep in bag gym shoes and towel in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila marundhu and tablet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "tab pottuko night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Stethoscope and lab coat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "SBI bank branch ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Vendor agreement innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "Take umbrella and raincoat",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to water intake at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "medicine podanum night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Umbrella and raincoat bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to zoom meeting morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't carry laptop to lab prof said no need",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila kaapi thool vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bike rc book and helmet eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fix standup notes by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Laptop and charger eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila oil packet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila oil packet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Keep in bag stethoscope and lab coat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila vengayam and urulai kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Reach central library tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila oil packet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Don't forget to take bike RC book and helmet in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "College id card marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Order milk and bread for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila kaapi thool kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila kaapi thool vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Credit card bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Finish assignment by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Pick up chicken and masala",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Stethoscope and lab coat bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Flat rent to owner transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Seminar ppt innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "airport terminal 2 ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Send lab record by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Prepare project report this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't carry laptop to lab prof said no need",
+    "intent": "Note"
+  },
+  {
+    "text": "Send money for college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Purchase notebook and blue pen for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "House keys bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Room rent on 5th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Balance sheet innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Take water bottle for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Wash architecture doc before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Carry water bottle for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Hostel rent kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to take vitamin tablet night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take stethoscope and lab coat",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to zoom meeting at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call manager afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Get maggie and biscuits for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to doctor appointment afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock onions and potatoes",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to take vitamin tablet night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pack water bottle in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila muttai and thakkali vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to zoom meeting night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Assignment innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "car service center ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Hall ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Hostel rent pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila muttai and thakkali vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Send exam notes before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Passport and ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Maintenance fee settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Caution deposit transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Prepare seminar ppt today",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock coffee powder in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Phonepe maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Prepare assignment by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Take power bank in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fix fridge cleaning",
+    "intent": "Task"
+  },
+  {
+    "text": "Head to post office this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to doctor appointment sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Transfer wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "House rent on 1st transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "supermarket ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Clear mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clothes innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "gym center ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Bring power bank in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Curtains innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Debug monthly invoice by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Phonepe mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Get coffee powder for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Sprint tickets innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Gym shoes and towel bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pack college id card tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Wash sprint tickets before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Electricity bill transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to doctor appointment in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to call manager at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Send PR review tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila muttai and thakkali vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Fix curtains by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take umbrella and raincoat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "House rent on 1st settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Seminar ppt innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Gym membership fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy chicken and masala today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Sprint tickets innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Send money for mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Assignment innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Carry power bank when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila marundhu and tablet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "College tuition fee settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Keep in bag passport and ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to water intake afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Prepare client proposal this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Apollo hospital ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Reach Apollo hospital this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Water bottle bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Mess fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Exam notes innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't forget to take passport and ticket when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Phonepe electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pick up onions and potatoes today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Buy paracetamol and vicks from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Gpay hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Electricity bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Visit client office in T Nagar at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Drop by airport terminal 2 today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila soap and paste kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Restock curd and tomatoes for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Caution deposit settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "SBI bank branch ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Clear maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Stethoscope and lab coat maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clear wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take umbrella and raincoat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Order maggie and biscuits today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila paal and bread vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Reach client office in T Nagar tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Milkman payment gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Drop by Apollo hospital",
+    "intent": "Place"
+  },
+  {
+    "text": "Wash assignment before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Wifi bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Bring stethoscope and lab coat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Bike rc book and helmet maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "post office ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to zoom meeting morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Sprint tickets innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Update quotation for customer this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Credit card bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Head to railway station",
+    "intent": "Place"
+  },
+  {
+    "text": "Room rent on 5th settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Go to airport terminal 2 this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Reach Apollo hospital this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Hostel electricity charge settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to alarm for medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to zoom meeting afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Submit exam notes by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Phonepe mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Architecture doc innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Hostel electricity charge transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila oil packet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Update standup notes",
+    "intent": "Task"
+  },
+  {
+    "text": "Visit metro station at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Apollo hospital ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Bring water bottle",
+    "intent": "Carry"
+  },
+  {
+    "text": "railway station ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "airport terminal 2 ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pay maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Fix hall room by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Water filter change innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Electricity bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to car service center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "metro station ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Get eggs and bananas",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Don't carry laptop to lab prof said no need",
+    "intent": "Note"
+  },
+  {
+    "text": "Purchase atta flour and cooking oil for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Take passport and ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Project report innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Order milk and bread today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila muttai and thakkali vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to zoom meeting at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Standup notes innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Clean quarterly deck",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila oil packet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Order shampoo bottle for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to water intake morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Client email innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "amma ku call pannu night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Order notebook and blue pen from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call manager at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila kaapi thool order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Transfer room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clothes innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Reach gym center at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Lab record innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Debug quarterly deck before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Settle mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Exam notes innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Electricity bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "gym center ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Purchase chicken and masala",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pack office badge tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila paal and bread order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Go to Apollo hospital today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "College tuition fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "supermarket ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila arisi and paruppu order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "client office in T Nagar ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Phonepe college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Keep in bag laptop and charger",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take hall ticket tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Debug sprint tickets today",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "post office ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Maintenance fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy coffee powder",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to zoom meeting sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to doctor appointment night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Stethoscope and lab coat bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Review sprint tickets by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Reach metro station tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Don't forget to take bike RC book and helmet when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Umbrella and raincoat maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Hall ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Architecture doc innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Laptop and charger eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Maintenance fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Finish standup notes tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock curd and tomatoes today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "amma ku call pannu evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "House keys bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "College tuition fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Prepare monthly invoice today",
+    "intent": "Task"
+  },
+  {
+    "text": "Transfer mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Maintenance fee kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Order eggs and bananas from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Transfer hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Carry power bank in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Carry college id card for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Prepare lab record tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Clear credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Travel to dentist clinic this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Restock fruits for home for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Visit metro station today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Passport and ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Purchase eggs and bananas for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Fix vendor agreement by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to doctor appointment by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila vengayam and urulai order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bike rc book and helmet eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "medicine podanum naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Monthly invoice innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Quotation for customer innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Restock atta flour and cooking oil today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "House keys maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Get atta flour and cooking oil in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "House keys bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "SBI bank branch ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila muttai and thakkali vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Take office badge",
+    "intent": "Carry"
+  },
+  {
+    "text": "Maintenance fee settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila muttai and thakkali order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Apollo hospital ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit airport terminal 2",
+    "intent": "Place"
+  },
+  {
+    "text": "Complete balance sheet before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "post office ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take bike RC book and helmet in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Purchase fruits for home today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Head to metro station tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit dentist clinic today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Review kitchen sink",
+    "intent": "Task"
+  },
+  {
+    "text": "Stethoscope and lab coat eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila soap and paste vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Idea for startup: automated expense tracker",
+    "intent": "Note"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Power bank eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Get shampoo bottle for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clothes innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila oil packet vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Wash PR review tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "central library ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Transfer hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Head to supermarket",
+    "intent": "Place"
+  },
+  {
+    "text": "Pack hall ticket in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Idea for startup: automated expense tracker",
+    "intent": "Note"
+  },
+  {
+    "text": "Pr review innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Pick up fruits for home in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Vendor agreement innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Passport and ticket eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Hall room innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Update project report tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Go to car service center this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "SBI bank branch ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to zoom meeting at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Power bank maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "airport terminal 2 ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bring stethoscope and lab coat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Flat rent to owner transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Architecture doc innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Purchase curd and tomatoes in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Clear mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "central library ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Order fruits for home in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "SBI bank branch ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Head to central library",
+    "intent": "Place"
+  },
+  {
+    "text": "Hostel electricity charge transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Visit gym center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Bring umbrella and raincoat when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to take vitamin tablet night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Head to Apollo hospital at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Maintenance fee kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Quarterly deck innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock milk and bread from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Restock washing detergent for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Purchase washing detergent in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Transfer caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to zoom meeting sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Power bank eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Travel to airport terminal 2",
+    "intent": "Place"
+  },
+  {
+    "text": "Drop by SBI bank branch tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Client email innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Order shampoo bottle in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Apollo hospital ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Wifi bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Power bank maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take passport and ticket in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila arisi and paruppu order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Exam notes innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Seminar ppt innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Flat rent to owner kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Water bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gpay caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Monthly invoice innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "airport terminal 2 ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Take office badge in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle gym membership fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Bring laptop and charger when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fix fridge cleaning before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Power bank marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to alarm for medicine by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Electricity bill settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Visit dentist clinic at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock toothpaste and soap today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Fix client proposal by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Sprint tickets innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "Transfer hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clear credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pr review innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Gpay credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "railway station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Keep in bag gym shoes and towel when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by post office",
+    "intent": "Place"
+  },
+  {
+    "text": "College tuition fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Go to post office today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila marundhu and tablet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Head to car service center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Go to Apollo hospital",
+    "intent": "Place"
+  },
+  {
+    "text": "medicine podanum naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send clothes today",
+    "intent": "Task"
+  },
+  {
+    "text": "Water bottle marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Water bottle maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "Fix clothes today",
+    "intent": "Task"
+  },
+  {
+    "text": "gym center ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to zoom meeting afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Transfer room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Mess fee settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Assignment innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay water bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pack power bank when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to water intake sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Buy atta flour and cooking oil for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "car service center ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Settle flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Drop by central library tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pack umbrella and raincoat tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Carry stethoscope and lab coat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "airport terminal 2 ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Pack hall ticket for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Go to supermarket today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Transfer credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to doctor appointment at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Assignment innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Flat rent to owner gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Power bank marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Finish PR review",
+    "intent": "Task"
+  },
+  {
+    "text": "Send vendor agreement this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Go to airport terminal 2 this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Umbrella and raincoat maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Phonepe caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to post office at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila kaapi thool order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pack college id card tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pick up chicken and masala today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Take office badge when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Don't carry laptop to lab prof said no need",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to doctor appointment by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Visit dentist clinic tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "College tuition fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Reach car service center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Purchase curd and tomatoes in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "manager call irukku evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Internship application innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Buy milk and bread today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Buy coffee powder from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Gpay flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gpay hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pick up maggie and biscuits for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to take vitamin tablet night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Update sprint tickets before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Fridge cleaning innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pr review innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Send money for mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Hostel electricity charge gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Client proposal innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to zoom meeting sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Transfer caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Milkman payment gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Room rent on 5th transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "dentist clinic ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Water bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Settle milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "airport terminal 2 ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Order onions and potatoes for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Clear house rent on 1st",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Keep in bag hall ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Buy notebook and blue pen for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to alarm for medicine in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quotation for customer innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "SBI bank branch ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Gym shoes and towel maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send money for wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Visit post office",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila oil packet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Hall ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pack laptop and charger in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "tab pottuko evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Standup notes innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Maintenance fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Bring passport and ticket in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to alarm for medicine by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "manager call irukku naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "amma ku call pannu evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to water intake at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Keep in bag house keys for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Phonepe house rent on 1st",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy milk and bread for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila soap and paste vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Purchase fruits for home from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Order fruits for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Water filter change innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Clean hall room tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "supermarket ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "dentist clinic ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Milkman payment gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Head to metro station today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit SBI bank branch today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Head to dentist clinic at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "railway station ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Stethoscope and lab coat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila muttai and thakkali kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Send money for credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "dentist clinic ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila kaapi thool vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Phonepe room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Room rent on 5th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to call manager night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "Drop by gym center this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Head to car service center",
+    "intent": "Place"
+  },
+  {
+    "text": "Restock coffee powder in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Fridge cleaning innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Idea for startup: automated expense tracker",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to call manager by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Credit card bill transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila marundhu and tablet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kitchen sink innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila paal and bread vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kitchen sink innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Hall ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Go to Apollo hospital at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Mess fee transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Mobile recharge on 28th gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Reach SBI bank branch at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Keep in bag gym shoes and towel for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Credit card bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Wash quotation for customer this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Order notebook and blue pen today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila kaapi thool vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila arisi and paruppu order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bike rc book and helmet maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Purchase atta flour and cooking oil for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Hostel rent gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Reach central library tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila paal and bread vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "dentist clinic ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "client office in T Nagar ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Take college id card when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take umbrella and raincoat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pack gym shoes and towel for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to zoom meeting night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Gym membership fee kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "railway station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Architecture doc innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Monthly invoice innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Update project report tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "SBI bank branch ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Water bottle bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by SBI bank branch this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Review quotation for customer by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Vendor agreement innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to doctor appointment night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock shampoo bottle today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "dentist clinic ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Umbrella and raincoat eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "amma ku call pannu naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "SBI bank branch ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "manager call irukku naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "SBI bank branch ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to alarm for medicine night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't buy milk today fridge has two packets",
+    "intent": "Note"
+  },
+  {
+    "text": "manager call irukku 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Drop by railway station at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Transfer milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Passport and ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take umbrella and raincoat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym shoes and towel maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila soap and paste vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila oil packet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Passport and ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fridge cleaning innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Submit seminar ppt this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "client office in T Nagar ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Restock coffee powder today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Credit card bill settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Maintenance fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Client email innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock curd and tomatoes from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "Transfer caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Pick up atta flour and cooking oil from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Carry water bottle",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take stethoscope and lab coat when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila oil packet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Get notebook and blue pen",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Clear flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Finish PR review today",
+    "intent": "Task"
+  },
+  {
+    "text": "Send money for wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Power bank marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Head to Apollo hospital tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Carry power bank in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Passport and ticket marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fridge cleaning innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Submit internship application",
+    "intent": "Task"
+  },
+  {
+    "text": "supermarket ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Hall room innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bring hall ticket in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Finish assignment before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Sprint tickets innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to doctor appointment at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call mom by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Don't forget to take umbrella and raincoat when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Bring college id card when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take office badge in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "metro station ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to water intake night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Water bottle bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Carry laptop and charger",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "gym center ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Prepare exam notes today",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila muttai and thakkali order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Go to dentist clinic",
+    "intent": "Place"
+  },
+  {
+    "text": "Standup notes innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila paal and bread vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "tab pottuko night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Power bank maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clean project report",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't forget to take gym shoes and towel when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "College id card maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "House rent on 1st gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pack gym shoes and towel for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Fridge cleaning innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "doctor appointment marakadha 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "House rent on 1st transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Apollo hospital ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Reach SBI bank branch this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Pick up curd and tomatoes today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call mom morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to water intake at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Standup notes innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "medicine podanum night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send PR review today",
+    "intent": "Task"
+  },
+  {
+    "text": "Wifi bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Wifi bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Don't carry laptop to lab prof said no need",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to call mom sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Carry passport and ticket for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clean exam notes this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Umbrella and raincoat eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Hostel rent kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Bring passport and ticket when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send PR review before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Bring umbrella and raincoat for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Apollo hospital ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Hostel electricity charge gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Umbrella and raincoat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Stethoscope and lab coat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Carry college id card in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Go to dentist clinic",
+    "intent": "Place"
+  },
+  {
+    "text": "Drop by Apollo hospital today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Bring house keys",
+    "intent": "Carry"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to water intake by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pr review innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to take vitamin tablet by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Milkman payment pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pick up paracetamol and vicks for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to call mom sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call manager in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Restock notebook and blue pen from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Wash assignment before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Flat rent to owner settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Finish kitchen sink this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Take hall ticket when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "dentist clinic ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Review curtains tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila marundhu and tablet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila oil packet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "metro station ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Pack gym shoes and towel",
+    "intent": "Carry"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila muttai and thakkali kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bike rc book and helmet eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to zoom meeting night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Submit kitchen sink today",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to alarm for medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Drop by gym center this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Drop by post office this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "College id card eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "College tuition fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Take power bank for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Travel to car service center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Finish clothes tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take vitamin tablet at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Go to SBI bank branch today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Client proposal innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Settle credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Phonepe credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila soap and paste vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "amma ku call pannu innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila kaapi thool kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Update clothes by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "gym center ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Restock notebook and blue pen in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Take gym shoes and towel for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym membership fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Never skip morning breakfast",
+    "intent": "Note"
+  },
+  {
+    "text": "Passport and ticket eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take water bottle for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Water bottle bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Pay hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Gym shoes and towel marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila oil packet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila oil packet vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to zoom meeting in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Go to airport terminal 2 tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Apollo hospital ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Hall ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "central library ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to take vitamin tablet at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Mess fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Transfer credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock atta flour and cooking oil for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pay mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila paal and bread vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "Project report innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to doctor appointment night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Order milk and bread today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Prepare clothes this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Keep in bag hall ticket for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila vengayam and urulai kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Transfer room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Visit central library",
+    "intent": "Place"
+  },
+  {
+    "text": "Sprint tickets innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Carry stethoscope and lab coat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to call mom afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Travel to railway station at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to call mom sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila soap and paste vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Carry laptop and charger tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take office badge",
+    "intent": "Carry"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila muttai and thakkali kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Mobile recharge on 28th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy maggie and biscuits in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Power bank eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Complete fridge cleaning",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to zoom meeting by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Bring office badge",
+    "intent": "Carry"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Head to gym center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Pay hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "gym center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Drop by dentist clinic today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Umbrella and raincoat bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pay milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Buy maggie and biscuits today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Apollo hospital ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Electricity bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Umbrella and raincoat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send project report",
+    "intent": "Task"
+  },
+  {
+    "text": "Submit seminar ppt",
+    "intent": "Task"
+  },
+  {
+    "text": "Bring stethoscope and lab coat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Bike rc book and helmet maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to take vitamin tablet sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Phonepe milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Water bottle eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Water filter change innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Office badge marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Don't forget to take umbrella and raincoat",
+    "intent": "Carry"
+  },
+  {
+    "text": "Seminar ppt innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Keep in bag house keys tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "manager call irukku naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Power bank bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym shoes and towel bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "College id card bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to doctor appointment at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Stethoscope and lab coat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Head to dentist clinic tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "manager call irukku innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila arisi and paruppu kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Fridge cleaning innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to water intake night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Go to client office in T Nagar",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Clear college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila oil packet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Carry house keys when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clear hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "amma ku call pannu naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "client office in T Nagar ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila paal and bread vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Balance sheet innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Travel to gym center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Settle credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Restock toothpaste and soap from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Power bank marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Head to client office in T Nagar today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit SBI bank branch tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit gym center this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "tab pottuko evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Purchase toothpaste and soap from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Apollo hospital ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Prepare clothes before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Take house keys for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Don't forget to take passport and ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Wifi bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Go to supermarket this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Vendor agreement innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Finish internship application today",
+    "intent": "Task"
+  },
+  {
+    "text": "Power bank marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "airport terminal 2 ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Transfer credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "railway station ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Take gym shoes and towel for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "post office ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Monthly invoice innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Purchase milk and bread from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Settle water bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clean architecture doc tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Stethoscope and lab coat eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym shoes and towel bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Take bike RC book and helmet when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send money for water bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "metro station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Take passport and ticket",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clear gym membership fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Take gym shoes and towel when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Transfer caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clear flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Review monthly invoice",
+    "intent": "Task"
+  },
+  {
+    "text": "Hall room innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to call mom at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Caution deposit gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Laptop and charger bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila kaapi thool vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Reach dentist clinic",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila soap and paste vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to doctor appointment sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to alarm for medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Transfer hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "airport terminal 2 ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Water bottle maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pick up washing detergent from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Passport and ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pick up shampoo bottle for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "metro station ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Finish curtains",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take vitamin tablet by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Drop by airport terminal 2 tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Clothes innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "manager call irukku innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Complete monthly invoice today",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kitchen sink innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "railway station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to zoom meeting in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Debug quarterly deck before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Passport and ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Hall room innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila soap and paste vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Don't buy milk today fridge has two packets",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to water intake morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pay hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Review fridge cleaning today",
+    "intent": "Task"
+  },
+  {
+    "text": "Client email innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "railway station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "central library ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit SBI bank branch",
+    "intent": "Place"
+  },
+  {
+    "text": "Phonepe flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Prepare quotation for customer before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Credit card bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila paal and bread vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Reach car service center this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "car service center ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Send money for flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Apollo hospital ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Visit dentist clinic today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Drop by airport terminal 2 tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Submit standup notes before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Visit railway station today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila soap and paste vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call mom by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "dentist clinic ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "College id card bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Settle gym membership fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Hall ticket eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Mess fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to call manager in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Complete seminar ppt by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Bike rc book and helmet marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "amma ku call pannu naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Seminar ppt innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "car service center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Submit vendor agreement before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "College tuition fee settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Send project report this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Clear flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Don't buy milk today fridge has two packets",
+    "intent": "Note"
+  },
+  {
+    "text": "Monthly invoice innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Pack bike RC book and helmet tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "car service center ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Phonepe caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Reach gym center today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Travel to client office in T Nagar",
+    "intent": "Place"
+  },
+  {
+    "text": "Get fruits for home in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "post office ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Get shampoo bottle",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Order curd and tomatoes for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Power bank maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Bike rc book and helmet bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Send internship application before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "No need to buy eggs today",
+    "intent": "Note"
+  },
+  {
+    "text": "Prepare kitchen sink today",
+    "intent": "Task"
+  },
+  {
+    "text": "Clothes innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Get coffee powder today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bring gym shoes and towel tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Apollo hospital ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Credit card bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Settle milkman payment",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "SBI bank branch ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock maggie and biscuits today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pick up notebook and blue pen today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Go to metro station tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Pack laptop and charger",
+    "intent": "Carry"
+  },
+  {
+    "text": "Assignment innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila paal and bread kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "manager call irukku 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Prepare fridge cleaning today",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pay hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Fridge cleaning innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila soap and paste vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Client proposal innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Finish kitchen sink before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Project report innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Pack water bottle",
+    "intent": "Carry"
+  },
+  {
+    "text": "College tuition fee kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Review internship application this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "doctor appointment marakadha naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Wifi bill settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Pay mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to Apollo hospital at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Water bottle eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by central library today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Go to metro station this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "Get onions and potatoes today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Water bill settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Project report innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Milk vendam innaiku curd already irukku",
+    "intent": "Note"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Travel to supermarket",
+    "intent": "Place"
+  },
+  {
+    "text": "Phonepe maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Settle room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Water bottle bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Exam notes innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Phonepe college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila oil packet vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Monthly invoice innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "Assignment innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Settle flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Head to SBI bank branch today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Drop by dentist clinic today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Gpay maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Pick up eggs and bananas from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila muttai and thakkali kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to doctor appointment at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Electricity bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to doctor appointment in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quotation for customer innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila soap and paste vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Prepare kitchen sink before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Restock paracetamol and vicks",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Office badge bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Buy curd and tomatoes from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "doctor appointment marakadha naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Drop by railway station tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Umbrella and raincoat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Hall room innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Credit card bill kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "College tuition fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "House keys eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "airport terminal 2 ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Purchase chicken and masala",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "amma ku call pannu innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "tab pottuko naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "gym center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Curtains innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Go to gym center",
+    "intent": "Place"
+  },
+  {
+    "text": "Purchase washing detergent",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pack power bank when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Travel to central library today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't wash white shirt with colored clothes",
+    "intent": "Note"
+  },
+  {
+    "text": "Assignment innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "client office in T Nagar ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Prepare client proposal tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "doctor appointment marakadha 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take college id card",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to call manager by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Submit quarterly deck by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Drop by post office at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Get chicken and masala in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Drop by metro station at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Carry bike RC book and helmet",
+    "intent": "Carry"
+  },
+  {
+    "text": "Passport and ticket eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Standup notes innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "gym center ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Stethoscope and lab coat marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Flat rent to owner settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Order maggie and biscuits",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "College tuition fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Purchase curd and tomatoes from supermarket",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Get maggie and biscuits for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Movie to watch on weekend: Interstellar",
+    "intent": "Note"
+  },
+  {
+    "text": "Flat rent to owner settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Maintenance fee pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Exam notes innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Bike rc book and helmet marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Submit hall room tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Clothes innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Pay caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "amma ku call pannu innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Idea for startup: automated expense tracker",
+    "intent": "Note"
+  },
+  {
+    "text": "Passport and ticket bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Flat rent to owner kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gym shoes and towel eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Quarterly deck innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "client office in T Nagar ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Mess fee gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to zoom meeting at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pack bike RC book and helmet tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Drop by gym center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Curtains innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to call mom by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Water filter change innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "Visit client office in T Nagar tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "dentist clinic ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Mobile recharge on 28th transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Credit card bill gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to airport terminal 2",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pay maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Drop by dentist clinic today evening",
+    "intent": "Place"
+  },
+  {
+    "text": "Passport and ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila oil packet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Keep in bag college id card when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clean kitchen sink this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Transfer wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Order eggs and bananas in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Assignment innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila marundhu and tablet order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Internship application innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Send client email this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quarterly deck innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Bring bike RC book and helmet when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "Bring umbrella and raincoat in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "manager call irukku innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "doctor appointment marakadha night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Buy onions and potatoes today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Mobile recharge on 28th transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Wifi bill pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Gpay hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila vengayam and urulai kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "gym center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Clean fridge cleaning this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Gpay mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Clear caution deposit",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Transfer electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila kaapi thool vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Don't forget to take bike RC book and helmet when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Get fruits for home in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Go to Apollo hospital at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Transfer mess fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Debug water filter change tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to take blood pressure medicine morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "central library ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Laptop and charger marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Restock curd and tomatoes for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Room rent on 5th transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Client proposal innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Hostel electricity charge kattunum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Send kitchen sink this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Hostel rent pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Get atta flour and cooking oil",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila kaapi thool vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager night 10 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Purchase chicken and masala today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "medicine podanum night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pack hall ticket for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "Keep in bag office badge",
+    "intent": "Carry"
+  },
+  {
+    "text": "Monthly invoice innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Laptop and charger maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "railway station ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "manager call irukku 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Visit post office this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "post office ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "supermarket ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Purchase paracetamol and vicks for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pick up toothpaste and soap",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Buy shampoo bottle",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Research about Flutter on-device neural model quantization",
+    "intent": "Note"
+  },
+  {
+    "text": "Restock milk and bread today",
+    "intent": "Shopping"
+  },
+  {
+    "text": "metro station ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Wash clothes today",
+    "intent": "Task"
+  },
+  {
+    "text": "metro station ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Room rent on 5th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "central library ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Buy washing detergent",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Fridge cleaning innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "Caution deposit gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Book recommendation: Atomic Habits by James Clear",
+    "intent": "Note"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Water bottle marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Keep in bag gym shoes and towel when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Veliya poga vendam heavy rain outside",
+    "intent": "Note"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Pr review innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Prepare quotation for customer before Friday",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila vengayam and urulai vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "doctor appointment marakadha naalaiku kaalaila 8 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Internship application innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Clothes innaiku clean panni vai",
+    "intent": "Task"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Visit metro station tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila kaapi thool order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Keep in bag laptop and charger when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Pick up notebook and blue pen",
+    "intent": "Shopping"
+  },
+  {
+    "text": "dentist clinic ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "gym center ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to alarm for medicine sharp 7 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Standup notes innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Travel to client office in T Nagar",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to take vitamin tablet morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Assignment innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "House keys marakkama kondu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kitchen sink innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Go to airport terminal 2 tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to doctor appointment at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "manager call irukku 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Settle maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Bring stethoscope and lab coat tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Clear college tuition fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "car service center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Keep in bag college id card for tomorrow office",
+    "intent": "Carry"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kitchen sink innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Buy shampoo bottle in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "car service center ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Kadaila marundhu and tablet vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Clear house rent on 1st",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Wash fridge cleaning today",
+    "intent": "Task"
+  },
+  {
+    "text": "Reach client office in T Nagar",
+    "intent": "Place"
+  },
+  {
+    "text": "Client proposal innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "supermarket ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Bring passport and ticket when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Milkman payment settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to take vitamin tablet morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "medicine podanum 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Remind me to zoom meeting at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Transfer mobile recharge on 28th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "doctor appointment marakadha evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to call mom at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Don't forget to take passport and ticket when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Transfer hostel electricity charge",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Do not pay rent today owner said wait till 10th",
+    "intent": "Note"
+  },
+  {
+    "text": "Review architecture doc tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Travel to gym center tomorrow 10 AM",
+    "intent": "Place"
+  },
+  {
+    "text": "Head to dentist clinic",
+    "intent": "Place"
+  },
+  {
+    "text": "Finish water filter change this weekend",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to water intake in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Restock chicken and masala in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Room rent on 5th pay pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Power bank maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Kitchen sink innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Fix lab record",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to call manager at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "gym center ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Send money for hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Kadaila marundhu and tablet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Bring gym shoes and towel when going out",
+    "intent": "Carry"
+  },
+  {
+    "text": "Monthly invoice innaiku mudikanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Bring laptop and charger",
+    "intent": "Carry"
+  },
+  {
+    "text": "amma ku call pannu 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pick up curd and tomatoes in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila muttai and thakkali order pannu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila oil packet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Quotation for customer innaiku send pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "airport terminal 2 ku visit panrom",
+    "intent": "Place"
+  },
+  {
+    "text": "Pick up atta flour and cooking oil for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pay electricity bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Restock eggs and bananas in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila arisi and paruppu vangikanum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pick up paracetamol and vicks for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Remind me to call manager at 5 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Standup notes innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "post office ku reach aaganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Remind me to zoom meeting by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Phonepe room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Idea for startup: automated expense tracker",
+    "intent": "Note"
+  },
+  {
+    "text": "Clear maintenance fee",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Carry laptop and charger tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Meeting summary: discuss quarterly roadmap next Monday",
+    "intent": "Note"
+  },
+  {
+    "text": "Quarterly deck innaiku pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Kadaila oil packet vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Quote: Consistency beats talent every single day",
+    "intent": "Note"
+  },
+  {
+    "text": "Send money for room rent on 5th",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Wifi password for new router is SecretPass99",
+    "intent": "Note"
+  },
+  {
+    "text": "Kadaila paal and bread kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila oil packet kadaila vaangu",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Update water filter change by evening",
+    "intent": "Task"
+  },
+  {
+    "text": "Drop by metro station this Saturday",
+    "intent": "Place"
+  },
+  {
+    "text": "amma ku call pannu evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Kadaila kaapi thool vaanga vendum",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Pay credit card bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Take gym shoes and towel in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Electricity bill settle pannanum",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Travel to dentist clinic",
+    "intent": "Place"
+  },
+  {
+    "text": "Phonepe flat rent to owner",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Send money for wifi bill",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to call manager by 4 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "amma ku call pannu evening 6:30 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Hostel electricity charge gpay pannu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "client office in T Nagar ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "doctor appointment marakadha innaiku 5 manikku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "SBI bank branch ku poganum",
+    "intent": "Place"
+  },
+  {
+    "text": "Order chicken and masala for home",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Kadaila paal and bread vangitu va",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Avoid going to bank today it is a public holiday",
+    "intent": "Note"
+  },
+  {
+    "text": "Keep in bag water bottle tomorrow to college",
+    "intent": "Carry"
+  },
+  {
+    "text": "Travel to SBI bank branch at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "tab pottuko 2 mani nerathula",
+    "intent": "Reminder"
+  },
+  {
+    "text": "central library ku poitu va",
+    "intent": "Place"
+  },
+  {
+    "text": "Settle hostel rent",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Vendor agreement innaiku wash pannanum",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to doctor appointment in 2 hours",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Finish monthly invoice today",
+    "intent": "Task"
+  },
+  {
+    "text": "Update clothes tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Hall ticket maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Seminar ppt innaiku ready pannu",
+    "intent": "Task"
+  },
+  {
+    "text": "manager call irukku night 9 ku",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Pick up shampoo bottle",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Clean assignment",
+    "intent": "Task"
+  },
+  {
+    "text": "Remind me to water intake at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Umbrella and raincoat maranthudadha take",
+    "intent": "Carry"
+  },
+  {
+    "text": "Get maggie and biscuits in evening",
+    "intent": "Shopping"
+  },
+  {
+    "text": "Flat rent to owner transfer pannidu",
+    "intent": "Payment_Due"
+  },
+  {
+    "text": "Remind me to take vitamin tablet at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to take vitamin tablet morning 9 AM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Finish client proposal tomorrow",
+    "intent": "Task"
+  },
+  {
+    "text": "Don't submit project yet pending review",
+    "intent": "Note"
+  },
+  {
+    "text": "Bring power bank in backpack",
+    "intent": "Carry"
+  },
+  {
+    "text": "Gym shoes and towel bag la vai",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to call manager afternoon 2 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Remind me to water intake at 6:30 PM",
+    "intent": "Reminder"
+  },
+  {
+    "text": "Visit post office at 4 PM",
+    "intent": "Place"
+  },
+  {
+    "text": "Umbrella and raincoat eduthutu po",
+    "intent": "Carry"
+  },
+  {
+    "text": "Carry bike RC book and helmet",
+    "intent": "Carry"
+  },
+  {
+    "text": "Remind me to water intake at 5 PM",
+    "intent": "Reminder"
+  }
+]

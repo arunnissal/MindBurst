@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import '../models/memory_model.dart';
+import 'edge_neural_model.dart';
 
 class AIExtractor {
   static const Set<String> genericNoiseWords = {
@@ -217,7 +218,13 @@ class AIExtractor {
         cLower.contains("vendam") ||
         cLower.contains("koodathu") ||
         cLower.contains("panna koodathu") ||
-        cLower.contains("never");
+        cLower.contains("never") ||
+        cLower.contains("avoid") ||
+        cLower.contains("no need");
+
+    // On-Device Custom Edge Neural Model prediction
+    final neuralPred = EdgeNeuralModel.instance.predict(clause);
+    final hasNeuralConfidence = neuralPred.confidence >= 0.55;
 
     // A. Carry Intent
     final isCarryVerb = cLower.contains('carry') ||
@@ -246,7 +253,7 @@ class AIExtractor {
       type = 'Note';
       category = 'Notes';
       title = _capitalizeFirstLetter(clause);
-    } else if (isCarryVerb || (hasCarryItem && (places.isNotEmpty || cLower.contains('ku') || cLower.contains('to')))) {
+    } else if (isCarryVerb || (hasCarryItem && (places.isNotEmpty || cLower.contains('ku') || cLower.contains('to'))) || (hasNeuralConfidence && neuralPred.intent == 'Carry')) {
       type = 'Carry';
       category = 'Carry';
       final placeStr = places.isNotEmpty ? ' to ${places.first}' : '';
@@ -265,7 +272,8 @@ class AIExtractor {
         cLower.contains('vaanga') ||
         cLower.contains('grocery') ||
         cLower.contains('groceries') ||
-        cLower.contains('supermarket')) {
+        cLower.contains('supermarket') ||
+        (hasNeuralConfidence && neuralPred.intent == 'Shopping')) {
       type = 'Shopping';
       category = 'Shopping';
       final shopItems = items.isNotEmpty ? items.join(", ") : '';
@@ -312,7 +320,8 @@ class AIExtractor {
         cLower.contains('remind') ||
         cLower.contains('todo') ||
         cLower.contains('need to') ||
-        cLower.contains('have to')) {
+        cLower.contains('have to') ||
+        (hasNeuralConfidence && (neuralPred.intent == 'Task' || neuralPred.intent == 'Payment_Due' || neuralPred.intent == 'Reminder'))) {
       if (cLower.contains('remind') || cLower.contains('remember to') || cLower.contains('maranthuraadha') || cLower.contains('alert') || cLower.contains('alarm')) {
         type = 'Reminder';
         category = 'Reminders';
