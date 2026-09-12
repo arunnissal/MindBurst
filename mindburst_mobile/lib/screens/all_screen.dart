@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
@@ -114,6 +115,7 @@ class AllScreenState extends State<AllScreen> {
   }
 
   Future<void> _toggleRoutine(DailyRoutine routine) async {
+    HapticFeedback.mediumImpact();
     await DatabaseHelper.instance.toggleRoutineCompletion(routine);
     await refreshMemories();
   }
@@ -258,12 +260,14 @@ class AllScreenState extends State<AllScreen> {
   }
 
   Future<void> _toggleComplete(Memory mem) async {
+    HapticFeedback.lightImpact();
     await DatabaseHelper.instance.toggleComplete(mem);
     await refreshMemories();
   }
 
   Future<void> _softDelete(Memory mem) async {
     if (mem.id == null) return;
+    HapticFeedback.mediumImpact();
     await DatabaseHelper.instance.softDelete(mem.id!);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -353,7 +357,10 @@ class AllScreenState extends State<AllScreen> {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: () => setState(() => _selectedView = 0),
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _selectedView = 0);
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -382,7 +389,10 @@ class AllScreenState extends State<AllScreen> {
                 ),
                 Expanded(
                   child: InkWell(
-                    onTap: () => setState(() => _selectedView = 1),
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _selectedView = 1);
+                    },
                     borderRadius: BorderRadius.circular(10),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -701,83 +711,122 @@ class AllScreenState extends State<AllScreen> {
                   itemCount: _routines.length,
                   itemBuilder: (context, index) {
                     final routine = _routines[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 8),
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-                      decoration: BoxDecoration(
-                        color: AppTheme.cardBg,
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(
-                          color: routine.isCompleted ? AppTheme.greenAccent.withOpacity(0.4) : AppTheme.cardBorder,
+                    return Dismissible(
+                      key: ValueKey('routine_${routine.id}_${routine.lastCompletedDate}_${routine.isCompleted}'),
+                      background: Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          color: AppTheme.greenAccent,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        alignment: Alignment.centerLeft,
+                        child: Icon(
+                          routine.isCompleted ? Icons.undo_rounded : Icons.check_circle_rounded,
+                          color: Colors.white,
+                          size: 24,
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () => _toggleRoutine(routine),
-                            borderRadius: BorderRadius.circular(20),
-                            child: AnimatedContainer(
-                              duration: const Duration(milliseconds: 200),
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                color: routine.isCompleted ? AppTheme.greenAccent : Colors.transparent,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: routine.isCompleted ? AppTheme.greenAccent : AppTheme.cardBorder,
-                                  width: 2,
-                                ),
-                              ),
-                              child: routine.isCompleted
-                                  ? const Icon(Icons.check, size: 16, color: Colors.white)
-                                  : null,
-                            ),
+                      secondaryBackground: Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          color: AppTheme.deleteRed,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        alignment: Alignment.centerRight,
+                        child: const Icon(Icons.delete_outline, color: Colors.white, size: 24),
+                      ),
+                      confirmDismiss: (direction) async {
+                        HapticFeedback.mediumImpact();
+                        if (direction == DismissDirection.startToEnd) {
+                          _toggleRoutine(routine);
+                          return false;
+                        } else {
+                          if (routine.id != null) {
+                            _deleteRoutine(routine.id!);
+                          }
+                          return true;
+                        }
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: AppTheme.cardBg,
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: routine.isCompleted ? AppTheme.greenAccent.withOpacity(0.4) : AppTheme.cardBorder,
                           ),
-                          const SizedBox(width: 14),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  routine.title,
-                                  style: TextStyle(
-                                    color: routine.isCompleted ? AppTheme.textSecondary : AppTheme.textPrimary,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                    decoration: routine.isCompleted ? TextDecoration.lineThrough : null,
+                        ),
+                        child: Row(
+                          children: [
+                            InkWell(
+                              onTap: () => _toggleRoutine(routine),
+                              borderRadius: BorderRadius.circular(20),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: routine.isCompleted ? AppTheme.greenAccent : Colors.transparent,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: routine.isCompleted ? AppTheme.greenAccent : AppTheme.cardBorder,
+                                    width: 2,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.surfaceBg,
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: Text(
-                                        routine.timeSlot,
-                                        style: const TextStyle(color: AppTheme.primaryLight, fontSize: 10),
-                                      ),
-                                    ),
-                                    if (routine.streakCount > 0) ...[
-                                      const SizedBox(width: 8),
-                                      Text(
-                                        '🔥 ${routine.streakCount} streak',
-                                        style: const TextStyle(color: AppTheme.goldAccent, fontSize: 10, fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ],
-                                ),
-                              ],
+                                child: routine.isCompleted
+                                    ? const Icon(Icons.check, size: 16, color: Colors.white)
+                                    : null,
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete_outline, size: 18, color: AppTheme.textSecondary),
-                            onPressed: () => routine.id != null ? _deleteRoutine(routine.id!) : null,
-                          ),
-                        ],
+                            const SizedBox(width: 14),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    routine.title,
+                                    style: TextStyle(
+                                      color: routine.isCompleted ? AppTheme.textSecondary : AppTheme.textPrimary,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      decoration: routine.isCompleted ? TextDecoration.lineThrough : null,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.surfaceBg,
+                                          borderRadius: BorderRadius.circular(6),
+                                        ),
+                                        child: Text(
+                                          routine.timeSlot,
+                                          style: const TextStyle(color: AppTheme.primaryLight, fontSize: 10),
+                                        ),
+                                      ),
+                                      if (routine.streakCount > 0) ...[
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          '🔥 ${routine.streakCount} streak',
+                                          style: const TextStyle(color: AppTheme.goldAccent, fontSize: 10, fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete_outline, size: 18, color: AppTheme.textSecondary),
+                              onPressed: () => routine.id != null ? _deleteRoutine(routine.id!) : null,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -950,7 +999,62 @@ class AllScreenState extends State<AllScreen> {
     final bool isCompleted = mem.completed;
     final catColor = _getCategoryColor(mem.category);
 
-    return Card(
+    return Dismissible(
+      key: ValueKey('mem_${mem.id}_${mem.updatedAt}_${mem.completed}'),
+      background: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: AppTheme.greenAccent,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.centerLeft,
+        child: Row(
+          children: [
+            Icon(
+              isCompleted ? Icons.undo_rounded : Icons.check_circle_rounded,
+              color: Colors.white,
+              size: 26,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              isCompleted ? 'Mark Undone' : 'Complete',
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+          ],
+        ),
+      ),
+      secondaryBackground: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: AppTheme.deleteRed,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        alignment: Alignment.centerRight,
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Delete',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+            ),
+            SizedBox(width: 8),
+            Icon(Icons.delete_sweep_rounded, color: Colors.white, size: 26),
+          ],
+        ),
+      ),
+      confirmDismiss: (direction) async {
+        HapticFeedback.mediumImpact();
+        if (direction == DismissDirection.startToEnd) {
+          _toggleComplete(mem);
+          return false;
+        } else {
+          _softDelete(mem);
+          return true;
+        }
+      },
+      child: Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
@@ -1147,8 +1251,9 @@ class AllScreenState extends State<AllScreen> {
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildEntityBadge(String name, IconData icon, Color textColor, Color bgColor) {
     return InkWell(

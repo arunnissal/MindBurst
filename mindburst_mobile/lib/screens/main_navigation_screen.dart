@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../theme/app_theme.dart';
 import 'burst_screen.dart';
 import 'all_screen.dart';
@@ -73,6 +74,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           unselectedLabelStyle: const TextStyle(fontSize: 11),
           elevation: 0,
           onTap: (index) {
+            HapticFeedback.selectionClick();
             setState(() {
               _currentIndex = index;
             });
