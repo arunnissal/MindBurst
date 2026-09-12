@@ -64,4 +64,12 @@ void main() {
     expect(answer.toLowerCase(), contains('financial & payment records'));
     expect(answer.toLowerCase(), contains('rent'));
   });
+
+  test('Negation protection does not convert to task or shopping', () {
+    final memories = AIExtractor.extractMemories("Don't buy milk today", 30);
+    expect(memories.length, 1);
+    expect(memories[0].category, 'Notes');
+    expect(memories[0].type, 'Note');
+    expect(memories[0].title.toLowerCase(), contains("don't buy milk"));
+  });
 }

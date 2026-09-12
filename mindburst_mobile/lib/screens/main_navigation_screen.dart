@@ -39,11 +39,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       ),
       AllScreen(key: _allScreenKey),
       const AskScreen(),
-      ProfileScreen(
-        onProfileUpdated: () {
-          _allScreenKey.currentState?.refreshMemories();
-        },
-      ),
     ];
   }
 
@@ -100,11 +95,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: Icon(Icons.psychology_outlined),
               activeIcon: Icon(Icons.psychology),
               label: 'Ask Mind',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile',
             ),
           ],
         ),

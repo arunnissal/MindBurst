@@ -4,6 +4,7 @@ import '../theme/app_theme.dart';
 import '../database/db_helper.dart';
 import '../services/llm_service.dart';
 import 'understanding_screen.dart';
+import 'profile_screen.dart';
 
 class BurstScreen extends StatefulWidget {
   final VoidCallback onSaved;
@@ -284,6 +285,51 @@ class _BurstScreenState extends State<BurstScreen> with SingleTickerProviderStat
             ),
             tooltip: 'AI Engine Settings',
             onPressed: _showAISettings,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 14.0, left: 4.0),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(
+                      onProfileUpdated: () {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                );
+                setState(() {});
+              },
+              borderRadius: BorderRadius.circular(22),
+              child: Container(
+                padding: const EdgeInsets.all(2.5),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: AppTheme.primaryGradient,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.primary.withOpacity(0.35),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: const Icon(
+                    Icons.person_rounded,
+                    color: AppTheme.primary,
+                    size: 19,
+                  ),
+                ),
+              ),
+            ),
           ),
         ],
       ),

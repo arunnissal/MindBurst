@@ -29,10 +29,30 @@ class AllScreenState extends State<AllScreen> {
   UserProfile _userProfile = UserProfile();
 
   List<String> get _categories {
-    if (_userProfile.livingSituation == 'home') {
-      return ['All', 'Reminders', 'Tasks', 'Home', 'College', 'Carry', 'Notes', 'Places', 'Projects'];
+    final living = _userProfile.livingSituation;
+    final prof = _userProfile.profession;
+
+    final base = ['All', 'Reminders', 'Tasks'];
+    if (living == 'hostel') {
+      base.add('Hostel');
+    } else if (living == 'rented') {
+      base.add('Rent');
+    } else {
+      base.add('Home');
     }
-    return ['All', 'Reminders', 'Tasks', 'Hostel', 'College', 'Carry', 'Notes', 'Places', 'Projects'];
+
+    if (prof == 'student') {
+      base.add('College');
+    } else if (prof == 'professional') {
+      base.add('Work');
+    } else if (prof == 'business') {
+      base.add('Business');
+    } else {
+      base.add('Family');
+    }
+
+    base.addAll(['Carry', 'Shopping', 'Notes', 'Places']);
+    return base;
   }
 
   final List<String> _dateFilters = ['All', 'Today', 'Yesterday', 'This Week'];

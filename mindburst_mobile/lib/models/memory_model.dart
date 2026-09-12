@@ -164,7 +164,8 @@ class Memory {
 
 class UserProfile {
   final int? id;
-  final String livingSituation; // 'hostel' or 'home'
+  final String livingSituation; // 'hostel', 'rented', 'home'
+  final String profession; // 'student', 'professional', 'homemaker', 'business'
   final String? userName;
   final String? collegeName;
   final int rentDueDay; // 1 to 31 (default 5)
@@ -174,6 +175,7 @@ class UserProfile {
   UserProfile({
     this.id,
     this.livingSituation = 'hostel',
+    this.profession = 'student',
     this.userName,
     this.collegeName,
     this.rentDueDay = 5,
@@ -185,6 +187,7 @@ class UserProfile {
     return {
       'id': id,
       'living_situation': livingSituation,
+      'profession': profession,
       'user_name': userName,
       'college_name': collegeName,
       'rent_due_day': rentDueDay,
@@ -197,6 +200,7 @@ class UserProfile {
     return UserProfile(
       id: map['id'],
       livingSituation: map['living_situation'] ?? 'hostel',
+      profession: map['profession'] ?? 'student',
       userName: map['user_name'],
       collegeName: map['college_name'],
       rentDueDay: map['rent_due_day'] ?? 5,
@@ -208,6 +212,7 @@ class UserProfile {
   UserProfile copyWith({
     int? id,
     String? livingSituation,
+    String? profession,
     String? userName,
     String? collegeName,
     int? rentDueDay,
@@ -217,6 +222,7 @@ class UserProfile {
     return UserProfile(
       id: id ?? this.id,
       livingSituation: livingSituation ?? this.livingSituation,
+      profession: profession ?? this.profession,
       userName: userName ?? this.userName,
       collegeName: collegeName ?? this.collegeName,
       rentDueDay: rentDueDay ?? this.rentDueDay,

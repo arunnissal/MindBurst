@@ -211,6 +211,14 @@ class AIExtractor {
     String title = clause;
     String retention = 'Temporary';
 
+    final isNegation = cLower.contains("don't") ||
+        cLower.contains("dont") ||
+        cLower.contains("do not") ||
+        cLower.contains("vendam") ||
+        cLower.contains("koodathu") ||
+        cLower.contains("panna koodathu") ||
+        cLower.contains("never");
+
     // A. Carry Intent
     final isCarryVerb = cLower.contains('carry') ||
         cLower.contains('take') ||
@@ -234,7 +242,11 @@ class AIExtractor {
       'Passport', 'License', 'Helmet'
     ].contains(i));
 
-    if (isCarryVerb || (hasCarryItem && (places.isNotEmpty || cLower.contains('ku') || cLower.contains('to')))) {
+    if (isNegation) {
+      type = 'Note';
+      category = 'Notes';
+      title = _capitalizeFirstLetter(clause);
+    } else if (isCarryVerb || (hasCarryItem && (places.isNotEmpty || cLower.contains('ku') || cLower.contains('to')))) {
       type = 'Carry';
       category = 'Carry';
       final placeStr = places.isNotEmpty ? ' to ${places.first}' : '';

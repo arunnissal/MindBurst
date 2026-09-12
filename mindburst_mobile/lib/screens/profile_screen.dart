@@ -44,19 +44,51 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
-  Future<void> _updateLivingSituation(String situation) async {
-    final updated = _profile.copyWith(livingSituation: situation);
+  Future<void> _updateProfession(String prof) async {
+    final updated = _profile.copyWith(profession: prof);
     setState(() => _profile = updated);
     await DatabaseHelper.instance.saveUserProfile(updated);
     widget.onProfileUpdated?.call();
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          situation == 'hostel'
-              ? '🏢 Switched to Hostel Mode (Rent & Mess activated)'
-              : '🏡 Switched to Home Mode (Simplified personal focus)',
-        ),
+        content: Text('Switched role to ${_getProfessionName(prof)}'),
+        backgroundColor: AppTheme.primary,
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  String _getProfessionName(String prof) {
+    switch (prof) {
+      case 'professional':
+        return 'Working Professional 💼';
+      case 'homemaker':
+        return 'Homemaker / Family 🏡';
+      case 'business':
+        return 'Business / Freelance 🚀';
+      default:
+        return 'Student / Scholar 🎓';
+    }
+  }
+
+  Future<void> _updateLivingSituation(String situation) async {
+    final updated = _profile.copyWith(livingSituation: situation);
+    setState(() => _profile = updated);
+    await DatabaseHelper.instance.saveUserProfile(updated);
+    widget.onProfileUpdated?.call();
+    if (!mounted) return;
+
+    String msg = '🏡 Switched to Family Home Mode (Simplified personal focus)';
+    if (situation == 'hostel') {
+      msg = '🛏️ Switched to Hostel/PG Mode (Rent & Mess fee active)';
+    } else if (situation == 'rented') {
+      msg = '🏢 Switched to Rented House Mode (House rent active)';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
         backgroundColor: AppTheme.primary,
         duration: const Duration(seconds: 2),
       ),
@@ -219,6 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     final isHostel = _profile.livingSituation == 'hostel';
+    final isRented = _profile.livingSituation == 'rented';
 
     return Scaffold(
       backgroundColor: AppTheme.scaffoldBg,
@@ -234,40 +267,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Row(
                       children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back_ios_new, color: AppTheme.textPrimary, size: 20),
+                          onPressed: () => Navigator.pop(context),
+                        ),
                         Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: AppTheme.primary.withOpacity(0.15),
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(color: AppTheme.primary.withOpacity(0.3)),
                           ),
-                          child: const Icon(Icons.person_pin, color: AppTheme.primaryLight, size: 24),
+                          child: const Icon(Icons.tune_rounded, color: AppTheme.primary, size: 20),
                         ),
-                        const SizedBox(width: 12),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Profile & Context',
-                              style: TextStyle(
-                                color: AppTheme.textPrimary,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                        const SizedBox(width: 10),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Personal Context',
+                                style: TextStyle(
+                                  color: AppTheme.textPrimary,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            Text(
-                              'Personalized Second Brain Context',
-                              style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
-                            ),
-                          ],
+                              Text(
+                                'Adapts MindBurst to your life',
+                                style: TextStyle(color: AppTheme.textSecondary, fontSize: 11),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 20),
+
+                    // Section: Profession / Role
+                    const Text(
+                      'DAILY ROLE / PROFESSION',
+                      style: TextStyle(
+                        color: AppTheme.textSecondary,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildRoleCard('student', 'Student', 'College & study', Icons.school_outlined),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildRoleCard('professional', 'Worker', 'Office & career', Icons.business_center_outlined),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildRoleCard('homemaker', 'Homemaker', 'Family & home', Icons.family_restroom_outlined),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildRoleCard('business', 'Freelance/Biz', 'Clients & growth', Icons.rocket_launch_outlined),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 22),
 
                     // Section: Living Situation
                     const Text(
-                      'LIVING SITUATION',
+                      'LIVING ARRANGEMENT',
                       style: TextStyle(
                         color: AppTheme.textSecondary,
                         fontSize: 11,
@@ -281,31 +356,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           child: _buildLivingOption(
                             title: 'Hostel / PG',
-                            subtitle: 'Room, rent & mess sync',
+                            subtitle: 'Room & mess sync',
                             icon: Icons.apartment_rounded,
-                            isSelected: isHostel,
+                            isSelected: _profile.livingSituation == 'hostel',
                             onTap: () => _updateLivingSituation('hostel'),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: _buildLivingOption(
-                            title: 'Home',
-                            subtitle: 'Day scholar & family life',
+                            title: 'Rented House',
+                            subtitle: 'Rent & utilities',
+                            icon: Icons.location_city_rounded,
+                            isSelected: _profile.livingSituation == 'rented',
+                            onTap: () => _updateLivingSituation('rented'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildLivingOption(
+                            title: 'Family Home',
+                            subtitle: 'Own family home',
                             icon: Icons.home_rounded,
-                            isSelected: !isHostel,
+                            isSelected: _profile.livingSituation == 'home',
                             onTap: () => _updateLivingSituation('home'),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 22),
 
-                    // Section: Hostel Recurring Obligations (Only when Hostel is active)
-                    if (isHostel) ...[
-                      const Text(
-                        'HOSTEL MONTHLY DUES',
-                        style: TextStyle(
+                    // Section: Recurring Obligations (Only when Hostel or Rented House is active)
+                    if (isHostel || isRented) ...[
+                      Text(
+                        isHostel ? 'HOSTEL MONTHLY DUES' : 'HOUSE RENT DUES',
+                        style: const TextStyle(
                           color: AppTheme.goldAccent,
                           fontSize: 11,
                           fontWeight: FontWeight.bold,
@@ -326,13 +411,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Row(
+                                Row(
                                   children: [
-                                    Icon(Icons.calendar_month, color: AppTheme.goldAccent, size: 20),
+                                    const Icon(Icons.calendar_month, color: AppTheme.goldAccent, size: 20),
                                     SizedBox(width: 8),
                                     Text(
-                                      'Hostel Rent Due Date',
-                                      style: TextStyle(
+                                      isHostel ? 'Hostel Rent Due Date' : 'House Rent Due Date',
+                                      style: const TextStyle(
                                         color: AppTheme.textPrimary,
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14,
@@ -390,68 +475,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 );
                               }).toList(),
                             ),
-                            const Divider(color: AppTheme.cardBorder, height: 24),
+                            if (isHostel) ...[
+                              const Divider(color: AppTheme.cardBorder, height: 24),
 
-                            // Mess Fee Section
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Row(
+                              // Mess Fee Section
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Row(
+                                    children: [
+                                      Icon(Icons.restaurant_menu, color: AppTheme.primaryLight, size: 20),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Mess Fee Due Date',
+                                        style: TextStyle(
+                                          color: AppTheme.textPrimary,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Switch(
+                                    value: _profile.hasMessFee,
+                                    activeColor: AppTheme.primary,
+                                    onChanged: _toggleMessFee,
+                                  ),
+                                ],
+                              ),
+                              if (_profile.hasMessFee) ...[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Icon(Icons.restaurant_menu, color: AppTheme.primaryLight, size: 20),
-                                    SizedBox(width: 8),
-                                    Text(
-                                      'Mess Fee Due Date',
-                                      style: TextStyle(
-                                        color: AppTheme.textPrimary,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
+                                    const Text(
+                                      'Paid separately on:',
+                                      style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.primary.withOpacity(0.15),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(color: AppTheme.primary.withOpacity(0.4)),
+                                      ),
+                                      child: Text(
+                                        'Day ${_profile.messDueDay}',
+                                        style: const TextStyle(
+                                          color: AppTheme.primaryLight,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                Switch(
-                                  value: _profile.hasMessFee,
+                                Slider(
+                                  value: _profile.messDueDay.toDouble(),
+                                  min: 1,
+                                  max: 31,
+                                  divisions: 30,
                                   activeColor: AppTheme.primary,
-                                  onChanged: _toggleMessFee,
+                                  inactiveColor: AppTheme.cardBorder,
+                                  onChanged: (val) => _updateMessDay(val.round()),
                                 ),
                               ],
-                            ),
-                            if (_profile.hasMessFee) ...[
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text(
-                                    'Paid separately on:',
-                                    style: TextStyle(color: AppTheme.textSecondary, fontSize: 12),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.primary.withOpacity(0.15),
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: AppTheme.primary.withOpacity(0.4)),
-                                    ),
-                                    child: Text(
-                                      'Day ${_profile.messDueDay}',
-                                      style: const TextStyle(
-                                        color: AppTheme.primaryLight,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Slider(
-                                value: _profile.messDueDay.toDouble(),
-                                min: 1,
-                                max: 31,
-                                divisions: 30,
-                                activeColor: AppTheme.primary,
-                                inactiveColor: AppTheme.cardBorder,
-                                onChanged: (val) => _updateMessDay(val.round()),
-                              ),
                             ],
                           ],
                         ),
@@ -588,6 +675,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 30),
                   ],
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoleCard(String roleKey, String title, String subtitle, IconData icon) {
+    final isSelected = _profile.profession == roleKey;
+    return InkWell(
+      onTap: () => _updateProfession(roleKey),
+      borderRadius: BorderRadius.circular(14),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? AppTheme.primary.withOpacity(0.12) : AppTheme.cardBg,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: isSelected ? AppTheme.primary : AppTheme.cardBorder,
+            width: isSelected ? 1.6 : 1.0,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: isSelected ? AppTheme.primary : AppTheme.textSecondary, size: 20),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: isSelected ? AppTheme.textPrimary : AppTheme.textSecondary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(color: AppTheme.textSecondary, fontSize: 9),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
           ],
