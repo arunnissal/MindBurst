@@ -48,9 +48,41 @@ class AIExtractor {
         : records;
   }
 
+  static String _cleanPreamble(String text) {
+    var t = text.trim();
+    final preambleRegex = RegExp(
+      r'^(?:hey\s+mind[\,\s]*|bro\s+listen[\,\s]*|uhm\s+actually[\,\s]*|one\s+more\s+thing[\,\s]*|please[\,\s]*|can\s+you[\,\s]*|machan[\,\s]*)',
+      caseSensitive: false,
+    );
+    return t.replaceFirst(preambleRegex, '').trim();
+  }
+
+  static String _normalizeShorthand(String text) {
+    var t = text;
+    final shorthands = {
+      r'\btmrw\b': 'tomorrow',
+      r'\btmr\b': 'tomorrow',
+      r'\b2moro\b': 'tomorrow',
+      r'\bclg\b': 'college',
+      r'\bcllg\b': 'college',
+      r'\bhosptl\b': 'hospital',
+      r'\bhosp\b': 'hospital',
+      r'\bevng\b': 'evening',
+      r'\bmrng\b': 'morning',
+      r'\bnxt\b': 'next',
+    };
+    for (final entry in shorthands.entries) {
+      t = t.replaceAll(RegExp(entry.key, caseSensitive: false), entry.value);
+    }
+    return t;
+  }
+
   static List<String> _splitIntoClauses(String text) {
+    final cleaned = _cleanPreamble(text);
+    var normalized = _normalizeShorthand(cleaned);
+
     // Pre-normalize times written with dots (e.g. "7.40pm", "7.30 am", "7.40 pm") to colons
-    var normalized = text.replaceAllMapped(
+    normalized = normalized.replaceAllMapped(
       RegExp(r'\b(\d{1,2})\.(\d{2})\s*(am|pm|AM|PM)?\b'),
       (m) => '${m.group(1)}:${m.group(2)}${m.group(3) != null ? " ${m.group(3)}" : ""}',
     );
@@ -85,8 +117,11 @@ class AIExtractor {
     String? date;
     String? time;
 
-    // --- 1. Detect Dates ---
-    if (cLower.contains('tomorrow') || cLower.contains('naalaiku') || cLower.contains('nalaiku')) {
+    // --- 1. Detect Dates (including relative day-after-tomorrow) ---
+    if (cLower.contains('day after tomorrow') || cLower.contains('marunaal') || cLower.contains('naalaiku marunaal')) {
+      final now = DateTime.now();
+      date = DateFormat('yyyy-MM-dd').format(now.add(const Duration(days: 2)));
+    } else if (cLower.contains('tomorrow') || cLower.contains('naalaiku') || cLower.contains('nalaiku')) {
       date = resolveDate('Tomorrow');
     } else if (cLower.contains('today') || cLower.contains('inru') || cLower.contains('inniku') || cLower.contains('tonight')) {
       date = resolveDate('Today');
@@ -212,7 +247,19 @@ class AIExtractor {
     String title = clause;
     String retention = 'Temporary';
 
-    final isNegation = cLower.contains("don't") ||
+    final isDoubleNegation = cLower.contains("don't forget") ||
+        cLower.contains("dont forget") ||
+        cLower.contains("do not forget") ||
+        cLower.contains("don't miss") ||
+        cLower.contains("dont miss") ||
+        cLower.contains("do not miss") ||
+        cLower.contains("never skip") ||
+        cLower.contains("maranthuraadha") ||
+        cLower.contains("maranthu poidaadha") ||
+        cLower.contains("marakkaama");
+
+    final isTrueNegation = !isDoubleNegation && (
+        cLower.contains("don't") ||
         cLower.contains("dont") ||
         cLower.contains("do not") ||
         cLower.contains("vendam") ||
@@ -220,7 +267,8 @@ class AIExtractor {
         cLower.contains("panna koodathu") ||
         cLower.contains("never") ||
         cLower.contains("avoid") ||
-        cLower.contains("no need");
+        cLower.contains("no need")
+    );
 
     // On-Device Custom Edge Neural Model prediction
     final neuralPred = EdgeNeuralModel.instance.predict(clause);
@@ -249,7 +297,7 @@ class AIExtractor {
       'Passport', 'License', 'Helmet'
     ].contains(i));
 
-    if (isNegation) {
+    if (isTrueNegation) {
       type = 'Note';
       category = 'Notes';
       title = _capitalizeFirstLetter(clause);
@@ -437,6 +485,15 @@ class AIExtractor {
       type = 'Note';
       category = 'Notes';
       title = _capitalizeFirstLetter(clause);
+    }
+
+    // Clean double negation prefixes from title (e.g. "Don't forget to pay electricity bill" -> "Pay electricity bill")
+    if (isDoubleNegation) {
+      final cleanPrefixRegex = RegExp(
+        r"^(?:don\'t\s+forget\s+(?:to\s+)?|dont\s+forget\s+(?:to\s+)?|do\s+not\s+forget\s+(?:to\s+)?|don\'t\s+miss\s+(?:the\s+)?|dont\s+miss\s+(?:the\s+)?|do\s+not\s+miss\s+(?:the\s+)?|never\s+skip\s+|maranthu\s+poidaadha\s+|maranthuraadha\s+|marakkaama\s+)",
+        caseSensitive: false,
+      );
+      title = _capitalizeFirstLetter(title.replaceFirst(cleanPrefixRegex, '').trim());
     }
 
     // Clean generic noise words from entities

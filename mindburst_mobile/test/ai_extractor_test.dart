@@ -91,4 +91,37 @@ void main() {
     expect(pred4.intent, 'Reminder');
     expect(pred4.confidence, greaterThan(0.60));
   });
+
+  test('Double-negation correctly parsed as affirmative task', () {
+    final memories = AIExtractor.extractMemories("Don't forget to pay electricity bill today", 40);
+    expect(memories.length, 1);
+    expect(memories[0].category, anyOf('Tasks', 'Reminders'));
+    expect(memories[0].title.toLowerCase(), anyOf(contains('pay electricity bill'), contains('pay bill')));
+    expect(memories[0].type, isNot('Note'));
+  });
+
+  test('Double-negation carry correctly parsed as Carry', () {
+    final memories = AIExtractor.extractMemories("Dont forget to bring hall ticket tomorrow", 41);
+    expect(memories.length, 1);
+    expect(memories[0].category, 'Carry');
+    expect(memories[0].items, contains('Hall Ticket'));
+  });
+
+  test('Mobile shorthand tmrw normalizes to tomorrow date', () {
+    final memories = AIExtractor.extractMemories("Tmrw morning 9 am submit lab record", 42);
+    expect(memories.length, 1);
+    expect(memories[0].date, isNotNull);
+  });
+
+  test('Relative date day after tomorrow correctly calculated', () {
+    final memories = AIExtractor.extractMemories("Day after tomorrow college fee pay pannanum", 43);
+    expect(memories.length, 1);
+    expect(memories[0].date, isNotNull);
+  });
+
+  test('Conversational preambles are stripped from title', () {
+    final memories = AIExtractor.extractMemories("Hey Mind, remind me to call manager at 6 PM", 44);
+    expect(memories.length, 1);
+    expect(memories[0].title.toLowerCase(), isNot(contains('hey mind')));
+  });
 }

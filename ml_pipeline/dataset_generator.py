@@ -2,7 +2,6 @@ import json
 import random
 import os
 
-# 7 Target Intent Classes
 INTENTS = [
     "Task",
     "Reminder",
@@ -13,177 +12,166 @@ INTENTS = [
     "Note"
 ]
 
-def generate_dataset(total_samples=1600):
+def generate_dataset(total_samples=1800):
     samples = []
     
-    # Templates & vocabularies for realistic English + Tanglish synthesis
-    
-    # 1. Tasks
+    # 1. Tasks & Double Negation Tasks
     task_verbs_en = ["complete", "finish", "submit", "prepare", "wash", "clean", "fix", "send", "update", "debug", "review"]
     task_verbs_ta = ["mudikanum", "pannanum", "wash pannanum", "clean panni vai", "send pannu", "ready pannu"]
-    task_objects_student = ["assignment", "lab record", "seminar ppt", "project report", "internship application", "exam notes"]
-    task_objects_prof = ["sprint tickets", "PR review", "quarterly deck", "client email", "architecture doc", "standup notes"]
-    task_objects_home = ["clothes", "kitchen sink", "hall room", "curtains", "fridge cleaning", "water filter change"]
-    task_objects_biz = ["client proposal", "vendor agreement", "monthly invoice", "quotation for customer", "balance sheet"]
+    task_objects = ["assignment", "lab record", "seminar ppt", "project report", "clothes", "kitchen sink", "client proposal", "invoice", "sprint tickets"]
     
-    # 2. Reminders
-    times = ["at 5 PM", "at 6:30 PM", "morning 9 AM", "night 10 PM", "in 2 hours", "by 4 PM", "sharp 7 AM", "afternoon 2 PM"]
+    # Standard tasks
+    for _ in range(200):
+        v = random.choice(task_verbs_en)
+        obj = random.choice(task_objects)
+        day = random.choice(["today", "tomorrow", "tmrw", "before Friday", "by evening", ""])
+        samples.append((f"{v.capitalize()} {obj} {day}".strip(), "Task"))
+        
+        v_ta = random.choice(task_verbs_ta)
+        samples.append((f"{obj.capitalize()} innaiku {v_ta}", "Task"))
+
+    # Double negation tasks (Must be classified as Task, NOT Note!)
+    double_neg_tasks = [
+        "Don't forget to submit lab record tomorrow",
+        "Dont forget to complete the assignment today",
+        "Do not miss submitting project report before Friday",
+        "Never skip washing clothes today",
+        "Maranthu poidaadha seminar ppt ready pannu",
+        "Marakkama lab record finish pannanum tmrw",
+        "Don't forget to send client proposal by evng",
+        "Do not delay fixing the kitchen sink"
+    ]
+    for _ in range(12):
+        for s in double_neg_tasks:
+            samples.append((s, "Task"))
+
+    # 2. Reminders & Double Negation Reminders
+    times = ["at 5 PM", "at 6:30 PM", "morning 9 AM", "night 10 PM", "in 2 hours", "by 4 PM", "sharp 7 AM", "afternoon 2 PM", "evng 6 pm"]
     times_ta = ["innaiku 5 manikku", "naalaiku kaalaila 8 ku", "evening 6:30 ku", "night 9 ku", "2 mani nerathula"]
-    reminder_actions = ["call mom", "call manager", "take blood pressure medicine", "take vitamin tablet", "zoom meeting", "doctor appointment", "alarm for medicine", "water intake"]
-    reminder_actions_ta = ["amma ku call pannu", "doctor appointment marakadha", "medicine podanum", "manager call irukku", "tab pottuko"]
+    reminder_actions = ["call mom", "call manager", "take blood pressure medicine", "take vitamin tablet", "zoom meeting", "doctor appointment", "water intake"]
+    
+    for _ in range(200):
+        act = random.choice(reminder_actions)
+        t = random.choice(times)
+        preamble = random.choice(["Hey Mind, ", "Please ", "Bro listen, ", ""])
+        samples.append((f"{preamble}remind me to {act} {t}".strip(), "Reminder"))
+        
+        act_ta = random.choice(["amma ku call pannu", "doctor appointment marakadha", "medicine podanum", "manager call irukku"])
+        t_ta = random.choice(times_ta)
+        samples.append((f"{act_ta} {t_ta}", "Reminder"))
+
+    # Double negation reminders
+    double_neg_reminders = [
+        "Do not miss the 5 PM client standup call",
+        "Don't forget to call doctor at 6:30 PM",
+        "Do not forget meeting with manager at 4 PM",
+        "Maranthu poidaadha evening 6 ku gym polam",
+        "Marakkama take medicine at night 10 PM",
+        "Don't miss the 9 AM team standup tomorrow"
+    ]
+    for _ in range(12):
+        for s in double_neg_reminders:
+            samples.append((s, "Reminder"))
 
     # 3. Shopping
-    shop_verbs_en = ["buy", "purchase", "get", "pick up", "order", "restock"]
-    shop_verbs_ta = ["vangitu va", "vangikanum", "vaanga vendum", "order pannu", "kadaila vaangu"]
     shop_items = [
         "milk and bread", "eggs and bananas", "curd and tomatoes", "onions and potatoes",
         "coffee powder", "toothpaste and soap", "notebook and blue pen", "shampoo bottle",
         "paracetamol and vicks", "atta flour and cooking oil", "maggie and biscuits",
-        "washing detergent", "fruits for home", "chicken and masala"
+        "2 kg onions, 1 litre milk, and 6 eggs", "1.5 kg tomatoes and sugar"
     ]
-    shop_items_ta = [
-        "paal and bread", "muttai and thakkali", "vengayam and urulai", "kaapi thool",
-        "soap and paste", "marundhu and tablet", "arisi and paruppu", "oil packet"
-    ]
+    for _ in range(200):
+        item = random.choice(shop_items)
+        v = random.choice(["buy", "purchase", "pick up", "order", "restock"])
+        samples.append((f"{v.capitalize()} {item} today from supermarket", "Shopping"))
+        
+        item_ta = random.choice(["paal and bread", "muttai and thakkali", "vengayam and urulai", "kaapi thool", "oil packet"])
+        samples.append((f"Kadaila {item_ta} vangitu va", "Shopping"))
 
-    # 4. Payment_Due
-    pay_verbs = ["pay", "clear", "transfer", "send money for", "settle", "gpay", "phonepe"]
-    pay_verbs_ta = ["kattunum", "pay pannanum", "gpay pannu", "settle pannanum", "transfer pannidu"]
-    pay_objects_hostel = ["hostel rent", "mess fee", "room rent on 5th", "caution deposit", "hostel electricity charge"]
-    pay_objects_rent = ["house rent on 1st", "maintenance fee", "water bill", "flat rent to owner"]
-    pay_objects_general = ["wifi bill", "electricity bill", "mobile recharge on 28th", "gym membership fee", "credit card bill", "milkman payment", "college tuition fee"]
-    
-    # 5. Carry
-    carry_verbs = ["carry", "bring", "take", "pack", "don't forget to take", "keep in bag"]
-    carry_verbs_ta = ["eduthutu po", "bag la vai", "marakkama kondu po", "maranthudadha take"]
+    # 4. Payment_Due & Double Negation Bills
+    pay_objects = [
+        "hostel rent on 5th", "mess fee", "house rent on 1st", "electricity bill",
+        "wifi bill", "mobile recharge on 28th", "gym membership fee", "college tuition fee", "clg fee"
+    ]
+    for _ in range(190):
+        bill = random.choice(pay_objects)
+        v = random.choice(["pay", "clear", "transfer", "settle", "gpay", "phonepe"])
+        samples.append((f"{v.capitalize()} {bill}", "Payment_Due"))
+        samples.append((f"{bill.capitalize()} innaiku gpay pannu", "Payment_Due"))
+
+    # Double negation payments
+    double_neg_payments = [
+        "Don't forget to pay electricity bill today",
+        "Dont forget to gpay hostel rent on 5th",
+        "Do not delay paying house rent on 1st",
+        "Maranthu poidaadha room rent 5th ku kattanum",
+        "Marakkama mess fee gpay pannanum",
+        "Don't forget mobile recharge on 28th"
+    ]
+    for _ in range(12):
+        for s in double_neg_payments:
+            samples.append((s, "Payment_Due"))
+
+    # 5. Carry & Double Negation Carry
     carry_items = [
         "laptop and charger", "umbrella and raincoat", "college id card", "hall ticket",
-        "water bottle", "house keys", "power bank", "bike RC book and helmet",
-        "office badge", "stethoscope and lab coat", "gym shoes and towel", "passport and ticket"
+        "water bottle", "house keys", "power bank", "bike rc book and helmet", "passport and ticket"
     ]
-    
-    # 6. Places
-    place_verbs = ["go to", "visit", "reach", "travel to", "drop by", "head to"]
-    place_verbs_ta = ["poganum", "poitu va", "visit panrom", "reach aaganum"]
-    places = [
-        "Apollo hospital", "central library", "metro station", "railway station",
-        "SBI bank branch", "supermarket", "car service center", "dentist clinic",
-        "client office in T Nagar", "airport terminal 2", "post office", "gym center"
-    ]
+    for _ in range(190):
+        item = random.choice(carry_items)
+        v = random.choice(["carry", "take", "bring", "pack", "keep in bag"])
+        samples.append((f"{v.capitalize()} {item} tomorrow to college", "Carry"))
+        samples.append((f"{item.capitalize()} marakkama eduthutu po", "Carry"))
 
-    # 7. Notes & Negation Protection
-    note_ideas = [
-        "Idea for startup: automated expense tracker",
-        "Book recommendation: Atomic Habits by James Clear",
-        "Movie to watch on weekend: Interstellar",
-        "Quote: Consistency beats talent every single day",
-        "Meeting summary: discuss quarterly roadmap next Monday",
-        "Research about Flutter on-device neural model quantization",
-        "Wifi password for new router is SecretPass99"
+    # Double negation carry
+    double_neg_carry = [
+        "Dont forget to bring hall ticket tomorrow",
+        "Don't forget to carry laptop and charger to lab",
+        "Do not forget to take umbrella and raincoat",
+        "Maranthu poidaadha college id card eduthutu po",
+        "Raincoat and umbrella bag la vachiko mazhai peiyum"
     ]
-    # Negation samples (must be classified as Note/Reminder, NOT Task/Shopping)
-    negations = [
+    for _ in range(12):
+        for s in double_neg_carry:
+            samples.append((s, "Carry"))
+
+    # 6. Places
+    places = ["Apollo hospital", "central library", "metro station", "railway station", "SBI bank branch", "supermarket", "car service center", "dentist clinic", "hosptl"]
+    for _ in range(180):
+        p = random.choice(places)
+        samples.append((f"Go to {p} tomorrow at 10 AM", "Place"))
+        samples.append((f"Reach {p} by 4 pm", "Place"))
+        samples.append((f"{p} ku visit panrom evening", "Place"))
+        samples.append((f"Innaiku clg mudinjadhum direct ah {p} reach aaganum", "Place"))
+
+    # 7. Pure Negation & Notes (MUST REMAIN NOTE!)
+    pure_negations = [
         "Don't buy milk today fridge has two packets",
         "Milk vendam innaiku curd already irukku",
         "Do not pay rent today owner said wait till 10th",
+        "Avoid going to SBI bank today it is closed",
         "Never skip morning breakfast",
         "Don't wash white shirt with colored clothes",
         "Veliya poga vendam heavy rain outside",
         "Don't carry laptop to lab prof said no need",
         "No need to buy eggs today",
         "Don't submit project yet pending review",
-        "Avoid going to bank today it is a public holiday"
+        "Idea for startup: automated expense tracker",
+        "Book recommendation: Atomic Habits by James Clear",
+        "Wifi password for new router is SecretPass99"
     ]
-
-    # Generate balanced samples
-    # Tasks
-    for _ in range(250):
-        v = random.choice(task_verbs_en)
-        obj = random.choice(task_objects_student + task_objects_prof + task_objects_home + task_objects_biz)
-        day = random.choice(["today", "tomorrow", "before Friday", "by evening", "this weekend", ""])
-        samples.append((f"{v.capitalize()} {obj} {day}".strip(), "Task"))
-        
-        # Tanglish tasks
-        v_ta = random.choice(task_verbs_ta)
-        samples.append((f"{obj.capitalize()} innaiku {v_ta}", "Task"))
-
-    # Reminders
-    for _ in range(240):
-        act = random.choice(reminder_actions)
-        t = random.choice(times)
-        samples.append((f"Remind me to {act} {t}", "Reminder"))
-        
-        # Tanglish reminders
-        act_ta = random.choice(reminder_actions_ta)
-        t_ta = random.choice(times_ta)
-        samples.append((f"{act_ta} {t_ta}", "Reminder"))
-
-    # Shopping
-    for _ in range(240):
-        v = random.choice(shop_verbs_en)
-        item = random.choice(shop_items)
-        when = random.choice(["today", "from supermarket", "in evening", "for home", ""])
-        samples.append((f"{v.capitalize()} {item} {when}".strip(), "Shopping"))
-        
-        # Tanglish shopping
-        v_ta = random.choice(shop_verbs_ta)
-        item_ta = random.choice(shop_items_ta)
-        samples.append((f"Kadaila {item_ta} {v_ta}", "Shopping"))
-
-    # Payment_Due
-    for _ in range(240):
-        v = random.choice(pay_verbs)
-        bill = random.choice(pay_objects_hostel + pay_objects_rent + pay_objects_general)
-        samples.append((f"{v.capitalize()} {bill}", "Payment_Due"))
-        
-        # Tanglish payment
-        v_ta = random.choice(pay_verbs_ta)
-        samples.append((f"{bill.capitalize()} {v_ta}", "Payment_Due"))
-
-    # Carry
-    for _ in range(220):
-        v = random.choice(carry_verbs)
-        item = random.choice(carry_items)
-        where = random.choice(["tomorrow to college", "for tomorrow office", "when going out", "in backpack", ""])
-        samples.append((f"{v.capitalize()} {item} {where}".strip(), "Carry"))
-        
-        # Tanglish carry
-        v_ta = random.choice(carry_verbs_ta)
-        samples.append((f"{item.capitalize()} {v_ta}", "Carry"))
-
-    # Places
-    for _ in range(220):
-        v = random.choice(place_verbs)
-        p = random.choice(places)
-        when = random.choice(["tomorrow 10 AM", "today evening", "this Saturday", "at 4 PM", ""])
-        samples.append((f"{v.capitalize()} {p} {when}".strip(), "Place"))
-        
-        # Tanglish place
-        v_ta = random.choice(place_verbs_ta)
-        samples.append((f"{p} ku {v_ta}", "Place"))
-
-    # Notes & Negation Protection
-    for _ in range(120):
-        samples.append((random.choice(note_ideas), "Note"))
-    for _ in range(120):
-        samples.append((random.choice(negations), "Note"))
+    for _ in range(14):
+        for s in pure_negations:
+            samples.append((s, "Note"))
 
     # Shuffle
     random.seed(42)
     random.shuffle(samples)
-    
     return samples[:total_samples]
 
 if __name__ == "__main__":
     os.makedirs("ml_pipeline", exist_ok=True)
-    data = generate_dataset(1600)
-    
+    data = generate_dataset(1800)
     with open("ml_pipeline/dataset.json", "w", encoding="utf-8") as f:
         json.dump([{"text": text, "intent": intent} for text, intent in data], f, indent=2)
-        
-    print(f"Generated {len(data)} labeled training samples across 7 intent classes!")
-    counts = {}
-    for _, intent in data:
-        counts[intent] = counts.get(intent, 0) + 1
-    for k, v in sorted(counts.items()):
-        print(f"  {k:15}: {v} samples")
+    print(f"Generated {len(data)} enhanced training samples!")
