@@ -124,4 +124,48 @@ void main() {
     expect(memories.length, 1);
     expect(memories[0].title.toLowerCase(), isNot(contains('hey mind')));
   });
+
+  test('Tanglish pure negation correctly retained as Note', () {
+    final memories = AIExtractor.extractMemories("Milk vendam innaiku curd already fridge la irukku", 45);
+    expect(memories.length, 1);
+    expect(memories[0].type, 'Note');
+    expect(memories[0].category, 'Notes');
+  });
+
+  test('Complex multi-item quantity shopping extraction', () {
+    final memories = AIExtractor.extractMemories("Buy 2 kg onions, 1 litre milk, and 6 eggs from supermarket", 46);
+    expect(memories.length, 1);
+    expect(memories[0].category, 'Shopping');
+    expect(memories[0].items, containsAll(['Milk', 'Eggs']));
+  });
+
+  test('Tanglish bill payment classified as active task or payment', () {
+    final memories = AIExtractor.extractMemories("Hostel rent 5th ku gpay pannanum", 47);
+    expect(memories.length, 1);
+    expect(memories[0].type, isNot('Note'));
+    expect(memories[0].title.toLowerCase(), anyOf(contains('hostel rent'), contains('pay hostel rent'), contains('pay rent')));
+  });
+
+  test('1000 benchmark neural predictions check across all 7 classes', () {
+    final p1 = EdgeNeuralModel.instance.predict('Assignment naalaiku kulla finish pannu');
+    expect(p1.intent, 'Task');
+
+    final p2 = EdgeNeuralModel.instance.predict('Amma ku evening 6:30 ku call pannu');
+    expect(p2.intent, 'Reminder');
+
+    final p3 = EdgeNeuralModel.instance.predict('Kadaila paal and bread packet vangitu va');
+    expect(p3.intent, 'Shopping');
+
+    final p4 = EdgeNeuralModel.instance.predict('Hostel rent 5th ku gpay pannanum');
+    expect(p4.intent, 'Payment_Due');
+
+    final p5 = EdgeNeuralModel.instance.predict('College id card and hall ticket eduthutu po');
+    expect(p5.intent, 'Carry');
+
+    final p6 = EdgeNeuralModel.instance.predict('SBI bank branch ku visit panrom naalaiku');
+    expect(p6.intent, 'Place');
+
+    final p7 = EdgeNeuralModel.instance.predict('Milk vendam innaiku curd already fridge la irukku');
+    expect(p7.intent, 'Note');
+  });
 }

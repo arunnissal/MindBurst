@@ -94,7 +94,7 @@ class AIExtractor {
     );
 
     final clauseRegex = RegExp(
-      r'(?:[\.\;\!\?\n]+|\,\s*and\s+|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b)))',
+      r'(?:[\.\;\!\?\n]+|\,\s*and\s+(?=(?:also\b|then\b|remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b))|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b)))',
       caseSensitive: false,
     );
 

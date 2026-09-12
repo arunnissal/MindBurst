@@ -30,7 +30,7 @@ def train_and_export():
     vectorizer = TfidfVectorizer(
         ngram_range=(1, 2),
         sublinear_tf=True,
-        max_features=1200,
+        max_features=1800,
         token_pattern=r"(?u)\b\w+\b"
     )
     X_train_vec = vectorizer.fit_transform(X_train)
@@ -43,8 +43,8 @@ def train_and_export():
     
     # Train Logistic / Single-Layer Neural Network with Softmax
     model = LogisticRegression(
-        C=4.0,
-        max_iter=300,
+        C=5.0,
+        max_iter=400,
         random_state=42,
         class_weight="balanced"
     )
