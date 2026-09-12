@@ -6,8 +6,15 @@ import '../models/memory_model.dart';
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
   static Database? _database;
+  static void Function()? onDatabaseChanged;
 
   DatabaseHelper._init();
+
+  void _notifyChanged() {
+    try {
+      onDatabaseChanged?.call();
+    } catch (_) {}
+  }
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -235,6 +242,29 @@ class DatabaseHelper {
         }
       }
     });
+    _notifyChanged();
+  }
+
+  Future<int> insertMemory(Memory mem) async {
+    await saveMemories([mem]);
+    return mem.id ?? 0;
+  }
+
+  Future<List<Memory>> getAllMemories() async {
+    final db = await database;
+    final rows = await db.rawQuery('''
+      SELECT m.*, COALESCE(c.original_text, '') AS original_text 
+      FROM memories m
+      LEFT JOIN captures c ON m.capture_id = c.id
+      ORDER BY m.id DESC
+    ''');
+    List<Memory> list = [];
+    for (final row in rows) {
+      final mem = Memory.fromMap(row);
+      await _loadEntities(db, mem);
+      list.add(mem);
+    }
+    return list;
   }
 
   Future<List<Memory>> getActiveMemories({
@@ -370,6 +400,7 @@ class DatabaseHelper {
         }
       }
     });
+    _notifyChanged();
   }
 
   Future<void> toggleComplete(Memory mem) async {
@@ -388,6 +419,7 @@ class DatabaseHelper {
     );
     mem.completed = newCompleted;
     mem.completedAt = newCompleted ? now : null;
+    _notifyChanged();
   }
 
   Future<void> softDelete(int id) async {
@@ -399,6 +431,7 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+    _notifyChanged();
   }
 
   Future<void> restoreMemory(int id) async {
@@ -409,12 +442,14 @@ class DatabaseHelper {
       where: 'id = ?',
       whereArgs: [id],
     );
+    _notifyChanged();
   }
 
   Future<void> deleteForever(int id) async {
     final db = await database;
     await db.delete('entities', where: 'memory_id = ?', whereArgs: [id]);
     await db.delete('memories', where: 'id = ?', whereArgs: [id]);
+    _notifyChanged();
   }
 
   Future<void> _loadEntities(Database db, Memory memory) async {

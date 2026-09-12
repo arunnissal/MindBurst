@@ -3,6 +3,7 @@ import 'package:sqflite/sqflite.dart';
 import '../theme/app_theme.dart';
 import '../models/memory_model.dart';
 import '../database/db_helper.dart';
+import '../services/vault_storage_service.dart';
 
 class ProfileScreen extends StatefulWidget {
   final VoidCallback? onProfileUpdated;
@@ -19,6 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   List<RecurringBill> _bills = [];
   int _totalMemories = 0;
   int _totalCaptures = 0;
+  VaultStats? _vaultStats;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final memories = await DatabaseHelper.instance.getActiveMemories();
     final db = await DatabaseHelper.instance.database;
     final captureCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM captures')) ?? 0;
+    final vaultStats = await VaultStorageService.instance.getVaultStats();
 
     if (!mounted) return;
     setState(() {
@@ -40,6 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       _bills = bills;
       _totalMemories = memories.length;
       _totalCaptures = captureCount;
+      _vaultStats = vaultStats;
       _isLoading = false;
     });
   }
@@ -672,6 +676,123 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: 16),
+
+                    // Section: 100% Offline Local File Vault
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppTheme.cardBg,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppTheme.primary.withOpacity(0.3)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.primary.withOpacity(0.12),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: const Icon(Icons.folder_zip_outlined, color: AppTheme.primaryLight, size: 20),
+                              ),
+                              const SizedBox(width: 10),
+                              const Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'LOCAL FILE VAULT',
+                                      style: TextStyle(
+                                        color: AppTheme.primaryLight,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.1,
+                                      ),
+                                    ),
+                                    Text(
+                                      '100% Offline • Auto-Mirrored to JSON',
+                                      style: TextStyle(color: AppTheme.textSecondary, fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: AppTheme.greenAccent.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Text(
+                                  'LIVE',
+                                  style: TextStyle(color: AppTheme.greenAccent, fontSize: 10, fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'All memories are continuously mirrored to a local file (mindburst_vault.json). You can export an offline backup or restore memories anytime.',
+                            style: TextStyle(color: AppTheme.textSecondary.withOpacity(0.9), fontSize: 11, height: 1.4),
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppTheme.scaffoldBg,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Vault Storage: ${_vaultStats?.formattedSize ?? "Calculating..."}',
+                                  style: const TextStyle(color: AppTheme.textPrimary, fontSize: 11, fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  '${_vaultStats?.totalMemories ?? _totalMemories} Memories',
+                                  style: const TextStyle(color: AppTheme.primaryLight, fontSize: 11, fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 14),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: _exportVault,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppTheme.primary,
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  ),
+                                  icon: const Icon(Icons.file_download_outlined, size: 16),
+                                  label: const Text('Export Backup', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: OutlinedButton.icon(
+                                  onPressed: _restoreVault,
+                                  style: OutlinedButton.styleFrom(
+                                    foregroundColor: AppTheme.textPrimary,
+                                    side: const BorderSide(color: AppTheme.cardBorder),
+                                    padding: const EdgeInsets.symmetric(vertical: 10),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  ),
+                                  icon: const Icon(Icons.settings_backup_restore, size: 16),
+                                  label: const Text('Restore File', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                     const SizedBox(height: 30),
                   ],
                 ),
@@ -681,6 +802,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _exportVault() async {
+    try {
+      final file = await VaultStorageService.instance.exportVaultToFile();
+      if (!mounted) return;
+      await _loadProfileData();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('✅ Offline Vault exported to:\n${file.path}'),
+          backgroundColor: AppTheme.primary,
+          duration: const Duration(seconds: 4),
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Export failed: $e'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+    }
+  }
+
+  Future<void> _restoreVault() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppTheme.cardBg,
+        title: const Text('Restore from Local Vault?', style: TextStyle(color: AppTheme.textPrimary)),
+        content: const Text(
+          'This will import memories saved in your local mindburst_vault.json file into the app without cloud dependence.',
+          style: TextStyle(color: AppTheme.textSecondary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel', style: TextStyle(color: AppTheme.textSecondary)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Restore Memories'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      try {
+        final stats = await VaultStorageService.instance.getVaultStats();
+        final count = await VaultStorageService.instance.importVaultFromFile(stats.filePath);
+        if (!mounted) return;
+        await _loadProfileData();
+        widget.onProfileUpdated?.call();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('✅ Successfully restored $count memories from local vault!'),
+            backgroundColor: AppTheme.primary,
+          ),
+        );
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Restore error: $e'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
   }
 
   Widget _buildRoleCard(String roleKey, String title, String subtitle, IconData icon) {

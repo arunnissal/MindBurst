@@ -94,13 +94,28 @@ class AIExtractor {
     );
 
     final clauseRegex = RegExp(
-      r'(?:[\.\;\!\?\n]+|\,\s*and\s+(?=(?:also\b|then\b|remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b))|\band\s+also\b|\band\s+then\b|\bapram\b|\bapparam\b|\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b)))',
+      r'(?:'
+      r'[\.\;\!\?\n]+|'
+      r'\b(?:and\s+then|after\s+that(?:\s+also)?|and\s+after\s+that|and\s+also)\b|'
+      r'\b(?:plus\s+(?:remember\s+to|don.?t\s+forget\s+to|dont\s+forget\s+to|also)?)\b|'
+      r'\b(?:and\s+(?:please\s+)?(?:don.?t\s+forget\s+(?:to\s+)?|dont\s+forget\s+(?:to\s+)?|do\s+not\s+forget\s+(?:to\s+)?|don.?t\s+miss|dont\s+miss|never\s+skip))\b|'
+      r'\b(?:also\s+(?:need\s+to|have\s+to|remember\s+to|make\s+sure\s+to))\b|'
+      r'\b(?:on\s+the\s+way\s+back\s+(?:home\s+)?(?:to\s+)?)\b|'
+      r'\,\s*and\s+(?=(?:also\b|then\b|after\b|remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b|please|don.?t|dont))|'
+      r'\band\s+(?=(?:remind|call|buy|take|carry|pack|submit|check|finish|renew|pay|meet|send|clean|wash|study|go\b|need\b|we\b|i\b|please|don.?t|dont|do\s+not|college\b|hall\b|laptop\b|umbrella\b|raincoat\b|bike\b|id\b|marakkama\b|maranthu\b|innaiku\b|naalaiku\b))|'
+      r'\b(?:apram|apparam|aprm)(?:\s+(?:marakkama|maranthu\s+poidaadha|maranthuraadha))?\b|'
+      r'\b(?:adhe\s+maadhiri|adhe\s+mari)\b|'
+      r'\b(?:adhu\s+kooda|adhukooda|koodave)\b|'
+      r'\b(?:veetuku\s+varum\s+bodhu|veetuku\s+varumbodhu)\b|'
+      r'\b(?:innaiku\s+clg\s+mudinjadhum|clg\s+mudinjadhum|college\s+mudinjadhum|work\s+mudinjadhum)\b'
+      r')',
       caseSensitive: false,
     );
 
     final parts = normalized
         .split(clauseRegex)
         .map((p) => p.replaceAll('__DOT__', '.').trim())
+        .map((p) => p.replaceFirst(RegExp(r'^(?:and\s+|then\s+|also\s+|plus\s+|so\s+|apram\s+|apparam\s+|kooda\s+)+', caseSensitive: false), '').trim())
         .where((p) => p.isNotEmpty)
         .toList();
 
@@ -297,10 +312,31 @@ class AIExtractor {
       'Passport', 'License', 'Helmet'
     ].contains(i));
 
+    final hasShopItem = items.any((i) => [
+      'Milk', 'Bread', 'Eggs', 'Curd', 'Coffee', 'Tea', 'Vegetables', 'Fruits'
+    ].contains(i)) || cLower.contains('apple') || cLower.contains('kg ') || cLower.contains('onion') || cLower.contains('tomato');
+
+    final isShoppingClause = cLower.contains('supermarket') ||
+        cLower.contains('grocery') ||
+        cLower.contains('groceries') ||
+        cLower.contains('buy') ||
+        cLower.contains('purchase') ||
+        cLower.contains('shopping') ||
+        cLower.contains('order') ||
+        cLower.contains('vaanganum') ||
+        cLower.contains('vaanga') ||
+        (hasShopItem && (cLower.contains('pick up') || cLower.contains('get') || cLower.contains('from'))) ||
+        (hasNeuralConfidence && neuralPred.intent == 'Shopping');
+
     if (isTrueNegation) {
       type = 'Note';
       category = 'Notes';
       title = _capitalizeFirstLetter(clause);
+    } else if (isShoppingClause) {
+      type = 'Shopping';
+      category = 'Shopping';
+      final shopItems = items.isNotEmpty ? items.join(", ") : '';
+      title = shopItems.isNotEmpty ? 'Buy $shopItems' : _cleanActionTitle(clause, 'Buy');
     } else if (isCarryVerb || (hasCarryItem && (places.isNotEmpty || cLower.contains('ku') || cLower.contains('to'))) || (hasNeuralConfidence && neuralPred.intent == 'Carry')) {
       type = 'Carry';
       category = 'Carry';
@@ -310,22 +346,6 @@ class AIExtractor {
       } else {
         title = 'Carry items$placeStr';
       }
-    }
-    // B. Shopping Intent
-    else if (cLower.contains('buy') ||
-        cLower.contains('purchase') ||
-        cLower.contains('shopping') ||
-        cLower.contains('order') ||
-        cLower.contains('vaanganum') ||
-        cLower.contains('vaanga') ||
-        cLower.contains('grocery') ||
-        cLower.contains('groceries') ||
-        cLower.contains('supermarket') ||
-        (hasNeuralConfidence && neuralPred.intent == 'Shopping')) {
-      type = 'Shopping';
-      category = 'Shopping';
-      final shopItems = items.isNotEmpty ? items.join(", ") : '';
-      title = shopItems.isNotEmpty ? 'Buy $shopItems' : _cleanActionTitle(clause, 'Buy');
     }
     // C. Action / Task / Reminder Intent
     else if (cLower.contains('need to go') ||
@@ -370,7 +390,13 @@ class AIExtractor {
         cLower.contains('need to') ||
         cLower.contains('have to') ||
         (hasNeuralConfidence && (neuralPred.intent == 'Task' || neuralPred.intent == 'Payment_Due' || neuralPred.intent == 'Reminder'))) {
-      if (cLower.contains('remind') || cLower.contains('remember to') || cLower.contains('maranthuraadha') || cLower.contains('alert') || cLower.contains('alarm')) {
+      if (cLower.contains('remind') ||
+          cLower.contains('remember to') ||
+          cLower.contains('maranthuraadha') ||
+          cLower.contains('alert') ||
+          cLower.contains('alarm') ||
+          (hasNeuralConfidence && neuralPred.intent == 'Reminder') ||
+          (time != null && (cLower.contains('call') || cLower.contains('appointment') || cLower.contains('meeting')))) {
         type = 'Reminder';
         category = 'Reminders';
       } else if (projects.isNotEmpty) {
@@ -384,7 +410,7 @@ class AIExtractor {
       // Smart title formatting
       if (category == 'Reminders') {
         final remMatch = RegExp(
-          r'\b(?:remind\s+(?:me\s+)?(?:to|about)?|remember\s+to|maranthuraadha)\s+(.+)',
+          r'\b(?:remind\s+(?:me\s+)?(?:to|about|at)?|remember\s+to|maranthuraadha)\s+(.+)',
           caseSensitive: false,
         ).firstMatch(clause);
         if (remMatch != null) {
@@ -399,10 +425,15 @@ class AIExtractor {
           } else {
             title = 'Reminder';
           }
-        } else if (time != null) {
-          title = 'Reminder at $time';
+        } else if (cLower.contains('call') || cLower.contains('phone') || cLower.contains('pesanum')) {
+          final callTargetMatch = RegExp(r'\b(?:call|phone)\s+(?:dr\.?\s+)?([A-Za-z]+)', caseSensitive: false).firstMatch(clause);
+          final calledPerson = callTargetMatch != null
+              ? callTargetMatch.group(0)!.replaceFirst(RegExp(r'^(?:call|phone)\s+', caseSensitive: false), '').trim()
+              : (people.isNotEmpty ? people.first : '');
+          title = calledPerson.isNotEmpty ? 'Call ${_capitalizeFirstLetter(calledPerson)}' : _cleanActionSummary(clause);
         } else {
-          title = 'Reminder';
+          final cleanCl = _cleanActionSummary(clause);
+          title = cleanCl.isNotEmpty ? cleanCl : (time != null ? 'Reminder at $time' : 'Reminder');
         }
       } else if (cLower.contains('go to') || cLower.contains('need to go') || cLower.contains('ponum')) {
         final placeStr = places.isNotEmpty ? places.first : '';
@@ -423,7 +454,21 @@ class AIExtractor {
         final personStr = people.isNotEmpty ? ' ${people.first}' : '';
         title = 'Ask$personStr about ${projects.isNotEmpty ? projects.first : "task"}';
       } else if (cLower.contains('submit')) {
-        title = projects.isNotEmpty ? 'Submit ${projects.first}' : 'Submit assignment';
+        final subMatch = RegExp(
+          r'\bsubmit\s+(?:the\s+|my\s+)?(.+)',
+          caseSensitive: false,
+        ).firstMatch(clause);
+        if (subMatch != null) {
+          var target = subMatch.group(1)!.trim();
+          target = target.replaceAll(RegExp(r'\b(?:before|by|today|tomorrow|at\s+\d|tmrw|in\s+\d).*$', caseSensitive: false), '').trim();
+          if (target.isNotEmpty) {
+            title = 'Submit ${_capitalizeFirstLetter(target)}';
+          } else {
+            title = projects.isNotEmpty ? 'Submit ${projects.first}' : 'Submit assignment';
+          }
+        } else {
+          title = projects.isNotEmpty ? 'Submit ${projects.first}' : 'Submit assignment';
+        }
       } else if (cLower.contains('renew')) {
         title = 'Renew subscription';
       } else if (cLower.contains('pay') || cLower.contains('recharge')) {
@@ -532,8 +577,11 @@ class AIExtractor {
 
   static String _cleanActionSummary(String clause) {
     var s = clause.trim();
-    // Remove leading conversational prefixes
-    s = s.replaceAll(RegExp(r'^(?:tomorrow|today|yesterday|namma|i\s+need\s+to|we\s+need\s+to|need\s+to|have\s+to|must|should|please)\s+', caseSensitive: false), '');
+    // Remove leading conversational prefixes and timestamps
+    s = s.replaceAll(
+      RegExp(r'^(?:tomorrow|today|yesterday|namma|i\s+need\s+to|we\s+need\s+to|need\s+to|have\s+to|must|should|please|innaiku\s+evening(?:\s+\d+)?(?:\s+ku)?|innaiku|naalaiku)\s*', caseSensitive: false),
+      '',
+    );
     return _capitalizeFirstLetter(s);
   }
 
