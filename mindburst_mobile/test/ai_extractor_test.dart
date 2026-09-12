@@ -56,4 +56,12 @@ void main() {
     expect(m.date, isNotNull);
     expect(m.title, contains('7:40 PM'));
   });
+
+  test('GroundedQA answers rent & fee query', () {
+    final memories = AIExtractor.extractMemories('Pay hostel rent on 5th and pay mess fee', 20);
+    final answer = GroundedQA.answerQuestion('when is my rent due', memories);
+
+    expect(answer.toLowerCase(), contains('financial & payment records'));
+    expect(answer.toLowerCase(), contains('rent'));
+  });
 }

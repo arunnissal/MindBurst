@@ -15,6 +15,9 @@ class AppTheme {
   static const Color accent = Color(0xFF7C3AED);
 
   // Backward compatibility aliases
+  static const Color scaffoldBg = background;
+  static const Color surfaceBg = background;
+  static const Color greenAccent = shoppingEmerald;
   static const Color goldAccent = Color(0xFF4F46E5);
   static const Color goldAccentLight = Color(0xFFEEF2FF);
   static const Color goldBorder = Color(0xFFE0E7FF);

@@ -11,6 +11,38 @@ class GroundedQA {
     final q = question.toLowerCase().trim();
     final todayStr = DateFormat('yyyy-MM-dd').format(DateTime.now());
 
+    // 0. Rent, Mess & Monthly Dues Queries ("rent", "mess fee", "vaadagai", "bill")
+    if (q.contains('rent') ||
+        q.contains('mess') ||
+        q.contains('fee') ||
+        q.contains('fees') ||
+        q.contains('bill') ||
+        q.contains('bills') ||
+        q.contains('vaadagai') ||
+        q.contains('katnum')) {
+      final feeMems = memories.where((m) =>
+          m.title.toLowerCase().contains('rent') ||
+          m.title.toLowerCase().contains('mess') ||
+          m.title.toLowerCase().contains('fee') ||
+          m.title.toLowerCase().contains('bill') ||
+          m.title.toLowerCase().contains('pay') ||
+          m.details.toLowerCase().contains('rent') ||
+          m.details.toLowerCase().contains('mess') ||
+          m.category.toLowerCase().contains('hostel') ||
+          m.category.toLowerCase().contains('payment')).toList();
+
+      if (feeMems.isNotEmpty) {
+        final lines = <String>[];
+        for (final m in feeMems) {
+          final dateStr = m.date != null ? ' [${AIExtractor.formatHumanDate(m.date)}]' : '';
+          lines.add('• ${m.title}$dateStr');
+        }
+        return "Here are your financial & payment records:\n\n${lines.join('\n')}\n\nTip: You can customize your recurring Rent & Mess due day anytime in Profile!";
+      } else {
+        return "You have no pending rent or mess fee notes in your active memories. Check your Profile tab to see or adjust your recurring monthly due dates!";
+      }
+    }
+
     // 1. Reminders & Alarms Queries
     if (q.contains('remind') ||
         q.contains('reminder') ||

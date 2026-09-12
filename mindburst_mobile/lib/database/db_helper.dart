@@ -21,8 +21,9 @@ class DatabaseHelper {
 
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _createDB,
+      onUpgrade: _onUpgrade,
       onConfigure: (db) async {
         await db.execute('PRAGMA foreign_keys = ON;');
       },
@@ -74,6 +75,100 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX idx_mem_completed ON memories(completed);');
     await db.execute('CREATE INDEX idx_mem_deleted ON memories(deleted_at);');
     await db.execute('CREATE INDEX idx_ent_memory ON entities(memory_id);');
+    await _createSecondBrainTables(db);
+  }
+
+  Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      await _createSecondBrainTables(db);
+    }
+  }
+
+  Future<void> _createSecondBrainTables(Database db) async {
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS user_profile (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        living_situation TEXT NOT NULL DEFAULT 'hostel',
+        user_name TEXT,
+        college_name TEXT,
+        rent_due_day INTEGER NOT NULL DEFAULT 5,
+        mess_due_day INTEGER NOT NULL DEFAULT 5,
+        has_mess_fee INTEGER NOT NULL DEFAULT 1
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS recurring_bills (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        due_day INTEGER NOT NULL DEFAULT 1,
+        amount REAL,
+        category TEXT NOT NULL DEFAULT 'Personal'
+      );
+    ''');
+
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS daily_routines (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        time_slot TEXT NOT NULL DEFAULT 'Morning',
+        context_tag TEXT NOT NULL DEFAULT 'all',
+        is_completed INTEGER NOT NULL DEFAULT 0,
+        last_completed_date TEXT,
+        streak_count INTEGER NOT NULL DEFAULT 0
+      );
+    ''');
+
+    // Seed default routines if empty
+    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM daily_routines')) ?? 0;
+    if (count == 0) {
+      await db.insert('daily_routines', {
+        'title': 'Drink Water & Morning Stretch',
+        'time_slot': 'Morning',
+        'context_tag': 'all',
+        'is_completed': 0,
+        'streak_count': 0,
+      });
+      await db.insert('daily_routines', {
+        'title': "Review Today's Plan in MindBurst",
+        'time_slot': 'Morning',
+        'context_tag': 'all',
+        'is_completed': 0,
+        'streak_count': 0,
+      });
+      await db.insert('daily_routines', {
+        'title': 'College Lectures & Lab Prep',
+        'time_slot': 'Afternoon',
+        'context_tag': 'all',
+        'is_completed': 0,
+        'streak_count': 0,
+      });
+      await db.insert('daily_routines', {
+        'title': 'Hostel Room Cleanup & Laundry Check',
+        'time_slot': 'Evening',
+        'context_tag': 'hostel',
+        'is_completed': 0,
+        'streak_count': 0,
+      });
+      await db.insert('daily_routines', {
+        'title': 'Day Recap & Wind Down',
+        'time_slot': 'Night',
+        'context_tag': 'all',
+        'is_completed': 0,
+        'streak_count': 0,
+      });
+    }
+
+    // Seed default profile if empty
+    final profileCount = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM user_profile')) ?? 0;
+    if (profileCount == 0) {
+      await db.insert('user_profile', {
+        'living_situation': 'hostel',
+        'rent_due_day': 5,
+        'mess_due_day': 5,
+        'has_mess_fee': 1,
+      });
+    }
   }
 
   // --- Captures ---
@@ -332,5 +427,119 @@ class DatabaseHelper {
     memory.places = rows.where((r) => r['entity_type'] == 'place').map((r) => r['name'] as String).toList();
     memory.items = rows.where((r) => r['entity_type'] == 'item').map((r) => r['name'] as String).toList();
     memory.projects = rows.where((r) => r['entity_type'] == 'project').map((r) => r['name'] as String).toList();
+  }
+
+  // --- User Profile ---
+  Future<UserProfile> getUserProfile() async {
+    final db = await database;
+    final rows = await db.query('user_profile', limit: 1);
+    if (rows.isNotEmpty) {
+      return UserProfile.fromMap(rows.first);
+    }
+    final defaultProfile = UserProfile();
+    final id = await db.insert('user_profile', defaultProfile.toMap());
+    return defaultProfile.copyWith(id: id);
+  }
+
+  Future<void> saveUserProfile(UserProfile profile) async {
+    final db = await database;
+    final rows = await db.query('user_profile', limit: 1);
+    if (rows.isNotEmpty) {
+      final existingId = rows.first['id'] as int;
+      await db.update('user_profile', profile.toMap(), where: 'id = ?', whereArgs: [existingId]);
+    } else {
+      await db.insert('user_profile', profile.toMap());
+    }
+  }
+
+  // --- Recurring Bills ---
+  Future<List<RecurringBill>> getRecurringBills() async {
+    final db = await database;
+    final rows = await db.query('recurring_bills', orderBy: 'due_day ASC');
+    return rows.map((r) => RecurringBill.fromMap(r)).toList();
+  }
+
+  Future<int> addRecurringBill(RecurringBill bill) async {
+    final db = await database;
+    return await db.insert('recurring_bills', bill.toMap());
+  }
+
+  Future<void> deleteRecurringBill(int id) async {
+    final db = await database;
+    await db.delete('recurring_bills', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // --- Daily Routines ---
+  Future<List<DailyRoutine>> getDailyRoutines({String? contextTag}) async {
+    final db = await database;
+    final now = DateTime.now();
+    final todayStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+
+    List<Map<String, dynamic>> rows;
+    if (contextTag != null && contextTag != 'all') {
+      rows = await db.query(
+        'daily_routines',
+        where: "context_tag = 'all' OR context_tag = ?",
+        whereArgs: [contextTag],
+        orderBy: 'id ASC',
+      );
+    } else {
+      rows = await db.query('daily_routines', orderBy: 'id ASC');
+    }
+
+    final routines = <DailyRoutine>[];
+    for (final r in rows) {
+      final routine = DailyRoutine.fromMap(r);
+      // Auto-reset if last completed was on an earlier date
+      if (routine.isCompleted && routine.lastCompletedDate != null && routine.lastCompletedDate != todayStr) {
+        await db.update(
+          'daily_routines',
+          {'is_completed': 0},
+          where: 'id = ?',
+          whereArgs: [routine.id],
+        );
+        routines.add(routine.copyWith(isCompleted: false));
+      } else {
+        routines.add(routine);
+      }
+    }
+    return routines;
+  }
+
+  Future<void> toggleRoutineCompletion(DailyRoutine routine) async {
+    final db = await database;
+    final now = DateTime.now();
+    final todayStr = '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
+    final willBeCompleted = !routine.isCompleted;
+
+    int newStreak = routine.streakCount;
+    if (willBeCompleted) {
+      if (routine.lastCompletedDate != todayStr) {
+        newStreak += 1;
+      }
+    } else {
+      if (newStreak > 0) newStreak -= 1;
+    }
+
+    await db.update(
+      'daily_routines',
+      {
+        'is_completed': willBeCompleted ? 1 : 0,
+        'last_completed_date': willBeCompleted ? todayStr : routine.lastCompletedDate,
+        'streak_count': newStreak,
+      },
+      where: 'id = ?',
+      whereArgs: [routine.id],
+    );
+  }
+
+  Future<int> addDailyRoutine(DailyRoutine routine) async {
+    final db = await database;
+    return await db.insert('daily_routines', routine.toMap());
+  }
+
+  Future<void> deleteDailyRoutine(int id) async {
+    final db = await database;
+    await db.delete('daily_routines', where: 'id = ?', whereArgs: [id]);
   }
 }

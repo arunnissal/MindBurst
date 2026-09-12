@@ -24,16 +24,16 @@ class AllScreenState extends State<AllScreen> {
   String _selectedCategory = 'All';
   String _selectedRetention = 'All';
 
-  final List<String> _categories = [
-    'All',
-    'Reminders',
-    'Tasks',
-    'Events',
-    'Carry',
-    'Notes',
-    'Places',
-    'Projects',
-  ];
+  int _selectedView = 0; // 0: Memories, 1: Daily Routine
+  List<DailyRoutine> _routines = [];
+  UserProfile _userProfile = UserProfile();
+
+  List<String> get _categories {
+    if (_userProfile.livingSituation == 'home') {
+      return ['All', 'Reminders', 'Tasks', 'Home', 'College', 'Carry', 'Notes', 'Places', 'Projects'];
+    }
+    return ['All', 'Reminders', 'Tasks', 'Hostel', 'College', 'Carry', 'Notes', 'Places', 'Projects'];
+  }
 
   final List<String> _dateFilters = ['All', 'Today', 'Yesterday', 'This Week'];
 
@@ -79,11 +79,162 @@ class AllScreenState extends State<AllScreen> {
       endDate: endDate,
     );
 
+    final profile = await DatabaseHelper.instance.getUserProfile();
+    final routines = await DatabaseHelper.instance.getDailyRoutines(
+      contextTag: profile.livingSituation,
+    );
+
     if (!mounted) return;
     setState(() {
+      _userProfile = profile;
+      _routines = routines;
       _memories = results;
       _isLoading = false;
     });
+  }
+
+  Future<void> _toggleRoutine(DailyRoutine routine) async {
+    await DatabaseHelper.instance.toggleRoutineCompletion(routine);
+    await refreshMemories();
+  }
+
+  Future<void> _deleteRoutine(int id) async {
+    await DatabaseHelper.instance.deleteDailyRoutine(id);
+    await refreshMemories();
+  }
+
+  Future<void> _addRoutineDialog() async {
+    final titleController = TextEditingController();
+    String selectedSlot = 'Morning';
+    String selectedContext = 'all';
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppTheme.cardBg,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (context, setSheetState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+                left: 20,
+                right: 20,
+                top: 20,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Add Daily Habit / Routine',
+                    style: TextStyle(
+                      color: AppTheme.textPrimary,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    controller: titleController,
+                    autofocus: true,
+                    style: const TextStyle(color: AppTheme.textPrimary),
+                    decoration: InputDecoration(
+                      hintText: 'e.g., Morning Walk, Night Study, Wash Clothes',
+                      hintStyle: const TextStyle(color: AppTheme.textSecondary),
+                      filled: true,
+                      fillColor: AppTheme.surfaceBg,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppTheme.cardBorder),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: AppTheme.cardBorder),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text('Time Slot:', style: TextStyle(color: AppTheme.textSecondary, fontSize: 12, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: ['Morning', 'Afternoon', 'Evening', 'Night'].map((slot) {
+                      final isChosen = selectedSlot == slot;
+                      return ChoiceChip(
+                        label: Text(slot),
+                        selected: isChosen,
+                        selectedColor: AppTheme.primary.withOpacity(0.25),
+                        backgroundColor: AppTheme.surfaceBg,
+                        labelStyle: TextStyle(
+                          color: isChosen ? AppTheme.primaryLight : AppTheme.textSecondary,
+                          fontWeight: isChosen ? FontWeight.bold : FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                        onSelected: (_) => setSheetState(() => selectedSlot = slot),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 14),
+                  const Text('Applicable Context:', style: TextStyle(color: AppTheme.textSecondary, fontSize: 12, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      {'tag': 'all', 'label': 'Everywhere (All)'},
+                      {'tag': 'hostel', 'label': '🏢 Hostel Only'},
+                      {'tag': 'home', 'label': '🏡 Home Only'},
+                    ].map((ctxItem) {
+                      final isChosen = selectedContext == ctxItem['tag'];
+                      return ChoiceChip(
+                        label: Text(ctxItem['label']!),
+                        selected: isChosen,
+                        selectedColor: AppTheme.primary.withOpacity(0.25),
+                        backgroundColor: AppTheme.surfaceBg,
+                        labelStyle: TextStyle(
+                          color: isChosen ? AppTheme.primaryLight : AppTheme.textSecondary,
+                          fontWeight: isChosen ? FontWeight.bold : FontWeight.normal,
+                          fontSize: 12,
+                        ),
+                        onSelected: (_) => setSheetState(() => selectedContext = ctxItem['tag']!),
+                      );
+                    }).toList(),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.primary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      onPressed: () async {
+                        final title = titleController.text.trim();
+                        if (title.isNotEmpty) {
+                          final routine = DailyRoutine(
+                            title: title,
+                            timeSlot: selectedSlot,
+                            contextTag: selectedContext,
+                          );
+                          await DatabaseHelper.instance.addDailyRoutine(routine);
+                          Navigator.pop(ctx);
+                          refreshMemories();
+                        }
+                      },
+                      child: const Text('Add Routine', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Future<void> _toggleComplete(Memory mem) async {
@@ -169,6 +320,81 @@ class AllScreenState extends State<AllScreen> {
       ),
       body: Column(
         children: [
+          // Top Segment: [💭 Memories] vs [⚡ Daily Routine]
+          Container(
+            margin: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: AppTheme.cardBg,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: AppTheme.cardBorder),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: () => setState(() => _selectedView = 0),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        color: _selectedView == 0 ? AppTheme.primary : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.layers_outlined, size: 16, color: _selectedView == 0 ? Colors.white : AppTheme.textSecondary),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Memories',
+                            style: TextStyle(
+                              color: _selectedView == 0 ? Colors.white : AppTheme.textSecondary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: () => setState(() => _selectedView = 1),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                        color: _selectedView == 1 ? AppTheme.primary : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.bolt, size: 16, color: _selectedView == 1 ? Colors.white : AppTheme.textSecondary),
+                          const SizedBox(width: 6),
+                          Text(
+                            'Daily Routine',
+                            style: TextStyle(
+                              color: _selectedView == 1 ? Colors.white : AppTheme.textSecondary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (_selectedView == 1)
+            Expanded(child: _buildDailyRoutineView())
+          else ...[
           // Search & Filters container
           Container(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
@@ -341,8 +567,203 @@ class AllScreenState extends State<AllScreen> {
                         ),
                       ),
           ),
+          ],
         ],
       ),
+    );
+  }
+
+  Widget _buildDailyRoutineView() {
+    final completedCount = _routines.where((r) => r.isCompleted).length;
+    final totalCount = _routines.length;
+    final percent = totalCount > 0 ? (completedCount / totalCount) : 0.0;
+    final isHostel = _userProfile.livingSituation == 'hostel';
+
+    return Column(
+      children: [
+        // Daily summary card
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppTheme.cardBg,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppTheme.cardBorder),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      isHostel ? '🏢 Hostel Routine' : '🏡 Home Routine',
+                      style: const TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    Text(
+                      '$completedCount of $totalCount Done',
+                      style: const TextStyle(
+                        color: AppTheme.goldAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: percent,
+                    minHeight: 6,
+                    backgroundColor: AppTheme.surfaceBg,
+                    valueColor: const AlwaysStoppedAnimation<Color>(AppTheme.goldAccent),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      DateFormat('EEEE, MMM d').format(DateTime.now()),
+                      style: const TextStyle(color: AppTheme.textSecondary, fontSize: 11),
+                    ),
+                    InkWell(
+                      onTap: _addRoutineDialog,
+                      child: const Row(
+                        children: [
+                          Icon(Icons.add_circle_outline, size: 14, color: AppTheme.primaryLight),
+                          SizedBox(width: 4),
+                          Text(
+                            'Add Habit',
+                            style: TextStyle(color: AppTheme.primaryLight, fontSize: 11, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // List of routines
+        Expanded(
+          child: _routines.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.bolt, size: 48, color: AppTheme.textSecondary),
+                      const SizedBox(height: 12),
+                      const Text(
+                        'No routines set for your profile.',
+                        style: TextStyle(color: AppTheme.textSecondary, fontSize: 13),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(backgroundColor: AppTheme.primary),
+                        onPressed: _addRoutineDialog,
+                        icon: const Icon(Icons.add, size: 16),
+                        label: const Text('Add Daily Habit'),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  itemCount: _routines.length,
+                  itemBuilder: (context, index) {
+                    final routine = _routines[index];
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      decoration: BoxDecoration(
+                        color: AppTheme.cardBg,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: routine.isCompleted ? AppTheme.greenAccent.withOpacity(0.4) : AppTheme.cardBorder,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: () => _toggleRoutine(routine),
+                            borderRadius: BorderRadius.circular(20),
+                            child: AnimatedContainer(
+                              duration: const Duration(milliseconds: 200),
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                color: routine.isCompleted ? AppTheme.greenAccent : Colors.transparent,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: routine.isCompleted ? AppTheme.greenAccent : AppTheme.cardBorder,
+                                  width: 2,
+                                ),
+                              ),
+                              child: routine.isCompleted
+                                  ? const Icon(Icons.check, size: 16, color: Colors.white)
+                                  : null,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  routine.title,
+                                  style: TextStyle(
+                                    color: routine.isCompleted ? AppTheme.textSecondary : AppTheme.textPrimary,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                    decoration: routine.isCompleted ? TextDecoration.lineThrough : null,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                      decoration: BoxDecoration(
+                                        color: AppTheme.surfaceBg,
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Text(
+                                        routine.timeSlot,
+                                        style: const TextStyle(color: AppTheme.primaryLight, fontSize: 10),
+                                      ),
+                                    ),
+                                    if (routine.streakCount > 0) ...[
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        '🔥 ${routine.streakCount} streak',
+                                        style: const TextStyle(color: AppTheme.goldAccent, fontSize: 10, fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete_outline, size: 18, color: AppTheme.textSecondary),
+                            onPressed: () => routine.id != null ? _deleteRoutine(routine.id!) : null,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+        ),
+      ],
     );
   }
 

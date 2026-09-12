@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import 'burst_screen.dart';
 import 'all_screen.dart';
 import 'ask_screen.dart';
+import 'profile_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -38,6 +39,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       ),
       AllScreen(key: _allScreenKey),
       const AskScreen(),
+      ProfileScreen(
+        onProfileUpdated: () {
+          _allScreenKey.currentState?.refreshMemories();
+        },
+      ),
     ];
   }
 
@@ -63,6 +69,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
         ),
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
           backgroundColor: AppTheme.cardBg,
           selectedItemColor: AppTheme.primary,
@@ -93,6 +100,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: Icon(Icons.psychology_outlined),
               activeIcon: Icon(Icons.psychology),
               label: 'Ask Mind',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline),
+              activeIcon: Icon(Icons.person),
+              label: 'Profile',
             ),
           ],
         ),

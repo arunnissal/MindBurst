@@ -161,3 +161,168 @@ class Memory {
     );
   }
 }
+
+class UserProfile {
+  final int? id;
+  final String livingSituation; // 'hostel' or 'home'
+  final String? userName;
+  final String? collegeName;
+  final int rentDueDay; // 1 to 31 (default 5)
+  final int messDueDay; // 1 to 31 (default 5)
+  final bool hasMessFee;
+
+  UserProfile({
+    this.id,
+    this.livingSituation = 'hostel',
+    this.userName,
+    this.collegeName,
+    this.rentDueDay = 5,
+    this.messDueDay = 5,
+    this.hasMessFee = true,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'living_situation': livingSituation,
+      'user_name': userName,
+      'college_name': collegeName,
+      'rent_due_day': rentDueDay,
+      'mess_due_day': messDueDay,
+      'has_mess_fee': hasMessFee ? 1 : 0,
+    };
+  }
+
+  factory UserProfile.fromMap(Map<String, dynamic> map) {
+    return UserProfile(
+      id: map['id'],
+      livingSituation: map['living_situation'] ?? 'hostel',
+      userName: map['user_name'],
+      collegeName: map['college_name'],
+      rentDueDay: map['rent_due_day'] ?? 5,
+      messDueDay: map['mess_due_day'] ?? 5,
+      hasMessFee: (map['has_mess_fee'] ?? 1) == 1,
+    );
+  }
+
+  UserProfile copyWith({
+    int? id,
+    String? livingSituation,
+    String? userName,
+    String? collegeName,
+    int? rentDueDay,
+    int? messDueDay,
+    bool? hasMessFee,
+  }) {
+    return UserProfile(
+      id: id ?? this.id,
+      livingSituation: livingSituation ?? this.livingSituation,
+      userName: userName ?? this.userName,
+      collegeName: collegeName ?? this.collegeName,
+      rentDueDay: rentDueDay ?? this.rentDueDay,
+      messDueDay: messDueDay ?? this.messDueDay,
+      hasMessFee: hasMessFee ?? this.hasMessFee,
+    );
+  }
+}
+
+class RecurringBill {
+  final int? id;
+  final String title;
+  final int dueDay; // 1 to 31
+  final double? amount;
+  final String category; // 'Hostel', 'Personal', etc.
+
+  RecurringBill({
+    this.id,
+    required this.title,
+    required this.dueDay,
+    this.amount,
+    this.category = 'Personal',
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'due_day': dueDay,
+      'amount': amount,
+      'category': category,
+    };
+  }
+
+  factory RecurringBill.fromMap(Map<String, dynamic> map) {
+    return RecurringBill(
+      id: map['id'],
+      title: map['title'] ?? '',
+      dueDay: map['due_day'] ?? 1,
+      amount: map['amount'] != null ? (map['amount'] as num).toDouble() : null,
+      category: map['category'] ?? 'Personal',
+    );
+  }
+}
+
+class DailyRoutine {
+  final int? id;
+  final String title;
+  final String timeSlot; // 'Morning', 'Afternoon', 'Evening', 'Night'
+  final String contextTag; // 'all', 'hostel', 'home'
+  final bool isCompleted;
+  final String? lastCompletedDate; // 'YYYY-MM-DD'
+  final int streakCount;
+
+  DailyRoutine({
+    this.id,
+    required this.title,
+    this.timeSlot = 'Morning',
+    this.contextTag = 'all',
+    this.isCompleted = false,
+    this.lastCompletedDate,
+    this.streakCount = 0,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'time_slot': timeSlot,
+      'context_tag': contextTag,
+      'is_completed': isCompleted ? 1 : 0,
+      'last_completed_date': lastCompletedDate,
+      'streak_count': streakCount,
+    };
+  }
+
+  factory DailyRoutine.fromMap(Map<String, dynamic> map) {
+    return DailyRoutine(
+      id: map['id'],
+      title: map['title'] ?? '',
+      timeSlot: map['time_slot'] ?? 'Morning',
+      contextTag: map['context_tag'] ?? 'all',
+      isCompleted: (map['is_completed'] ?? 0) == 1,
+      lastCompletedDate: map['last_completed_date'],
+      streakCount: map['streak_count'] ?? 0,
+    );
+  }
+
+  DailyRoutine copyWith({
+    int? id,
+    String? title,
+    String? timeSlot,
+    String? contextTag,
+    bool? isCompleted,
+    String? lastCompletedDate,
+    int? streakCount,
+  }) {
+    return DailyRoutine(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      timeSlot: timeSlot ?? this.timeSlot,
+      contextTag: contextTag ?? this.contextTag,
+      isCompleted: isCompleted ?? this.isCompleted,
+      lastCompletedDate: lastCompletedDate ?? this.lastCompletedDate,
+      streakCount: streakCount ?? this.streakCount,
+    );
+  }
+}
+

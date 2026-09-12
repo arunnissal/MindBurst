@@ -358,7 +358,19 @@ class AIExtractor {
       } else if (cLower.contains('renew')) {
         title = 'Renew subscription';
       } else if (cLower.contains('pay') || cLower.contains('recharge')) {
-        title = 'Pay bill';
+        if (cLower.contains('rent')) {
+          title = cLower.contains('hostel') ? 'Pay hostel rent' : 'Pay rent';
+        } else if (cLower.contains('mess')) {
+          title = 'Pay mess fee';
+        } else if (cLower.contains('recharge')) {
+          title = 'Mobile recharge';
+        } else if (cLower.contains('wifi') || cLower.contains('wi-fi')) {
+          title = 'Pay WiFi bill';
+        } else if (cLower.contains('gym')) {
+          title = 'Pay gym fee';
+        } else {
+          title = 'Pay bill';
+        }
       } else {
         title = _cleanActionSummary(clause);
       }
